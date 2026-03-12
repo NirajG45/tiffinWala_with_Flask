@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - Tiffin Service</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-logo">Tiffin Service</a>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('tiffins') }}">Tiffins</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('cart') }}">Cart</a></li>
+                    <li><a href="{{ url_for('orders') }}">Orders</a></li>
+                    <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="order-details">
+            <h1>Order #{{ order.id }}</h1>
+            
+            <div class="order-status">
+                <span class="status-badge status-{{ order.status }}">{{ order.status|capitalize }}</span>
+                <span class="payment-status">Payment: {{ order.payment_status|capitalize }}</span>
+            </div>
+
+            <div class="order-info">
+                <div class="info-group">
+                    <h3>Order Information</h3>
+                    <p><strong>Order Date:</strong> {{ order.order_date.strftime('%B %d, %Y %I:%M %p') }}</p>
+                    <p><strong>Delivery Date:</strong> {{ order.delivery_date.strftime('%B %d, %Y') }}</p>
+                </div>
+
+                <div class="info-group">
+                    <h3>Item Details</h3>
+                    <p><strong>Tiffin:</strong> {{ order.tiffin.name }}</p>
+                    <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+                    <p><strong>Price per item:</strong> ₹{{ "%.2f"|format(order.tiffin.price) }}</p>
+                    <p><strong>Total Amount:</strong> ₹{{ "%.2f"|format(order.total_amount) }}</p>
+                </div>
+
+                <div class="info-group">
+                    <h3>Delivery Address</h3>
+                    {% if order.address %}
+                        <p>{{ order.address.address_line1 }}</p>
+                        {% if order.address.address_line2 %}
+                        <p>{{ order.address.address_line2 }}</p>
+                        {% endif %}
+                        <p>{{ order.address.city }}, {{ order.address.state }} - {{ order.address.pincode }}</p>
+                        <p>Phone: {{ order.address.phone }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="info-group">
+                    <h3>Payment Method</h3>
+                    {% if order.payment_method %}
+                        <p>{{ order.payment_method.card_type|capitalize }} ending in {{ order.payment_method.card_number }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if order.status == 'pending' %}
+            <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="POST" class="cancel-form">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order?')">
+                    Cancel Order
+                </button>
+            </form>
+            {% endif %}
+
+            <div class="back-link">
+                <a href="{{ url_for('orders') }}">← Back to Orders</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

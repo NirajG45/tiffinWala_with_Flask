@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Addresses - TiffinWala</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== GLOBAL VARIABLES ===== */
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFD166;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #06D6A0;
+            --warning: #FFD166;
+            --danger: #FF6B6B;
+            --gradient-primary: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --gradient-secondary: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            --shadow-sm: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.15);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+            padding-top: 80px; /* For fixed navbar */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* ===== ENHANCED NAVIGATION BAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+            padding: 5px 0;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .logo-text .brand {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text .tagline {
+            font-size: 10px;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Enhanced Search Container */
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 16px;
+            z-index: 2;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 14px 50px 14px 50px;
+            border: 1px solid #E0E0E0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: var(--transition);
+            background: #F8F9FA;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .search-btn:hover {
+            background: #FF5252;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 5px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(255, 107, 107, 0.1);
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* User Menu Styles */
+        .user-nav-link {
+            padding: 8px 16px;
+            border: 1px solid #E0E0E0;
+            background: #F8F9FA;
+        }
+
+        .user-nav-link:hover {
+            background: white;
+            border-color: var(--primary);
+        }
+
+        .user-text {
+            font-weight: 600;
+        }
+
+        /* Cart Styles */
+        .cart-nav-link {
+            position: relative;
+            padding: 8px 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+        }
+
+        .cart-nav-link:hover {
+            background: var(--gradient-primary);
+            opacity: 0.9;
+            color: white;
+        }
+
+        .cart-text {
+            font-weight: 600;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: white;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary);
+        }
+
+        /* Mobile Search Toggle */
+        .mobile-search-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            color: #333;
+            font-size: 20px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: #333;
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid #E9ECEF;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 14px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #F8F9FA;
+            color: var(--primary);
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #E9ECEF;
+            margin: 5px 0;
+        }
+
+        /* ===== ADDRESSES PAGE STYLES ===== */
+        .addresses-page {
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .page-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .page-header p {
+            color: #666;
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .addresses-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+        }
+        
+        @media (max-width: 992px) {
+            .addresses-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Sidebar */
+        .addresses-sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-header {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .user-details h4 {
+            font-size: 1.125rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .user-details p {
+            color: #666;
+            font-size: 0.875rem;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        
+        .sidebar-nav a:hover {
+            background: rgba(78, 205, 196, 0.1);
+            color: var(--secondary);
+        }
+        
+        .sidebar-nav a.active {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+        
+        .delivery-stats {
+            background: #F8F9FA;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .delivery-stats h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.875rem;
+        }
+        
+        .stats-item .label {
+            color: #666;
+        }
+        
+        .stats-item .value {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        /* Addresses Content */
+        .addresses-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .addresses-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .addresses-header h2 {
+            font-size: 1.75rem;
+            color: var(--dark);
+        }
+        
+        .add-address-btn {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .add-address-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .addresses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .addresses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .address-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #E9ECEF;
+            transition: var(--transition);
+            position: relative;
+            height: 100%;
+        }
+        
+        .address-card:hover {
+            border-color: var(--secondary);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .address-card.default {
+            border: 2px solid var(--accent);
+            background: linear-gradient(135deg, rgba(255, 214, 102, 0.05) 0%, rgba(255, 214, 102, 0.1) 100%);
+        }
+        
+        .address-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .badge-default {
+            background: rgba(255, 214, 102, 0.2);
+            color: #856404;
+        }
+        
+        .badge-home {
+            background: rgba(78, 205, 196, 0.2);
+            color: var(--secondary);
+        }
+        
+        .badge-office {
+            background: rgba(0, 123, 255, 0.2);
+            color: #004085;
+        }
+        
+        .badge-other {
+            background: rgba(108, 117, 125, 0.2);
+            color: #6C757D;
+        }
+        
+        .address-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #E9ECEF;
+        }
+        
+        .address-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .address-info h3 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .address-info p {
+            color: #666;
+            font-size: 0.875rem;
+        }
+        
+        .address-details {
+            margin-bottom: 25px;
+        }
+        
+        .address-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #666;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .address-line i {
+            color: var(--secondary);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .address-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #E9ECEF;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .address-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 16px;
+            border: 2px solid #E9ECEF;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .action-btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .action-btn.secondary {
+            background: white;
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .action-btn.secondary:hover {
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .set-default-btn {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .set-default-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .set-default-btn.default {
+            background: #6C757D;
+            cursor: default;
+        }
+        
+        .empty-addresses {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-addresses i {
+            font-size: 4rem;
+            color: #E9ECEF;
+            margin-bottom: 20px;
+        }
+        
+        .empty-addresses h3 {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .empty-addresses p {
+            color: #888;
+            margin-bottom: 30px;
+        }
+        
+        /* Address Form Modal */
+        .address-form-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+        
+        .address-form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-btn:hover {
+            color: var(--primary);
+        }
+        
+        .address-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #E9ECEF;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            transition: var(--transition);
+            background: #F8F9FA;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary);
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .address-type-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .address-type-btn {
+            padding: 12px;
+            border: 2px solid #E9ECEF;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .address-type-btn:hover {
+            border-color: var(--secondary);
+        }
+        
+        .address-type-btn.active {
+            background: var(--gradient-secondary);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .address-type-btn i {
+            font-size: 1.25rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .submit-btn {
+            flex: 1;
+            padding: 15px;
+            background: var(--gradient-secondary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .cancel-btn {
+            flex: 1;
+            padding: 15px;
+            background: #6C757D;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cancel-btn:hover {
+            background: #5A6268;
+            transform: translateY(-2px);
+        }
+        
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1200px) {
+            .nav-container {
+                padding: 0 15px;
+            }
+            
+            .search-container {
+                max-width: 400px;
+                margin: 0 20px;
+            }
+            
+            .nav-link {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .addresses-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .addresses-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            .navbar {
+                height: 70px;
+            }
+            
+            .nav-container {
+                height: 70px;
+                padding: 0 15px;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .logo-text .brand {
+                font-size: 24px;
+            }
+            
+            .logo-text .tagline {
+                font-size: 10px;
+            }
+            
+            /* Mobile Menu Toggle */
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            /* Mobile Search Toggle Button */
+            .mobile-search-toggle {
+                display: block;
+            }
+            
+            .search-toggle-btn:hover {
+                background: rgba(255, 107, 107, 0.1);
+                color: var(--primary);
+            }
+            
+            /* Navigation Menu */
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 20px;
+                transition: var(--transition);
+                overflow-y: auto;
+                gap: 10px;
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-link {
+                padding: 15px;
+                justify-content: flex-start;
+                font-size: 16px;
+                border-radius: 10px;
+                margin-bottom: 5px;
+            }
+            
+            /* Search Container on Mobile */
+            .search-container {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 15px;
+                margin: 0;
+                max-width: 100%;
+                display: none;
+                box-shadow: var(--shadow-md);
+                border-bottom: 1px solid #E9ECEF;
+                z-index: 999;
+            }
+            
+            .search-container.active {
+                display: block;
+            }
+            
+            .addresses-page {
+                padding: 30px 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .addresses-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .address-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .address-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            
+            .action-btn {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+            
+            .address-form-container {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .address-card {
+                padding: 20px;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF5252;
+        }
+
+        /* ===== LOADING SPINNER ===== */
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand">TiffinWala</span>
+                    <span class="tagline">Fresh Home Food</span>
+                </div>
+            </a>
+
+            <!-- Search Container -->
+            <div class="search-container" id="searchContainer">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" id="searchBox" placeholder="Search for tiffin services, cuisine, or location...">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="tiffins.html" class="nav-link">
+                        <i class="fas fa-utensils"></i> Order Food
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#how-it-works" class="nav-link">
+                        <i class="fas fa-play-circle"></i> How it Works
+                    </a>
+                </li>
+                
+                <!-- User Menu (Updated by JavaScript) -->
+                <li class="nav-item dropdown" id="userMenu">
+                    <a href="login.html" class="nav-link user-nav-link">
+                        <i class="fas fa-user"></i>
+                        <span class="user-text">Login</span>
+                    </a>
+                </li>
+
+                <!-- Cart -->
+                <li class="nav-item cart-container">
+                    <a href="cart.html" class="nav-link cart-nav-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-text">Cart</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Mobile Search Toggle Button -->
+            <button class="mobile-search-toggle" id="mobileSearchBtn">
+                <i class="fas fa-search"></i>
+            </button>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Addresses Page Content -->
+    <section class="addresses-page">
+        <div class="page-header animate-fade-in">
+            <h1>My Addresses</h1>
+            <p>Manage your delivery addresses for seamless tiffin delivery</p>
+        </div>
+        
+        <div class="addresses-container">
+            <!-- Sidebar -->
+            <div class="addresses-sidebar animate-fade-in">
+                <div class="sidebar-header">
+                    <h3>Delivery Management</h3>
+                </div>
+                
+                <div class="user-info" id="userInfo">
+                    <!-- User info will be loaded here -->
+                </div>
+                
+                <ul class="sidebar-nav">
+                    <li>
+                        <a href="profile.html">
+                            <i class="fas fa-user-circle"></i>
+                            My Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="orders.html">
+                            <i class="fas fa-shopping-bag"></i>
+                            My Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscriptions.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            Subscriptions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="addresses.html" class="active">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Delivery Addresses
+                        </a>
+                    </li>
+                    <li>
+                        <a href="payment-methods.html">
+                            <i class="fas fa-credit-card"></i>
+                            Payment Methods
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="delivery-stats">
+                    <h4>Delivery Statistics</h4>
+                    <div class="stats-item">
+                        <span class="label">Total Deliveries:</span>
+                        <span class="value">48</span>
+                    </div>
+                    <div class="stats-item">
+                        <span class="label">On-time Rate:</span>
+                        <span class="value">96%</span>
+                    </div>
+                    <div class="stats-item">
+                        <span class="label">Preferred Time:</span>
+                        <span class="value">12:00 PM - 2:00 PM</span>
+                    </div>
+                    <div class="stats-item">
+                        <span class="label">Last Delivery:</span>
+                        <span class="value">Today, 1:15 PM</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Addresses Content -->
+            <div class="addresses-content animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="addresses-header">
+                    <h2>Saved Addresses</h2>
+                    <button class="add-address-btn" onclick="openAddressForm()">
+                        <i class="fas fa-plus-circle"></i> Add New Address
+                    </button>
+                </div>
+                
+                <div class="addresses-grid" id="addressesList">
+                    <!-- Addresses will be loaded here -->
+                </div>
+                
+                <div class="empty-addresses" id="emptyAddresses" style="display: none;">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>No Addresses Saved</h3>
+                    <p>Add your first delivery address to start ordering tiffin services</p>
+                    <button class="add-address-btn" onclick="openAddressForm()">
+                        <i class="fas fa-plus-circle"></i> Add Your First Address
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Address Form Modal -->
+    <div class="address-form-modal" id="addressModal">
+        <div class="address-form-container">
+            <div class="form-header">
+                <h2 id="modalTitle">Add New Address</h2>
+                <button class="close-btn" onclick="closeAddressForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form class="address-form" id="addressForm">
+                <input type="hidden" id="addressId" value="">
+                
+                <div class="form-group">
+                    <label for="addressType">Address Type *</label>
+                    <div class="address-type-selector">
+                        <button type="button" class="address-type-btn" onclick="selectAddressType('home')" id="typeHome">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </button>
+                        <button type="button" class="address-type-btn" onclick="selectAddressType('office')" id="typeOffice">
+                            <i class="fas fa-building"></i>
+                            <span>Office</span>
+                        </button>
+                        <button type="button" class="address-type-btn" onclick="selectAddressType('other')" id="typeOther">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Other</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="addressType" value="home" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" placeholder="10-digit mobile number" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addressLine1">Address Line 1 *</label>
+                        <input type="text" id="addressLine1" placeholder="House no., Building, Street" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressLine2">Address Line 2</label>
+                        <input type="text" id="addressLine2" placeholder="Area, Colony, Landmark">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" placeholder="Enter your city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State *</label>
+                        <input type="text" id="state" placeholder="Enter your state" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pincode">Pincode *</label>
+                        <input type="text" id="pincode" placeholder="6-digit pincode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country *</label>
+                        <select id="country" required>
+                            <option value="">Select Country</option>
+                            <option value="India" selected>India</option>
+                            <option value="USA">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Australia">Australia</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryInstructions">Delivery Instructions</label>
+                    <textarea id="deliveryInstructions" placeholder="Any special instructions for delivery (optional)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="setAsDefault">
+                        Set as default delivery address
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-save"></i> Save Address
+                    </button>
+                    <button type="button" class="cancel-btn" onclick="closeAddressForm()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== NAVIGATION FUNCTIONALITY =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavigation();
+            checkLoginStatus();
+            loadAddresses();
+            updateCartCount();
+        });
+
+        function initNavigation() {
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const searchBox = document.getElementById('searchBox');
+            const searchBtn = document.getElementById('searchBtn');
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                
+                // Close search if open
+                if (searchContainer.classList.contains('active')) {
+                    searchContainer.classList.remove('active');
+                }
+            });
+
+            // Mobile search toggle
+            mobileSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                searchContainer.classList.toggle('active');
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                
+                // Focus on search input when opened
+                if (searchContainer.classList.contains('active')) {
+                    setTimeout(() => {
+                        searchBox.focus();
+                    }, 100);
+                }
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                // Close mobile menu
+                if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+                
+                // Close search if clicking outside
+                if (!searchContainer.contains(event.target) && 
+                    !mobileSearchBtn.contains(event.target) &&
+                    window.innerWidth <= 768) {
+                    searchContainer.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu on link click
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        searchContainer.classList.remove('active');
+                    }
+                });
+            });
+
+            // Search functionality
+            function performSearch() {
+                const query = searchBox.value.trim();
+                if (query) {
+                    // Close search on mobile after search
+                    if (window.innerWidth <= 768) {
+                        searchContainer.classList.remove('active');
+                    }
+                    window.location.href = `tiffins.html?search=${encodeURIComponent(query)}`;
+                }
+            }
+
+            searchBtn.addEventListener('click', performSearch);
+            searchBox.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        // ===== ADDRESSES DATA =====
+        let addresses = JSON.parse(localStorage.getItem('addresses')) || [
+            {
+                id: 'addr-1',
+                type: 'home',
+                name: 'John Doe',
+                phone: '9876543210',
+                line1: '123 Main Street',
+                line2: 'Near Central Park',
+                city: 'Delhi',
+                state: 'Delhi',
+                pincode: '110001',
+                country: 'India',
+                instructions: 'Ring bell twice. Leave at doorstep.',
+                isDefault: true,
+                createdAt: '2024-03-01'
+            },
+            {
+                id: 'addr-2',
+                type: 'office',
+                name: 'John Doe',
+                phone: '9876543211',
+                line1: '456 Tech Park',
+                line2: 'Floor 5, Suite 502',
+                city: 'Gurgaon',
+                state: 'Haryana',
+                pincode: '122001',
+                country: 'India',
+                instructions: 'Deliver at reception. Call before arrival.',
+                isDefault: false,
+                createdAt: '2024-03-10'
+            },
+            {
+                id: 'addr-3',
+                type: 'other',
+                name: 'Jane Smith',
+                phone: '9876543212',
+                line1: '789 Market Road',
+                line2: 'Opposite City Mall',
+                city: 'Noida',
+                state: 'Uttar Pradesh',
+                pincode: '201301',
+                country: 'India',
+                instructions: '',
+                isDefault: false,
+                createdAt: '2024-03-15'
+            }
+        ];
+
+        // ===== ADDRESS FUNCTIONS =====
+        function loadAddresses() {
+            const user = JSON.parse(localStorage.getItem('user') || '{"name": "John Doe", "email": "john@example.com"}');
+            const addressesList = document.getElementById('addressesList');
+            const emptyAddresses = document.getElementById('emptyAddresses');
+            const userInfo = document.getElementById('userInfo');
+            
+            // Update user info
+            userInfo.innerHTML = `
+                <div class="user-avatar">
+                    ${user.name.charAt(0).toUpperCase()}
+                </div>
+                <div class="user-details">
+                    <h4>${user.name}</h4>
+                    <p>${user.email}</p>
+                </div>
+            `;
+            
+            if (addresses.length === 0) {
+                addressesList.innerHTML = '';
+                emptyAddresses.style.display = 'block';
+                return;
+            }
+            
+            emptyAddresses.style.display = 'none';
+            
+            // Display addresses
+            addressesList.innerHTML = addresses.map((address, index) => `
+                <div class="address-card ${address.isDefault ? 'default' : ''} animate-fade-in" style="animation-delay: ${index * 0.1}s;">
+                    <div class="address-badge ${getAddressTypeClass(address.type)}">
+                        ${getAddressTypeText(address.type)}
+                    </div>
+                    
+                    <div class="address-header">
+                        <div class="address-icon">
+                            ${getAddressIcon(address.type)}
+                        </div>
+                        <div class="address-info">
+                            <h3>${address.name}</h3>
+                            <p>${address.phone}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="address-details">
+                        <div class="address-line">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${address.line1}, ${address.line2}</span>
+                        </div>
+                        <div class="address-line">
+                            <i class="fas fa-city"></i>
+                            <span>${address.city}, ${address.state} - ${address.pincode}</span>
+                        </div>
+                        <div class="address-line">
+                            <i class="fas fa-globe"></i>
+                            <span>${address.country}</span>
+                        </div>
+                        ${address.instructions ? `
+                        <div class="address-line">
+                            <i class="fas fa-info-circle"></i>
+                            <span><strong>Instructions:</strong> ${address.instructions}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="address-footer">
+                        <div class="address-actions">
+                            <button class="action-btn secondary" onclick="editAddress('${address.id}')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn primary" onclick="deleteAddress('${address.id}')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                        <button class="set-default-btn ${address.isDefault ? 'default' : ''}" 
+                                onclick="setDefaultAddress('${address.id}')" 
+                                ${address.isDefault ? 'disabled' : ''}>
+                            <i class="fas ${address.isDefault ? 'fa-check' : 'fa-star'}"></i>
+                            ${address.isDefault ? 'Default Address' : 'Set as Default'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Save to localStorage
+            localStorage.setItem('addresses', JSON.stringify(addresses));
+        }
+
+        function getAddressIcon(type) {
+            const icons = {
+                'home': '🏠',
+                'office': '🏢',
+                'other': '📍'
+            };
+            return icons[type] || '📍';
+        }
+
+        function getAddressTypeClass(type) {
+            const classes = {
+                'home': 'badge-home',
+                'office': 'badge-office',
+                'other': 'badge-other'
+            };
+            return classes[type] || 'badge-other';
+        }
+
+        function getAddressTypeText(type) {
+            const texts = {
+                'home': 'Home',
+                'office': 'Office',
+                'other': 'Other'
+            };
+            return texts[type] || 'Address';
+        }
+
+        // ===== ADDRESS FORM FUNCTIONS =====
+        function openAddressForm(addressId = null) {
+            const modal = document.getElementById('addressModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const form = document.getElementById('addressForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (addressId) {
+                // Edit mode
+                const address = addresses.find(addr => addr.id === addressId);
+                if (address) {
+                    modalTitle.textContent = 'Edit Address';
+                    submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Address';
+                    
+                    document.getElementById('addressId').value = address.id;
+                    selectAddressType(address.type);
+                    document.getElementById('fullName').value = address.name;
+                    document.getElementById('phone').value = address.phone;
+                    document.getElementById('addressLine1').value = address.line1;
+                    document.getElementById('addressLine2').value = address.line2;
+                    document.getElementById('city').value = address.city;
+                    document.getElementById('state').value = address.state;
+                    document.getElementById('pincode').value = address.pincode;
+                    document.getElementById('country').value = address.country;
+                    document.getElementById('deliveryInstructions').value = address.instructions;
+                    document.getElementById('setAsDefault').checked = address.isDefault;
+                }
+            } else {
+                // Add mode
+                modalTitle.textContent = 'Add New Address';
+                submitBtn.innerHTML = '<i class="fas fa-save"></i> Save Address';
+                
+                form.reset();
+                document.getElementById('addressId').value = '';
+                selectAddressType('home');
+                document.getElementById('country').value = 'India';
+                document.getElementById('setAsDefault').checked = false;
+            }
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAddressForm() {
+            const modal = document.getElementById('addressModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectAddressType(type) {
+            // Remove active class from all buttons
+            document.getElementById('typeHome').classList.remove('active');
+            document.getElementById('typeOffice').classList.remove('active');
+            document.getElementById('typeOther').classList.remove('active');
+            
+            // Add active class to selected button
+            document.getElementById(`type${type.charAt(0).toUpperCase() + type.slice(1)}`).classList.add('active');
+            
+            // Update hidden input
+            document.getElementById('addressType').value = type;
+        }
+
+        // Handle form submission
+        document.getElementById('addressForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const addressId = document.getElementById('addressId').value;
+            const isDefault = document.getElementById('setAsDefault').checked;
+            
+            // If setting as default, remove default from others
+            if (isDefault) {
+                addresses.forEach(addr => addr.isDefault = false);
+            }
+            
+            const addressData = {
+                id: addressId || `addr-${Date.now()}`,
+                type: document.getElementById('addressType').value,
+                name: document.getElementById('fullName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                line1: document.getElementById('addressLine1').value.trim(),
+                line2: document.getElementById('addressLine2').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                state: document.getElementById('state').value.trim(),
+                pincode: document.getElementById('pincode').value.trim(),
+                country: document.getElementById('country').value,
+                instructions: document.getElementById('deliveryInstructions').value.trim(),
+                isDefault: isDefault,
+                createdAt: new Date().toISOString().split('T')[0]
+            };
+            
+            // Validate required fields
+            if (!validateAddress(addressData)) {
+                showNotification('Please fill all required fields correctly', 'error');
+                return;
+            }
+            
+            if (addressId) {
+                // Update existing address
+                const index = addresses.findIndex(addr => addr.id === addressId);
+                if (index !== -1) {
+                    addresses[index] = addressData;
+                    showNotification('Address updated successfully!', 'success');
+                }
+            } else {
+                // Add new address
+                addresses.push(addressData);
+                showNotification('Address added successfully!', 'success');
+            }
+            
+            // Save and reload
+            localStorage.setItem('addresses', JSON.stringify(addresses));
+            loadAddresses();
+            closeAddressForm();
+        });
+
+        function validateAddress(address) {
+            if (!address.name || !address.phone || !address.line1 || !address.city || 
+                !address.state || !address.pincode || !address.country) {
+                return false;
+            }
+            
+            // Validate phone number (10 digits)
+            if (!/^\d{10}$/.test(address.phone)) {
+                return false;
+            }
+            
+            // Validate pincode (6 digits for India)
+            if (address.country === 'India' && !/^\d{6}$/.test(address.pincode)) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        // ===== ADDRESS ACTIONS =====
+        function editAddress(addressId) {
+            openAddressForm(addressId);
+        }
+
+        function deleteAddress(addressId) {
+            if (confirm('Are you sure you want to delete this address?')) {
+                const address = addresses.find(addr => addr.id === addressId);
+                if (address && address.isDefault && addresses.length > 1) {
+                    // Set another address as default
+                    const otherAddress = addresses.find(addr => addr.id !== addressId);
+                    if (otherAddress) {
+                        otherAddress.isDefault = true;
+                    }
+                }
+                
+                addresses = addresses.filter(addr => addr.id !== addressId);
+                localStorage.setItem('addresses', JSON.stringify(addresses));
+                loadAddresses();
+                showNotification('Address deleted successfully', 'success');
+            }
+        }
+
+        function setDefaultAddress(addressId) {
+            addresses.forEach(addr => {
+                addr.isDefault = addr.id === addressId;
+            });
+            
+            localStorage.setItem('addresses', JSON.stringify(addresses));
+            loadAddresses();
+            showNotification('Default address updated', 'success');
+        }
+
+        // ===== USER MANAGEMENT =====
+        function checkLoginStatus() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                if (confirm('You need to login to manage addresses. Redirect to login page?')) {
+                    window.location.href = 'login.html?redirect=addresses';
+                }
+                return;
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+                cartCount.textContent = totalItems;
+            }
+        }
+
+        // ===== NOTIFICATION SYSTEM =====
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+                box-shadow: var(--shadow-lg);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            switch(type) {
+                case 'success':
+                    notification.style.background = 'var(--success)';
+                    notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                    break;
+                case 'error':
+                    notification.style.background = '#dc3545';
+                    notification.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                    break;
+                case 'info':
+                    notification.style.background = 'var(--secondary)';
+                    notification.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+                    break;
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Add CSS for animation if not already present
+            if (!document.querySelector('#notification-animations')) {
+                const style = document.createElement('style');
+                style.id = 'notification-animations';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                    
+                    @keyframes slideOut {
+                        from {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                        to {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('addressModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddressForm();
+            }
+        });
+
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+        });
+
+        // Pincode formatting
+        document.getElementById('pincode').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
+        });
+    </script>
+</body>
+</html>

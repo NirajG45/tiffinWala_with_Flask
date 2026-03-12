@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Methods - TiffinWala</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== GLOBAL VARIABLES ===== */
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFD166;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #06D6A0;
+            --warning: #FFD166;
+            --danger: #FF6B6B;
+            --gradient-primary: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --gradient-secondary: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            --shadow-sm: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.15);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+            padding-top: 80px; /* For fixed navbar */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* ===== ENHANCED NAVIGATION BAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+            padding: 5px 0;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .logo-text .brand {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text .tagline {
+            font-size: 10px;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Enhanced Search Container */
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 16px;
+            z-index: 2;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 14px 50px 14px 50px;
+            border: 1px solid #E0E0E0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: var(--transition);
+            background: #F8F9FA;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .search-btn:hover {
+            background: #FF5252;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 5px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(255, 107, 107, 0.1);
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* User Menu Styles */
+        .user-nav-link {
+            padding: 8px 16px;
+            border: 1px solid #E0E0E0;
+            background: #F8F9FA;
+        }
+
+        .user-nav-link:hover {
+            background: white;
+            border-color: var(--primary);
+        }
+
+        .user-text {
+            font-weight: 600;
+        }
+
+        /* Cart Styles */
+        .cart-nav-link {
+            position: relative;
+            padding: 8px 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+        }
+
+        .cart-nav-link:hover {
+            background: var(--gradient-primary);
+            opacity: 0.9;
+            color: white;
+        }
+
+        .cart-text {
+            font-weight: 600;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: white;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary);
+        }
+
+        /* Mobile Search Toggle */
+        .mobile-search-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            color: #333;
+            font-size: 20px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: #333;
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid #E9ECEF;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 14px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #F8F9FA;
+            color: var(--primary);
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #E9ECEF;
+            margin: 5px 0;
+        }
+
+        /* ===== PAYMENT METHODS PAGE STYLES ===== */
+        .payment-methods-page {
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .page-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .page-header p {
+            color: #666;
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .payment-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+        }
+        
+        @media (max-width: 992px) {
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Sidebar */
+        .payment-sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-header {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .user-details h4 {
+            font-size: 1.125rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .user-details p {
+            color: #666;
+            font-size: 0.875rem;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        
+        .sidebar-nav a:hover {
+            background: rgba(78, 205, 196, 0.1);
+            color: var(--secondary);
+        }
+        
+        .sidebar-nav a.active {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+        
+        .payment-stats {
+            background: #F8F9FA;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .payment-stats h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.875rem;
+        }
+        
+        .stats-item .label {
+            color: #666;
+        }
+        
+        .stats-item .value {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        /* Payment Methods Content */
+        .payment-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .payment-header h2 {
+            font-size: 1.75rem;
+            color: var(--dark);
+        }
+        
+        .add-payment-btn {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .add-payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-methods-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .payment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #E9ECEF;
+            transition: var(--transition);
+            position: relative;
+            height: 100%;
+        }
+        
+        .payment-card:hover {
+            border-color: var(--secondary);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .payment-card.default {
+            border: 2px solid var(--accent);
+            background: linear-gradient(135deg, rgba(255, 214, 102, 0.05) 0%, rgba(255, 214, 102, 0.1) 100%);
+        }
+        
+        .payment-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .badge-default {
+            background: rgba(255, 214, 102, 0.2);
+            color: #856404;
+        }
+        
+        .badge-card {
+            background: rgba(78, 205, 196, 0.2);
+            color: var(--secondary);
+        }
+        
+        .badge-upi {
+            background: rgba(0, 123, 255, 0.2);
+            color: #004085;
+        }
+        
+        .badge-wallet {
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--primary);
+        }
+        
+        .payment-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #E9ECEF;
+        }
+        
+        .payment-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.75rem;
+            flex-shrink: 0;
+        }
+        
+        .payment-info h3 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .payment-info p {
+            color: #666;
+            font-size: 0.875rem;
+        }
+        
+        .payment-details {
+            margin-bottom: 25px;
+        }
+        
+        .payment-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #666;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .payment-line i {
+            color: var(--secondary);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .card-details {
+            background: #F8F9FA;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        
+        .card-number {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: monospace;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+        
+        .card-expiry {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.875rem;
+            color: #666;
+        }
+        
+        .payment-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #E9ECEF;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .payment-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 16px;
+            border: 2px solid #E9ECEF;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .action-btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .action-btn.secondary {
+            background: white;
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .action-btn.secondary:hover {
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .set-default-btn {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .set-default-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .set-default-btn.default {
+            background: #6C757D;
+            cursor: default;
+        }
+        
+        .empty-payments {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-payments i {
+            font-size: 4rem;
+            color: #E9ECEF;
+            margin-bottom: 20px;
+        }
+        
+        .empty-payments h3 {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .empty-payments p {
+            color: #888;
+            margin-bottom: 30px;
+        }
+        
+        /* Payment Form Modal */
+        .payment-form-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+        
+        .payment-form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-btn:hover {
+            color: var(--primary);
+        }
+        
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .payment-type-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .payment-type-btn {
+            padding: 15px;
+            border: 2px solid #E9ECEF;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payment-type-btn:hover {
+            border-color: var(--secondary);
+        }
+        
+        .payment-type-btn.active {
+            background: var(--gradient-secondary);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .payment-type-btn i {
+            font-size: 1.5rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #E9ECEF;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            transition: var(--transition);
+            background: #F8F9FA;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--secondary);
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+        }
+        
+        .card-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-input-group input {
+            flex: 1;
+        }
+        
+        .card-type-icon {
+            font-size: 1.5rem;
+            color: #666;
+        }
+        
+        .security-note {
+            background: #F8F9FA;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .security-note i {
+            color: var(--success);
+            font-size: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .submit-btn {
+            flex: 1;
+            padding: 15px;
+            background: var(--gradient-secondary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .cancel-btn {
+            flex: 1;
+            padding: 15px;
+            background: #6C757D;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cancel-btn:hover {
+            background: #5A6268;
+            transform: translateY(-2px);
+        }
+        
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1200px) {
+            .nav-container {
+                padding: 0 15px;
+            }
+            
+            .search-container {
+                max-width: 400px;
+                margin: 0 20px;
+            }
+            
+            .nav-link {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            .navbar {
+                height: 70px;
+            }
+            
+            .nav-container {
+                height: 70px;
+                padding: 0 15px;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .logo-text .brand {
+                font-size: 24px;
+            }
+            
+            .logo-text .tagline {
+                font-size: 10px;
+            }
+            
+            /* Mobile Menu Toggle */
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            /* Mobile Search Toggle Button */
+            .mobile-search-toggle {
+                display: block;
+            }
+            
+            .search-toggle-btn:hover {
+                background: rgba(255, 107, 107, 0.1);
+                color: var(--primary);
+            }
+            
+            /* Navigation Menu */
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 20px;
+                transition: var(--transition);
+                overflow-y: auto;
+                gap: 10px;
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-link {
+                padding: 15px;
+                justify-content: flex-start;
+                font-size: 16px;
+                border-radius: 10px;
+                margin-bottom: 5px;
+            }
+            
+            /* Search Container on Mobile */
+            .search-container {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 15px;
+                margin: 0;
+                max-width: 100%;
+                display: none;
+                box-shadow: var(--shadow-md);
+                border-bottom: 1px solid #E9ECEF;
+                z-index: 999;
+            }
+            
+            .search-container.active {
+                display: block;
+            }
+            
+            .payment-methods-page {
+                padding: 30px 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .payment-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .payment-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .payment-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            
+            .action-btn {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+            
+            .payment-form-container {
+                padding: 30px 20px;
+            }
+            
+            .payment-type-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .payment-card {
+                padding: 20px;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .payment-methods-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF5252;
+        }
+
+        /* ===== LOADING SPINNER ===== */
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand">TiffinWala</span>
+                    <span class="tagline">Fresh Home Food</span>
+                </div>
+            </a>
+
+            <!-- Search Container -->
+            <div class="search-container" id="searchContainer">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" id="searchBox" placeholder="Search for tiffin services, cuisine, or location...">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="tiffins.html" class="nav-link">
+                        <i class="fas fa-utensils"></i> Order Food
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#how-it-works" class="nav-link">
+                        <i class="fas fa-play-circle"></i> How it Works
+                    </a>
+                </li>
+                
+                <!-- User Menu (Updated by JavaScript) -->
+                <li class="nav-item dropdown" id="userMenu">
+                    <a href="login.html" class="nav-link user-nav-link">
+                        <i class="fas fa-user"></i>
+                        <span class="user-text">Login</span>
+                    </a>
+                </li>
+
+                <!-- Cart -->
+                <li class="nav-item cart-container">
+                    <a href="cart.html" class="nav-link cart-nav-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-text">Cart</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Mobile Search Toggle Button -->
+            <button class="mobile-search-toggle" id="mobileSearchBtn">
+                <i class="fas fa-search"></i>
+            </button>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Payment Methods Page Content -->
+    <section class="payment-methods-page">
+        <div class="page-header animate-fade-in">
+            <h1>Payment Methods</h1>
+            <p>Manage your payment options for convenient tiffin orders</p>
+        </div>
+        
+        <div class="payment-container">
+            <!-- Sidebar -->
+            <div class="payment-sidebar animate-fade-in">
+                <div class="sidebar-header">
+                    <h3>Payment Management</h3>
+                </div>
+                
+                <div class="user-info" id="userInfo">
+                    <!-- User info will be loaded here -->
+                </div>
+                
+                <ul class="sidebar-nav">
+                    <li>
+                        <a href="profile.html">
+                            <i class="fas fa-user-circle"></i>
+                            My Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="orders.html">
+                            <i class="fas fa-shopping-bag"></i>
+                            My Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscriptions.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            Subscriptions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="addresses.html">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Delivery Addresses
+                        </a>
+                    </li>
+                    <li>
+                        <a href="payment-methods.html" class="active">
+                            <i class="fas fa-credit-card"></i>
+                            Payment Methods
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="payment-stats">
+                    <h4>Payment Statistics</h4>
+                    <div class="stats-item">
+                        <span class="label">Total Payments:</span>
+                        <span class="value">₹12,560</span>
+                    </div>
+                    <div class="stats-item">
+                        <span class="label">Preferred Method:</span>
+                        <span class="value">Credit Card</span>
+                    </div>
+                    <div class="stats-item">
+                        <span class="label">Last Payment:</span>
+                        <span class="value">Today, ₹450</span>
+                    </div>
+                    <div class="stats-item">
+                        <span class="label">Auto-Pay Active:</span>
+                        <span class="value">Yes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Methods Content -->
+            <div class="payment-content animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="payment-header">
+                    <h2>Saved Payment Methods</h2>
+                    <button class="add-payment-btn" onclick="openPaymentForm()">
+                        <i class="fas fa-plus-circle"></i> Add New Payment Method
+                    </button>
+                </div>
+                
+                <div class="payment-methods-grid" id="paymentsList">
+                    <!-- Payment methods will be loaded here -->
+                </div>
+                
+                <div class="empty-payments" id="emptyPayments" style="display: none;">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>No Payment Methods Saved</h3>
+                    <p>Add your first payment method to start ordering tiffin services</p>
+                    <button class="add-payment-btn" onclick="openPaymentForm()">
+                        <i class="fas fa-plus-circle"></i> Add Payment Method
+                    </button>
+                </div>
+                
+                <!-- Security Information -->
+                <div class="security-note" style="margin-top: 30px;">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <strong>Secure Payment Information:</strong>
+                        <p>Your payment information is encrypted and stored securely. We never store your CVV or full card details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Form Modal -->
+    <div class="payment-form-modal" id="paymentModal">
+        <div class="payment-form-container">
+            <div class="form-header">
+                <h2 id="modalTitle">Add New Payment Method</h2>
+                <button class="close-btn" onclick="closePaymentForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form class="payment-form" id="paymentForm">
+                <input type="hidden" id="paymentId" value="">
+                
+                <div class="form-group">
+                    <label for="paymentType">Payment Type *</label>
+                    <div class="payment-type-selector">
+                        <button type="button" class="payment-type-btn" onclick="selectPaymentType('card')" id="typeCard">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Credit/Debit Card</span>
+                        </button>
+                        <button type="button" class="payment-type-btn" onclick="selectPaymentType('upi')" id="typeUpi">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>UPI</span>
+                        </button>
+                        <button type="button" class="payment-type-btn" onclick="selectPaymentType('wallet')" id="typeWallet">
+                            <i class="fas fa-wallet"></i>
+                            <span>Digital Wallet</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="paymentType" value="card" required>
+                </div>
+                
+                <!-- Card Form -->
+                <div id="cardForm">
+                    <div class="form-group">
+                        <label for="cardName">Name on Card *</label>
+                        <input type="text" id="cardName" placeholder="Enter name as on card" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number *</label>
+                        <div class="card-input-group">
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                            <span class="card-type-icon" id="cardTypeIcon">
+                                <i class="far fa-credit-card"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date *</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV *</label>
+                            <input type="password" id="cvv" placeholder="123" maxlength="4" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- UPI Form -->
+                <div id="upiForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="upiId">UPI ID *</label>
+                        <input type="text" id="upiId" placeholder="username@bankname" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="upiApp">Preferred UPI App</label>
+                        <select id="upiApp">
+                            <option value="">Select App</option>
+                            <option value="gpay">Google Pay</option>
+                            <option value="phonepe">PhonePe</option>
+                            <option value="paytm">Paytm</option>
+                            <option value="bhim">BHIM UPI</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Wallet Form -->
+                <div id="walletForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="walletType">Wallet Type *</label>
+                        <select id="walletType" required>
+                            <option value="">Select Wallet</option>
+                            <option value="paytm">Paytm Wallet</option>
+                            <option value="amazonpay">Amazon Pay</option>
+                            <option value="mobikwik">MobiKwik</option>
+                            <option value="freecharge">FreeCharge</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="walletPhone">Registered Mobile Number *</label>
+                        <input type="tel" id="walletPhone" placeholder="10-digit mobile number" maxlength="10" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="setAsDefault">
+                        Set as default payment method
+                    </label>
+                </div>
+                
+                <div class="security-note">
+                    <i class="fas fa-lock"></i>
+                    <span>Your payment information is encrypted and secure</span>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-save"></i> Save Payment Method
+                    </button>
+                    <button type="button" class="cancel-btn" onclick="closePaymentForm()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== NAVIGATION FUNCTIONALITY =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavigation();
+            checkLoginStatus();
+            loadPaymentMethods();
+            updateCartCount();
+            initCardTypeDetection();
+        });
+
+        function initNavigation() {
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const searchBox = document.getElementById('searchBox');
+            const searchBtn = document.getElementById('searchBtn');
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                
+                // Close search if open
+                if (searchContainer.classList.contains('active')) {
+                    searchContainer.classList.remove('active');
+                }
+            });
+
+            // Mobile search toggle
+            mobileSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                searchContainer.classList.toggle('active');
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                
+                // Focus on search input when opened
+                if (searchContainer.classList.contains('active')) {
+                    setTimeout(() => {
+                        searchBox.focus();
+                    }, 100);
+                }
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                // Close mobile menu
+                if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+                
+                // Close search if clicking outside
+                if (!searchContainer.contains(event.target) && 
+                    !mobileSearchBtn.contains(event.target) &&
+                    window.innerWidth <= 768) {
+                    searchContainer.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu on link click
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        searchContainer.classList.remove('active');
+                    }
+                });
+            });
+
+            // Search functionality
+            function performSearch() {
+                const query = searchBox.value.trim();
+                if (query) {
+                    // Close search on mobile after search
+                    if (window.innerWidth <= 768) {
+                        searchContainer.classList.remove('active');
+                    }
+                    window.location.href = `tiffins.html?search=${encodeURIComponent(query)}`;
+                }
+            }
+
+            searchBtn.addEventListener('click', performSearch);
+            searchBox.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        // ===== PAYMENT METHODS DATA =====
+        let paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [
+            {
+                id: 'pay-1',
+                type: 'card',
+                name: 'John Doe',
+                cardNumber: '**** **** **** 5678',
+                lastFour: '5678',
+                cardType: 'visa',
+                expiry: '12/25',
+                isDefault: true,
+                createdAt: '2024-03-01'
+            },
+            {
+                id: 'pay-2',
+                type: 'upi',
+                name: 'John Doe',
+                upiId: 'john.doe@okhdfcbank',
+                app: 'gpay',
+                isDefault: false,
+                createdAt: '2024-03-10'
+            },
+            {
+                id: 'pay-3',
+                type: 'wallet',
+                name: 'John Doe',
+                walletType: 'paytm',
+                phone: '9876543210',
+                isDefault: false,
+                createdAt: '2024-03-15'
+            }
+        ];
+
+        // ===== PAYMENT METHODS FUNCTIONS =====
+        function loadPaymentMethods() {
+            const user = JSON.parse(localStorage.getItem('user') || '{"name": "John Doe", "email": "john@example.com"}');
+            const paymentsList = document.getElementById('paymentsList');
+            const emptyPayments = document.getElementById('emptyPayments');
+            const userInfo = document.getElementById('userInfo');
+            
+            // Update user info
+            userInfo.innerHTML = `
+                <div class="user-avatar">
+                    ${user.name.charAt(0).toUpperCase()}
+                </div>
+                <div class="user-details">
+                    <h4>${user.name}</h4>
+                    <p>${user.email}</p>
+                </div>
+            `;
+            
+            if (paymentMethods.length === 0) {
+                paymentsList.innerHTML = '';
+                emptyPayments.style.display = 'block';
+                return;
+            }
+            
+            emptyPayments.style.display = 'none';
+            
+            // Display payment methods
+            paymentsList.innerHTML = paymentMethods.map((payment, index) => {
+                let paymentHTML = '';
+                
+                switch(payment.type) {
+                    case 'card':
+                        paymentHTML = `
+                            <div class="payment-card ${payment.isDefault ? 'default' : ''} animate-fade-in" style="animation-delay: ${index * 0.1}s;">
+                                <div class="payment-badge ${payment.isDefault ? 'badge-default' : 'badge-card'}">
+                                    ${payment.isDefault ? 'Default' : 'Credit Card'}
+                                </div>
+                                
+                                <div class="payment-header">
+                                    <div class="payment-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <h3>${getCardTypeName(payment.cardType)} Card</h3>
+                                        <p>${payment.name}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-details">
+                                    <div class="card-details">
+                                        <div class="card-number">
+                                            <i class="fas fa-credit-card"></i>
+                                            <span>${payment.cardNumber}</span>
+                                        </div>
+                                        <div class="card-expiry">
+                                            <span>Expires: ${payment.expiry}</span>
+                                            <span>${getCardTypeIcon(payment.cardType)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-footer">
+                                    <div class="payment-actions">
+                                        <button class="action-btn secondary" onclick="editPaymentMethod('${payment.id}')">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="action-btn primary" onclick="deletePaymentMethod('${payment.id}')">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                    <button class="set-default-btn ${payment.isDefault ? 'default' : ''}" 
+                                            onclick="setDefaultPayment('${payment.id}')" 
+                                            ${payment.isDefault ? 'disabled' : ''}>
+                                        <i class="fas ${payment.isDefault ? 'fa-check' : 'fa-star'}"></i>
+                                        ${payment.isDefault ? 'Default Method' : 'Set as Default'}
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'upi':
+                        paymentHTML = `
+                            <div class="payment-card ${payment.isDefault ? 'default' : ''} animate-fade-in" style="animation-delay: ${index * 0.1}s;">
+                                <div class="payment-badge ${payment.isDefault ? 'badge-default' : 'badge-upi'}">
+                                    ${payment.isDefault ? 'Default' : 'UPI'}
+                                </div>
+                                
+                                <div class="payment-header">
+                                    <div class="payment-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <h3>${getUpiAppName(payment.app)}</h3>
+                                        <p>${payment.name}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-details">
+                                    <div class="payment-line">
+                                        <i class="fas fa-id-card"></i>
+                                        <span><strong>UPI ID:</strong> ${payment.upiId}</span>
+                                    </div>
+                                    <div class="payment-line">
+                                        <i class="fas fa-bolt"></i>
+                                        <span>Instant payments enabled</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-footer">
+                                    <div class="payment-actions">
+                                        <button class="action-btn secondary" onclick="editPaymentMethod('${payment.id}')">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="action-btn primary" onclick="deletePaymentMethod('${payment.id}')">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                    <button class="set-default-btn ${payment.isDefault ? 'default' : ''}" 
+                                            onclick="setDefaultPayment('${payment.id}')" 
+                                            ${payment.isDefault ? 'disabled' : ''}>
+                                        <i class="fas ${payment.isDefault ? 'fa-check' : 'fa-star'}"></i>
+                                        ${payment.isDefault ? 'Default Method' : 'Set as Default'}
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'wallet':
+                        paymentHTML = `
+                            <div class="payment-card ${payment.isDefault ? 'default' : ''} animate-fade-in" style="animation-delay: ${index * 0.1}s;">
+                                <div class="payment-badge ${payment.isDefault ? 'badge-default' : 'badge-wallet'}">
+                                    ${payment.isDefault ? 'Default' : 'Digital Wallet'}
+                                </div>
+                                
+                                <div class="payment-header">
+                                    <div class="payment-icon">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <h3>${getWalletName(payment.walletType)}</h3>
+                                        <p>${payment.name}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-details">
+                                    <div class="payment-line">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <span><strong>Registered Mobile:</strong> ${payment.phone}</span>
+                                    </div>
+                                    <div class="payment-line">
+                                        <i class="fas fa-bolt"></i>
+                                        <span>Quick checkout enabled</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-footer">
+                                    <div class="payment-actions">
+                                        <button class="action-btn secondary" onclick="editPaymentMethod('${payment.id}')">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="action-btn primary" onclick="deletePaymentMethod('${payment.id}')">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                    <button class="set-default-btn ${payment.isDefault ? 'default' : ''}" 
+                                            onclick="setDefaultPayment('${payment.id}')" 
+                                            ${payment.isDefault ? 'disabled' : ''}>
+                                        <i class="fas ${payment.isDefault ? 'fa-check' : 'fa-star'}"></i>
+                                        ${payment.isDefault ? 'Default Method' : 'Set as Default'}
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                }
+                
+                return paymentHTML;
+            }).join('');
+            
+            // Save to localStorage
+            localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+        }
+
+        function getCardTypeName(cardType) {
+            const names = {
+                'visa': 'Visa',
+                'mastercard': 'MasterCard',
+                'amex': 'American Express',
+                'discover': 'Discover',
+                'rupay': 'RuPay'
+            };
+            return names[cardType] || 'Credit';
+        }
+
+        function getCardTypeIcon(cardType) {
+            const icons = {
+                'visa': '<i class="fab fa-cc-visa"></i>',
+                'mastercard': '<i class="fab fa-cc-mastercard"></i>',
+                'amex': '<i class="fab fa-cc-amex"></i>',
+                'discover': '<i class="fab fa-cc-discover"></i>',
+                'rupay': '<i class="fas fa-credit-card"></i>'
+            };
+            return icons[cardType] || '<i class="far fa-credit-card"></i>';
+        }
+
+        function getUpiAppName(app) {
+            const names = {
+                'gpay': 'Google Pay',
+                'phonepe': 'PhonePe',
+                'paytm': 'Paytm UPI',
+                'bhim': 'BHIM UPI',
+                'other': 'UPI'
+            };
+            return names[app] || 'UPI';
+        }
+
+        function getWalletName(walletType) {
+            const names = {
+                'paytm': 'Paytm Wallet',
+                'amazonpay': 'Amazon Pay',
+                'mobikwik': 'MobiKwik',
+                'freecharge': 'FreeCharge'
+            };
+            return names[walletType] || 'Digital Wallet';
+        }
+
+        // ===== PAYMENT FORM FUNCTIONS =====
+        function openPaymentForm(paymentId = null) {
+            const modal = document.getElementById('paymentModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (paymentId) {
+                // Edit mode
+                const payment = paymentMethods.find(pay => pay.id === paymentId);
+                if (payment) {
+                    modalTitle.textContent = 'Edit Payment Method';
+                    submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Payment Method';
+                    populateForm(payment);
+                }
+            } else {
+                // Add mode
+                modalTitle.textContent = 'Add New Payment Method';
+                submitBtn.innerHTML = '<i class="fas fa-save"></i> Save Payment Method';
+                resetForm();
+            }
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentForm() {
+            const modal = document.getElementById('paymentModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectPaymentType(type) {
+            // Remove active class from all buttons
+            document.getElementById('typeCard').classList.remove('active');
+            document.getElementById('typeUpi').classList.remove('active');
+            document.getElementById('typeWallet').classList.remove('active');
+            
+            // Add active class to selected button
+            document.getElementById(`type${type.charAt(0).toUpperCase() + type.slice(1)}`).classList.add('active');
+            
+            // Update hidden input
+            document.getElementById('paymentType').value = type;
+            
+            // Show/hide form sections
+            document.getElementById('cardForm').style.display = type === 'card' ? 'block' : 'none';
+            document.getElementById('upiForm').style.display = type === 'upi' ? 'block' : 'none';
+            document.getElementById('walletForm').style.display = type === 'wallet' ? 'block' : 'none';
+            
+            // Reset form validation
+            resetFormValidation();
+        }
+
+        function resetForm() {
+            const form = document.getElementById('paymentForm');
+            form.reset();
+            document.getElementById('paymentId').value = '';
+            selectPaymentType('card');
+            document.getElementById('setAsDefault').checked = false;
+        }
+
+        function populateForm(payment) {
+            document.getElementById('paymentId').value = payment.id;
+            selectPaymentType(payment.type);
+            document.getElementById('setAsDefault').checked = payment.isDefault;
+            
+            switch(payment.type) {
+                case 'card':
+                    document.getElementById('cardName').value = payment.name || '';
+                    document.getElementById('cardNumber').value = payment.fullCardNumber || '';
+                    document.getElementById('expiryDate').value = payment.expiry || '';
+                    document.getElementById('cvv').value = '';
+                    break;
+                case 'upi':
+                    document.getElementById('upiId').value = payment.upiId || '';
+                    document.getElementById('upiApp').value = payment.app || '';
+                    break;
+                case 'wallet':
+                    document.getElementById('walletType').value = payment.walletType || '';
+                    document.getElementById('walletPhone').value = payment.phone || '';
+                    break;
+            }
+        }
+
+        function resetFormValidation() {
+            // Clear any validation messages
+            const inputs = document.querySelectorAll('#paymentForm input');
+            inputs.forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const paymentId = document.getElementById('paymentId').value;
+            const paymentType = document.getElementById('paymentType').value;
+            const isDefault = document.getElementById('setAsDefault').checked;
+            
+            // If setting as default, remove default from others
+            if (isDefault) {
+                paymentMethods.forEach(pay => pay.isDefault = false);
+            }
+            
+            let paymentData = {
+                id: paymentId || `pay-${Date.now()}`,
+                type: paymentType,
+                isDefault: isDefault,
+                createdAt: new Date().toISOString().split('T')[0]
+            };
+            
+            // Add type-specific data
+            switch(paymentType) {
+                case 'card':
+                    const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                    const cardType = detectCardType(cardNumber);
+                    
+                    paymentData = {
+                        ...paymentData,
+                        name: document.getElementById('cardName').value.trim(),
+                        cardNumber: `**** **** **** ${cardNumber.slice(-4)}`,
+                        fullCardNumber: cardNumber,
+                        lastFour: cardNumber.slice(-4),
+                        cardType: cardType,
+                        expiry: document.getElementById('expiryDate').value.trim()
+                    };
+                    
+                    if (!validateCard(paymentData)) {
+                        showNotification('Please check card details', 'error');
+                        return;
+                    }
+                    break;
+                    
+                case 'upi':
+                    paymentData = {
+                        ...paymentData,
+                        name: JSON.parse(localStorage.getItem('user') || '{"name": "John Doe"}').name,
+                        upiId: document.getElementById('upiId').value.trim(),
+                        app: document.getElementById('upiApp').value
+                    };
+                    
+                    if (!validateUpi(paymentData)) {
+                        showNotification('Please enter a valid UPI ID', 'error');
+                        return;
+                    }
+                    break;
+                    
+                case 'wallet':
+                    paymentData = {
+                        ...paymentData,
+                        name: JSON.parse(localStorage.getItem('user') || '{"name": "John Doe"}').name,
+                        walletType: document.getElementById('walletType').value,
+                        phone: document.getElementById('walletPhone').value.trim()
+                    };
+                    
+                    if (!validateWallet(paymentData)) {
+                        showNotification('Please check wallet details', 'error');
+                        return;
+                    }
+                    break;
+            }
+            
+            if (paymentId) {
+                // Update existing payment
+                const index = paymentMethods.findIndex(pay => pay.id === paymentId);
+                if (index !== -1) {
+                    paymentMethods[index] = paymentData;
+                    showNotification('Payment method updated!', 'success');
+                }
+            } else {
+                // Add new payment
+                paymentMethods.push(paymentData);
+                showNotification('Payment method added!', 'success');
+            }
+            
+            // Save and reload
+            localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+            loadPaymentMethods();
+            closePaymentForm();
+        });
+
+        function validateCard(card) {
+            if (!card.name || !card.fullCardNumber || !card.expiry) {
+                return false;
+            }
+            
+            // Validate card number length
+            if (card.fullCardNumber.length < 13 || card.fullCardNumber.length > 19) {
+                return false;
+            }
+            
+            // Validate expiry date format (MM/YY)
+            if (!/^\d{2}\/\d{2}$/.test(card.expiry)) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        function validateUpi(upi) {
+            if (!upi.upiId) {
+                return false;
+            }
+            
+            // Basic UPI validation
+            if (!/^[\w\.\-]{3,256}@[\w]{2,64}$/.test(upi.upiId)) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        function validateWallet(wallet) {
+            if (!wallet.walletType || !wallet.phone) {
+                return false;
+            }
+            
+            // Validate phone number
+            if (!/^\d{10}$/.test(wallet.phone)) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        // ===== CARD TYPE DETECTION =====
+        function initCardTypeDetection() {
+            const cardNumberInput = document.getElementById('cardNumber');
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function(e) {
+                    formatCardNumber(this);
+                    detectAndDisplayCardType(this.value.replace(/\s/g, ''));
+                });
+            }
+            
+            // Format expiry date
+            const expiryInput = document.getElementById('expiryDate');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', function(e) {
+                    formatExpiryDate(this);
+                });
+            }
+        }
+
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+            
+            // Add spaces every 4 digits
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            
+            // Limit to 19 characters (16 digits + 3 spaces)
+            value = value.substring(0, 19);
+            
+            input.value = value;
+        }
+
+        function formatExpiryDate(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            
+            // Limit to 5 characters (MM/YY)
+            value = value.substring(0, 5);
+            
+            input.value = value;
+        }
+
+        function detectCardType(cardNumber) {
+            // Visa
+            if (/^4/.test(cardNumber)) {
+                return 'visa';
+            }
+            // MasterCard
+            if (/^5[1-5]/.test(cardNumber)) {
+                return 'mastercard';
+            }
+            // American Express
+            if (/^3[47]/.test(cardNumber)) {
+                return 'amex';
+            }
+            // Discover
+            if (/^6(?:011|5)/.test(cardNumber)) {
+                return 'discover';
+            }
+            // RuPay
+            if (/^(508[5-9]|60698|607[0-9]{2}|608[0-9]|6521[5-9]|652[2-9]|6530|6531[0-4])/.test(cardNumber)) {
+                return 'rupay';
+            }
+            
+            return 'unknown';
+        }
+
+        function detectAndDisplayCardType(cardNumber) {
+            const cardType = detectCardType(cardNumber);
+            const iconElement = document.getElementById('cardTypeIcon');
+            
+            const icons = {
+                'visa': '<i class="fab fa-cc-visa"></i>',
+                'mastercard': '<i class="fab fa-cc-mastercard"></i>',
+                'amex': '<i class="fab fa-cc-amex"></i>',
+                'discover': '<i class="fab fa-cc-discover"></i>',
+                'rupay': '<i class="fas fa-credit-card"></i>',
+                'unknown': '<i class="far fa-credit-card"></i>'
+            };
+            
+            iconElement.innerHTML = icons[cardType] || icons['unknown'];
+        }
+
+        // ===== PAYMENT ACTIONS =====
+        function editPaymentMethod(paymentId) {
+            openPaymentForm(paymentId);
+        }
+
+        function deletePaymentMethod(paymentId) {
+            if (confirm('Are you sure you want to delete this payment method?')) {
+                const payment = paymentMethods.find(pay => pay.id === paymentId);
+                if (payment && payment.isDefault && paymentMethods.length > 1) {
+                    // Set another payment as default
+                    const otherPayment = paymentMethods.find(pay => pay.id !== paymentId);
+                    if (otherPayment) {
+                        otherPayment.isDefault = true;
+                    }
+                }
+                
+                paymentMethods = paymentMethods.filter(pay => pay.id !== paymentId);
+                localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+                loadPaymentMethods();
+                showNotification('Payment method deleted', 'success');
+            }
+        }
+
+        function setDefaultPayment(paymentId) {
+            paymentMethods.forEach(pay => {
+                pay.isDefault = pay.id === paymentId;
+            });
+            
+            localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+            loadPaymentMethods();
+            showNotification('Default payment method updated', 'success');
+        }
+
+        // ===== USER MANAGEMENT =====
+        function checkLoginStatus() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                if (confirm('You need to login to manage payment methods. Redirect to login page?')) {
+                    window.location.href = 'login.html?redirect=payment-methods';
+                }
+                return;
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+                cartCount.textContent = totalItems;
+            }
+        }
+
+        // ===== NOTIFICATION SYSTEM =====
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+                box-shadow: var(--shadow-lg);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            switch(type) {
+                case 'success':
+                    notification.style.background = 'var(--success)';
+                    notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                    break;
+                case 'error':
+                    notification.style.background = '#dc3545';
+                    notification.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                    break;
+                case 'info':
+                    notification.style.background = 'var(--secondary)';
+                    notification.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+                    break;
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Add CSS for animation if not already present
+            if (!document.querySelector('#notification-animations')) {
+                const style = document.createElement('style');
+                style.id = 'notification-animations';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                    
+                    @keyframes slideOut {
+                        from {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                        to {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentForm();
+            }
+        });
+
+        // Phone number formatting
+        document.getElementById('walletPhone')?.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+        });
+
+        // CVV formatting
+        document.getElementById('cvv')?.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+        });
+    </script>
+</body>
+</html>
