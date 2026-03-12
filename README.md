@@ -52,3 +52,126 @@ This platform works like a **social network for food**, where users can share th
 ---
 
 ## 📂 Project Structure
+tiffin_flask/
+│
+├── app.py
+├── database.db
+├── requirements.txt
+│
+├── templates/
+│ ├── base.html
+│ ├── index.html
+│ ├── login.html
+│ ├── register.html
+│ ├── profile.html
+│ └── post.html
+│
+├── static/
+│ ├── css/
+│ │ └── style.css
+│ ├── js/
+│ └── uploads/
+│
+└── README.md
+
+
+---
+
+## ⚙️ Installation Guide
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/tiffinwala.git
+cd tiffinwala
+2️⃣ Create Virtual Environment
+python -m venv .venv
+
+Activate the virtual environment
+
+Windows
+
+.venv\Scripts\activate
+
+Linux / Mac
+
+source .venv/bin/activate
+3️⃣ Install Dependencies
+pip install flask flask_sqlalchemy flask_login werkzeug
+
+OR
+
+pip install -r requirements.txt
+4️⃣ Run the Application
+python app.py
+
+Open browser and visit:
+
+http://127.0.0.1:5000
+🗄 Database
+
+The project uses SQLite Database.
+
+The database file will be automatically created when the application runs for the first time.
+
+database.db
+📸 Screenshots
+
+You can add screenshots of the application here.
+
+screenshots/
+│
+├── homepage.png
+├── profile.png
+└── post.png
+🧭 Future Improvements
+
+Online food ordering system
+
+Payment gateway integration
+
+Chat system between users
+
+Rating and review system
+
+Mobile responsive improvements
+
+Cloud deployment
+
+🤝 Contributing
+
+Contributions are welcome.
+
+Steps to contribute:
+
+Fork the repository
+
+Create a new branch
+
+Commit your changes
+
+Push the branch
+
+Open a Pull Request
+
+📜 License
+
+This project is licensed under the MIT License.
+
+👨‍💻 Author
+
+Subh
+
+BCA Student | Python Developer | Machine Learning Enthusiast
+
+GitHub: https://github.com/yourusername
+
+
+Agar chaho to main **aur bhi advanced README.md bana sakta hoon** jisme:
+
+- ⭐ project preview images  
+- 📊 GitHub stats  
+- 🎥 demo section  
+- 🚀 deployment guide (Render / Railway / AWS)
+
+jo **GitHub par project ko aur professional bana deta hai**.
