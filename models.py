@@ -33,8 +33,8 @@ class User(UserMixin, db.Model):
     reviews = db.relationship('Review', backref='author', lazy=True)
     subscriptions = db.relationship('Subscription', backref='subscriber', lazy=True)
     
-    # New relationships for social features
-    food_posts = db.relationship('FoodPost', back_populates='user', lazy=True)
+    # FIXED: Use back_populates instead of backref
+    food_posts = db.relationship('FoodPost', back_populates='user', lazy=True, cascade='all, delete-orphan')
     
     sent_messages = db.relationship('Message', 
                                    foreign_keys='Message.sender_id', 
@@ -277,10 +277,14 @@ class FoodPost(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # Relationships
-    user = db.relationship('User', backref='food_posts')
-    likes = db.relationship('Like', backref='post', lazy='dynamic')
-    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    # FIXED: Use back_populates instead of backref to avoid conflict
+    user = db.relationship('User', back_populates='food_posts')
+    
+    # Use back_populates for likes and comments
+    likes = db.relationship('PostLike', back_populates='post', lazy='dynamic', cascade='all, delete-orphan')
+    comments = db.relationship('PostComment', back_populates='post', lazy='dynamic', cascade='all, delete-orphan')
+    orders = db.relationship('FoodOrder', back_populates='post', lazy=True, cascade='all, delete-orphan')
+
 
 class PostLike(db.Model):
     """Post likes model"""
