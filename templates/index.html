@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TiffinWala - Fresh Homemade Food Delivered Daily</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap"
+        rel="stylesheet">
     <style>
         /* ===== GLOBAL RESET & VARIABLES ===== */
         :root {
@@ -19,9 +22,9 @@
             --gradient-primary: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
             --gradient-secondary: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
             --gradient-dark: linear-gradient(135deg, #2C3E50 0%, #1A252F 100%);
-            --shadow-sm: 0 5px 15px rgba(0,0,0,0.08);
-            --shadow-md: 0 10px 30px rgba(0,0,0,0.15);
-            --shadow-lg: 0 20px 50px rgba(0,0,0,0.2);
+            --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.2);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -41,10 +44,14 @@
             color: var(--dark);
             background: var(--light);
             overflow-x: hidden;
-            padding-top: 70px; /* For fixed navbar */
+            padding-top: 70px;
+            /* For fixed navbar */
         }
 
-        h1, h2, h3, h4 {
+        h1,
+        h2,
+        h3,
+        h4 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
         }
@@ -383,8 +390,8 @@
 
         /* ===== HERO SECTION ===== */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -491,20 +498,24 @@
         }
 
         .section.white {
-            background: #F0E68C; /* Updated to a soft yellow */
+            background: #F0E68C;
+            /* Updated to a soft yellow */
         }
 
         .section.light {
-            background: #FFD580; /* Updated to a light orange */
+            background: #FFD580;
+            /* Updated to a light orange */
         }
 
         .section.dark {
-            background: #90EE90; /* Updated to a light green */
+            background: #90EE90;
+            /* Updated to a light green */
             color: var(--dark);
         }
 
         .section.grey {
-            background: #D3D3D3; /* New grey section for variety */
+            background: #D3D3D3;
+            /* New grey section for variety */
         }
 
         .container {
@@ -643,10 +654,21 @@
             box-shadow: var(--shadow-lg);
         }
 
-        .category-card.veg { border-top: 5px solid #28A745; }
-        .category-card.nonveg { border-top: 5px solid #DC3545; }
-        .category-card.jain { border-top: 5px solid #FFC107; }
-        .category-card.diet { border-top: 5px solid #17A2B8; }
+        .category-card.veg {
+            border-top: 5px solid #28A745;
+        }
+
+        .category-card.nonveg {
+            border-top: 5px solid #DC3545;
+        }
+
+        .category-card.jain {
+            border-top: 5px solid #FFC107;
+        }
+
+        .category-card.diet {
+            border-top: 5px solid #17A2B8;
+        }
 
         .category-icon {
             font-size: 3rem;
@@ -654,10 +676,21 @@
             display: block;
         }
 
-        .category-card.veg .category-icon { color: #28A745; }
-        .category-card.nonveg .category-icon { color: #DC3545; }
-        .category-card.jain .category-icon { color: #FFC107; }
-        .category-card.diet .category-icon { color: #17A2B8; }
+        .category-card.veg .category-icon {
+            color: #28A745;
+        }
+
+        .category-card.nonveg .category-icon {
+            color: #DC3545;
+        }
+
+        .category-card.jain .category-icon {
+            color: #FFC107;
+        }
+
+        .category-card.diet .category-icon {
+            color: #17A2B8;
+        }
 
         .category-card h3 {
             font-size: 1.5rem;
@@ -728,7 +761,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5));
             z-index: 1;
         }
 
@@ -767,10 +800,25 @@
             font-weight: 600;
         }
 
-        .food-type.veg { background: #D4EDDA; color: #155724; }
-        .food-type.non-veg { background: #F8D7DA; color: #721C24; }
-        .food-type.jain { background: #FFF3CD; color: #856404; }
-        .food-type.diet { background: #CCE5FF; color: #004085; }
+        .food-type.veg {
+            background: #D4EDDA;
+            color: #155724;
+        }
+
+        .food-type.non-veg {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+
+        .food-type.jain {
+            background: #FFF3CD;
+            color: #856404;
+        }
+
+        .food-type.diet {
+            background: #CCE5FF;
+            color: #004085;
+        }
 
         .rating {
             display: flex;
@@ -1144,7 +1192,8 @@
 
         /* ===== ENHANCED FOOTER STYLES ===== */
         footer {
-            background: #808080; /* Updated to grey */
+            background: #808080;
+            /* Updated to grey */
             color: white;
             padding: 80px 20px 30px;
             position: relative;
@@ -1243,7 +1292,8 @@
             margin-bottom: 3px;
         }
 
-        .contact-item a, .contact-item span {
+        .contact-item a,
+        .contact-item span {
             color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             font-size: 0.9rem;
@@ -1303,13 +1353,15 @@
         }
 
         /* Links */
-        .footer-links, .footer-categories {
+        .footer-links,
+        .footer-categories {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .footer-links a, .footer-categories a {
+        .footer-links a,
+        .footer-categories a {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             transition: var(--transition);
@@ -1319,18 +1371,21 @@
             font-size: 0.9rem;
         }
 
-        .footer-links a i, .footer-categories a i {
+        .footer-links a i,
+        .footer-categories a i {
             font-size: 0.75rem;
             color: var(--primary);
             transition: var(--transition);
         }
 
-        .footer-links a:hover, .footer-categories a:hover {
+        .footer-links a:hover,
+        .footer-categories a:hover {
             color: var(--primary);
             transform: translateX(5px);
         }
 
-        .footer-links a:hover i, .footer-categories a:hover i {
+        .footer-links a:hover i,
+        .footer-categories a:hover i {
             transform: translateX(3px);
         }
 
@@ -1598,12 +1653,12 @@
             .nav-container {
                 padding: 0 15px;
             }
-            
+
             .search-container {
                 max-width: 500px;
                 margin: 0 30px;
             }
-            
+
             .footer-content {
                 gap: 30px;
             }
@@ -1613,70 +1668,70 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
+
             .hero p {
                 font-size: 1.125rem;
             }
-            
+
             .section-title {
                 font-size: 2rem;
             }
-            
+
             .steps-line {
                 display: none;
             }
-            
+
             .steps {
                 flex-direction: column;
                 gap: 40px;
             }
-            
+
             .step {
                 padding: 0;
             }
-            
+
             .testimonial-card {
                 padding: 30px;
             }
-            
+
             .search-container {
                 max-width: 400px;
                 margin: 0 20px;
             }
-            
+
             .nav-link {
                 padding: 8px 15px;
                 font-size: 13px;
             }
-            
+
             .cart-text,
             .user-text {
                 display: none;
             }
-            
+
             .nav-link i {
                 font-size: 18px;
                 width: auto;
             }
-            
+
             footer {
                 padding: 60px 20px 25px;
             }
-            
+
             .footer-content {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .footer-bottom-content {
                 flex-direction: column;
                 text-align: center;
                 gap: 15px;
             }
-            
+
             .footer-legal {
                 justify-content: center;
             }
-            
+
             .trust-badges {
                 justify-content: center;
             }
@@ -1686,35 +1741,35 @@
             body {
                 padding-top: 70px;
             }
-            
+
             .navbar {
                 height: 70px;
             }
-            
+
             .nav-container {
                 height: 70px;
                 padding: 0 15px;
             }
-            
+
             .logo-icon {
                 width: 36px;
                 height: 36px;
                 font-size: 18px;
             }
-            
+
             .logo-text .brand {
                 font-size: 22px;
             }
-            
+
             .logo-text .tagline {
                 font-size: 9px;
             }
-            
+
             /* Show mobile search toggle */
             .mobile-search-toggle {
                 display: flex;
             }
-            
+
             /* Hide desktop search */
             .search-container {
                 display: none;
@@ -1726,21 +1781,21 @@
                 padding: 15px;
                 margin: 0;
                 max-width: 100%;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
                 border-top: 1px solid #E9ECEF;
                 z-index: 999;
             }
-            
+
             .search-container.active {
                 display: block;
             }
-            
+
             /* Mobile Menu Toggle */
             .menu-toggle {
                 display: flex;
                 z-index: 1001;
             }
-            
+
             /* Navigation Menu */
             .nav-menu {
                 position: fixed;
@@ -1757,11 +1812,11 @@
                 gap: 10px;
                 box-shadow: var(--shadow-lg);
             }
-            
+
             .nav-menu.active {
                 left: 0;
             }
-            
+
             .nav-link {
                 padding: 15px;
                 justify-content: flex-start;
@@ -1769,97 +1824,98 @@
                 border-radius: 10px;
                 margin-bottom: 5px;
             }
-            
+
             .cart-text,
             .user-text {
                 display: inline;
             }
-            
+
             .hero {
                 min-height: calc(100vh - 70px);
             }
-            
+
             .hero h1 {
                 font-size: 2rem;
             }
-            
+
             .hero p {
                 font-size: 1rem;
             }
-            
+
             .hero-stats {
                 flex-direction: column;
                 gap: 30px;
             }
-            
+
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .btn {
                 width: 100%;
                 max-width: 300px;
                 justify-content: center;
             }
-            
+
             .section {
                 padding: 60px 15px;
             }
-            
+
             .feature-card,
             .category-card,
             .tiffin-service-card {
                 padding: 30px 20px;
             }
-            
+
             .tiffin-service-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
-            
+
             .footer-section {
                 padding: 0;
                 text-align: center;
             }
-            
+
             .footer-logo {
                 justify-content: center;
             }
-            
+
             .contact-item {
                 justify-content: center;
             }
-            
+
             .social-icons {
                 justify-content: center;
             }
-            
+
             .footer-section h3::after {
                 left: 50%;
                 transform: translateX(-50%);
             }
-            
-            .footer-links a, .footer-categories a {
+
+            .footer-links a,
+            .footer-categories a {
                 justify-content: center;
             }
-            
+
             .hours-grid {
                 text-align: left;
                 max-width: 300px;
                 margin: 0 auto;
             }
-            
+
             .certifications {
                 gap: 20px;
                 justify-content: center;
             }
-            
+
             .certification-item {
                 flex-direction: column;
                 text-align: center;
@@ -1871,59 +1927,59 @@
             .hero h1 {
                 font-size: 1.75rem;
             }
-            
+
             .stat-number {
                 font-size: 2rem;
             }
-            
+
             .section-title {
                 font-size: 1.75rem;
             }
-            
+
             .features-grid,
             .category-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .logo-text .brand {
                 font-size: 20px;
             }
-            
+
             .logo-text .tagline {
                 font-size: 8px;
             }
-            
+
             .nav-link {
                 padding: 12px;
             }
-            
+
             .footer-content {
                 gap: 30px;
             }
-            
+
             .newsletter-form {
                 flex-direction: column;
             }
-            
+
             .newsletter-form button {
                 width: 100%;
                 height: 50px;
             }
-            
+
             .footer-legal {
                 flex-direction: column;
                 gap: 5px;
             }
-            
+
             .divider {
                 display: none;
             }
-            
+
             .trust-badges {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .certifications {
                 flex-direction: column;
                 align-items: center;
@@ -1937,6 +1993,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1952,12 +2009,29 @@
             text-align: center;
         }
 
-        .mt-20 { margin-top: 20px; }
-        .mt-30 { margin-top: 30px; }
-        .mt-50 { margin-top: 50px; }
-        .mb-20 { margin-bottom: 20px; }
-        .mb-30 { margin-bottom: 30px; }
-        .mb-50 { margin-bottom: 50px; }
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mt-30 {
+            margin-top: 30px;
+        }
+
+        .mt-50 {
+            margin-top: 50px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .mb-30 {
+            margin-bottom: 30px;
+        }
+
+        .mb-50 {
+            margin-bottom: 50px;
+        }
 
         /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
@@ -1978,6 +2052,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
@@ -1997,7 +2072,8 @@
             <div class="search-container" id="searchContainer">
                 <div class="search-wrapper">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-box" id="searchBox" placeholder="Search for tiffin services, cuisine, or location...">
+                    <input type="text" class="search-box" id="searchBox"
+                        placeholder="Search for tiffin services, cuisine, or location...">
                     <button class="search-btn" id="searchBtn">
                         <i class="fas fa-search"></i>
                     </button>
@@ -2007,12 +2083,14 @@
             <!-- Navigation Menu -->
             <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
-                    <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+                    <a href="{{ url_for('index') }}"
+                        class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
                         <i class="fas fa-home"></i> Home
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('tiffins') }}" class="nav-link {% if request.endpoint == 'tiffins' %}active{% endif %}">
+                    <a href="{{ url_for('tiffins') }}"
+                        class="nav-link {% if request.endpoint == 'tiffins' %}active{% endif %}">
                         <i class="fas fa-utensils"></i> Order Food
                     </a>
                 </li>
@@ -2021,42 +2099,43 @@
                         <i class="fas fa-play-circle"></i> How it Works
                     </a>
                 </li>
-                
+
                 <!-- User Menu - Dynamic based on login status -->
-<li class="nav-item" id="userMenu">
-    {% if current_user.is_authenticated %}
-    <div class="dropdown">
-        <button class="nav-link user-nav-link dropdown-toggle" onclick="toggleUserDropdown(event)">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="width: 28px; height: 28px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 12px;">
-                    {{ current_user.username[0]|upper }}
-                </div>
-                <span class="user-text">{{ current_user.username.split(' ')[0] }}</span>
-            </div>
-        </button>
-        <div class="dropdown-menu" id="userDropdown">
-            <a href="{{ url_for('profile') }}" class="dropdown-item">
-                <i class="fas fa-user"></i> My Profile
-            </a>
-            <a href="{{ url_for('orders') }}" class="dropdown-item">
-                <i class="fas fa-history"></i> My Orders
-            </a>
-            <a href="{{ url_for('subscriptions') }}" class="dropdown-item">
-                <i class="fas fa-calendar-alt"></i> My Subscriptions
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="{{ url_for('logout') }}" class="dropdown-item">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-        </div>
-    </div>
-    {% else %}
-    <a href="{{ url_for('login') }}" class="nav-link user-nav-link">
-        <i class="fas fa-user"></i>
-        <span class="user-text">Login</span>
-    </a>
-    {% endif %}
-</li>
+                <li class="nav-item" id="userMenu">
+                    {% if current_user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="nav-link user-nav-link dropdown-toggle" onclick="toggleUserDropdown(event)">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div
+                                    style="width: 28px; height: 28px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 12px;">
+                                    {{ current_user.username[0]|upper }}
+                                </div>
+                                <span class="user-text">{{ current_user.username.split(' ')[0] }}</span>
+                            </div>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a href="{{ url_for('profile') }}" class="dropdown-item">
+                                <i class="fas fa-user"></i> My Profile
+                            </a>
+                            <a href="{{ url_for('orders') }}" class="dropdown-item">
+                                <i class="fas fa-history"></i> My Orders
+                            </a>
+                            <a href="{{ url_for('subscriptions') }}" class="dropdown-item">
+                                <i class="fas fa-calendar-alt"></i> My Subscriptions
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for('logout') }}" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link user-nav-link">
+                        <i class="fas fa-user"></i>
+                        <span class="user-text">Login</span>
+                    </a>
+                    {% endif %}
+                </li>
 
                 <!-- Cart -->
                 <li class="nav-item cart-container">
@@ -2086,8 +2165,9 @@
     <section class="hero">
         <div class="hero-content animate-fade-in">
             <h1>Fresh Homemade Food <br>Delivered Daily</h1>
-            <p>Subscribe to your favorite tiffin service. Healthy, hygienic, and homemade meals delivered to your doorstep every day.</p>
-            
+            <p>Subscribe to your favorite tiffin service. Healthy, hygienic, and homemade meals delivered to your
+                doorstep every day.</p>
+
             <div class="hero-stats">
                 <div class="stat-item">
                     <span class="stat-number">500+</span>
@@ -2102,7 +2182,7 @@
                     <span class="stat-label">Meals Delivered</span>
                 </div>
             </div>
-            
+
             <div class="hero-buttons">
                 <a href="{{ url_for('tiffins') }}" class="btn btn-primary">
                     <i class="fas fa-shopping-bag"></i> Order Now
@@ -2120,9 +2200,10 @@
             <div class="section-header">
                 <span class="section-subtitle">Why Choose Us</span>
                 <h2 class="section-title">Delicious Food, Delivered With Love</h2>
-                <p class="section-desc">Experience the convenience of homemade food delivered fresh to your doorstep every day.</p>
+                <p class="section-desc">Experience the convenience of homemade food delivered fresh to your doorstep
+                    every day.</p>
             </div>
-            
+
             <div class="features-grid">
                 <div class="feature-card animate-fade-in">
                     <div class="feature-icon">
@@ -2131,7 +2212,7 @@
                     <h3>100% Hygienic</h3>
                     <p>All our tiffin providers maintain highest hygiene standards with regular kitchen inspections.</p>
                 </div>
-                
+
                 <div class="feature-card animate-fade-in" style="animation-delay: 0.2s;">
                     <div class="feature-icon">
                         <i class="fas fa-clock"></i>
@@ -2139,7 +2220,7 @@
                     <h3>On-Time Delivery</h3>
                     <p>Get your meals delivered punctually every day at your preferred time slot.</p>
                 </div>
-                
+
                 <div class="feature-card animate-fade-in" style="animation-delay: 0.4s;">
                     <div class="feature-icon">
                         <i class="fas fa-utensils"></i>
@@ -2159,7 +2240,7 @@
                 <h2 class="section-title">Explore By Food Type</h2>
                 <p class="section-desc">Find the perfect tiffin service that matches your dietary preferences</p>
             </div>
-            
+
             <div class="category-grid">
                 <div class="category-card veg" onclick="filterByType('vegetarian')">
                     <div class="category-icon">
@@ -2169,7 +2250,7 @@
                     <p>Pure vegetarian meals with fresh ingredients</p>
                     <span class="category-count">25+ Providers</span>
                 </div>
-                
+
                 <div class="category-card nonveg" onclick="filterByType('non-vegetarian')">
                     <div class="category-icon">
                         <i class="fas fa-drumstick-bite"></i>
@@ -2178,7 +2259,7 @@
                     <p>Delicious chicken, fish, and mutton dishes</p>
                     <span class="category-count">15+ Providers</span>
                 </div>
-                
+
                 <div class="category-card jain" onclick="filterByType('jain')">
                     <div class="category-icon">
                         <i class="fas fa-peace"></i>
@@ -2187,7 +2268,7 @@
                     <p>No onion, no garlic, rootless vegetables</p>
                     <span class="category-count">12+ Providers</span>
                 </div>
-                
+
                 <div class="category-card diet" onclick="filterByType('diet')">
                     <div class="category-icon">
                         <i class="fas fa-apple-alt"></i>
@@ -2206,155 +2287,166 @@
             <div class="section-header">
                 <span class="section-subtitle">Top Rated Services</span>
                 <h2 class="section-title">Featured Tiffin Services</h2>
-                <p class="section-desc">Discover our most popular tiffin services with detailed menus and ingredients</p>
+                <p class="section-desc">Discover our most popular tiffin services with detailed menus and ingredients
+                </p>
             </div>
-            
+
             <div class="tiffin-service-grid" id="featuredTiffins">
                 {% if tiffins %}
-                    {% for tiffin in tiffins %}
-                    <div class="tiffin-service-card animate-fade-in">
-                        <div class="service-image">
-                            <img src="{{ tiffin.image_url or 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop' }}" alt="{{ tiffin.name }}" loading="lazy">
-                        </div>
-                        <div class="service-info">
-                            <div class="service-header">
-                                <h3>{{ tiffin.name }}</h3>
-                                <span class="food-type {{ tiffin.category|lower|replace('-', '') }}">{{ tiffin.category|capitalize }}</span>
-                            </div>
-                            <div class="rating">
-                                <div>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>4.5 (120+ reviews)</span>
-                                </div>
-                            </div>
-                            <p class="description">{{ tiffin.description|truncate(100) }}</p>
-                            
-                            <!-- Price and Order Section -->
-                            <div class="price-section">
-                                <div class="price">₹{{ "%.0f"|format(tiffin.price) }}<small>/day</small></div>
-                                <button class="order-btn" onclick="addToCart('{{ tiffin.id }}', '{{ tiffin.name }}', {{ tiffin.price }}, '{{ tiffin.category }}')">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </div>
-                            
-                            <a href="{{ url_for('tiffin_detail', tiffin_id=tiffin.id) }}" class="view-menu-btn">
-                                <i class="fas fa-eye"></i> View Details
-                            </a>
-                        </div>
+                {% for tiffin in tiffins %}
+                <div class="tiffin-service-card animate-fade-in">
+                    <div class="service-image">
+                        <img src="{{ tiffin.image_url or 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop' }}"
+                            alt="{{ tiffin.name }}" loading="lazy">
                     </div>
-                    {% endfor %}
+                    <div class="service-info">
+                        <div class="service-header">
+                            <h3>{{ tiffin.name }}</h3>
+                            <span class="food-type {{ tiffin.category|lower|replace('-', '') }}">{{
+                                tiffin.category|capitalize }}</span>
+                        </div>
+                        <div class="rating">
+                            <div>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5 (120+ reviews)</span>
+                            </div>
+                        </div>
+                        <p class="description">{{ tiffin.description|truncate(100) }}</p>
+
+                        <!-- Price and Order Section -->
+                        <div class="price-section">
+                            <div class="price">₹{{ "%.0f"|format(tiffin.price) }}<small>/day</small></div>
+                            <button class="order-btn"
+                                onclick="addToCart('{{ tiffin.id }}', '{{ tiffin.name }}', {{ tiffin.price }}, '{{ tiffin.category }}')">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                        </div>
+
+                        <a href="{{ url_for('tiffin_detail', tiffin_id=tiffin.id) }}" class="view-menu-btn">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <!-- Fallback static content if no tiffins in database -->
-                    <div class="tiffin-service-card animate-fade-in">
-                        <div class="service-image">
-                            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop" alt="Maa Ki Rasoi" loading="lazy">
-                        </div>
-                        <div class="service-info">
-                            <div class="service-header">
-                                <h3>Maa Ki Rasoi</h3>
-                                <span class="food-type veg">Veg</span>
-                            </div>
-                            <div class="rating">
-                                <div>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>4.8 (245 reviews)</span>
-                                </div>
-                            </div>
-                            <p class="description">Traditional home-style vegetarian meals with love and care passed down through generations.</p>
-                            
-                            <div class="price-section">
-                                <div class="price">₹180<small>/day</small></div>
-                                <button class="order-btn" onclick="addToCart(1, 'Maa Ki Rasoi', 180, 'veg')">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </div>
-                            
-                            <a href="{{ url_for('tiffin_detail', tiffin_id=1) }}" class="view-menu-btn">
-                                <i class="fas fa-eye"></i> View Details
-                            </a>
-                        </div>
+                <!-- Fallback static content if no tiffins in database -->
+                <div class="tiffin-service-card animate-fade-in">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop"
+                            alt="Maa Ki Rasoi" loading="lazy">
                     </div>
-                    
-                    <div class="tiffin-service-card animate-fade-in">
-                        <div class="service-image">
-                            <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400&h=300&fit=crop" alt="Healthy Bites" loading="lazy">
+                    <div class="service-info">
+                        <div class="service-header">
+                            <h3>Maa Ki Rasoi</h3>
+                            <span class="food-type veg">Veg</span>
                         </div>
-                        <div class="service-info">
-                            <div class="service-header">
-                                <h3>Healthy Bites</h3>
-                                <span class="food-type diet">Diet</span>
+                        <div class="rating">
+                            <div>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>4.8 (245 reviews)</span>
                             </div>
-                            <div class="rating">
-                                <div>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>4.7 (189 reviews)</span>
-                                </div>
-                            </div>
-                            <p class="description">Calorie-counted diet meals with nutrition tracking for weight management and healthy living.</p>
-                            
-                            <div class="price-section">
-                                <div class="price">₹250<small>/day</small></div>
-                                <button class="order-btn" onclick="addToCart(2, 'Healthy Bites', 250, 'diet')">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </div>
-                            
-                            <a href="{{ url_for('tiffin_detail', tiffin_id=2) }}" class="view-menu-btn">
-                                <i class="fas fa-eye"></i> View Details
-                            </a>
                         </div>
+                        <p class="description">Traditional home-style vegetarian meals with love and care passed down
+                            through generations.</p>
+
+                        <div class="price-section">
+                            <div class="price">₹180<small>/day</small></div>
+                            <button class="order-btn" onclick="addToCart(1, 'Maa Ki Rasoi', 180, 'veg')">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                        </div>
+
+                        <a href="{{ url_for('tiffin_detail', tiffin_id=1) }}" class="view-menu-btn">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
                     </div>
-                    
-                    <div class="tiffin-service-card animate-fade-in">
-                        <div class="service-image">
-                            <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop" alt="Royal Non-Veg" loading="lazy">
-                        </div>
-                        <div class="service-info">
-                            <div class="service-header">
-                                <h3>Royal Non-Veg</h3>
-                                <span class="food-type non-veg">Non-Veg</span>
-                            </div>
-                            <div class="rating">
-                                <div>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>4.9 (312 reviews)</span>
-                                </div>
-                            </div>
-                            <p class="description">Premium non-vegetarian delicacies with authentic recipes using fresh ingredients.</p>
-                            
-                            <div class="price-section">
-                                <div class="price">₹300<small>/day</small></div>
-                                <button class="order-btn" onclick="addToCart(3, 'Royal Non-Veg', 300, 'non-vegetarian')">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </div>
-                            
-                            <a href="{{ url_for('tiffin_detail', tiffin_id=3) }}" class="view-menu-btn">
-                                <i class="fas fa-eye"></i> View Details
-                            </a>
-                        </div>
+                </div>
+
+                <div class="tiffin-service-card animate-fade-in">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400&h=300&fit=crop"
+                            alt="Healthy Bites" loading="lazy">
                     </div>
+                    <div class="service-info">
+                        <div class="service-header">
+                            <h3>Healthy Bites</h3>
+                            <span class="food-type diet">Diet</span>
+                        </div>
+                        <div class="rating">
+                            <div>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.7 (189 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="description">Calorie-counted diet meals with nutrition tracking for weight management
+                            and healthy living.</p>
+
+                        <div class="price-section">
+                            <div class="price">₹250<small>/day</small></div>
+                            <button class="order-btn" onclick="addToCart(2, 'Healthy Bites', 250, 'diet')">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                        </div>
+
+                        <a href="{{ url_for('tiffin_detail', tiffin_id=2) }}" class="view-menu-btn">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
+                    </div>
+                </div>
+
+                <div class="tiffin-service-card animate-fade-in">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop"
+                            alt="Royal Non-Veg" loading="lazy">
+                    </div>
+                    <div class="service-info">
+                        <div class="service-header">
+                            <h3>Royal Non-Veg</h3>
+                            <span class="food-type non-veg">Non-Veg</span>
+                        </div>
+                        <div class="rating">
+                            <div>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>4.9 (312 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="description">Premium non-vegetarian delicacies with authentic recipes using fresh
+                            ingredients.</p>
+
+                        <div class="price-section">
+                            <div class="price">₹300<small>/day</small></div>
+                            <button class="order-btn" onclick="addToCart(3, 'Royal Non-Veg', 300, 'non-vegetarian')">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                        </div>
+
+                        <a href="{{ url_for('tiffin_detail', tiffin_id=3) }}" class="view-menu-btn">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
+                    </div>
+                </div>
                 {% endif %}
             </div>
-            
+
             <div class="text-center mt-50">
-                <a href="{{ url_for('tiffins') }}" class="btn btn-outline" style="color: var(--dark); border-color: var(--primary);">
+                <a href="{{ url_for('tiffins') }}" class="btn btn-outline"
+                    style="color: var(--dark); border-color: var(--primary);">
                     View All Services <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -2369,7 +2461,7 @@
                 <h2 class="section-title">How It Works</h2>
                 <p class="section-desc">Get your favorite homemade food in 4 easy steps</p>
             </div>
-            
+
             <div class="steps-container">
                 <div class="steps-line"></div>
                 <div class="steps">
@@ -2378,19 +2470,19 @@
                         <h3>Choose Tiffin Service</h3>
                         <p>Browse through verified tiffin providers with ratings and reviews</p>
                     </div>
-                    
+
                     <div class="step animate-fade-in" style="animation-delay: 0.2s;">
                         <div class="step-number">2</div>
                         <h3>Select Subscription</h3>
                         <p>Choose daily, weekly or monthly plan as per your need</p>
                     </div>
-                    
+
                     <div class="step animate-fade-in" style="animation-delay: 0.4s;">
                         <div class="step-number">3</div>
                         <h3>Place Your Order</h3>
                         <p>Complete checkout with your details and payment</p>
                     </div>
-                    
+
                     <div class="step animate-fade-in" style="animation-delay: 0.6s;">
                         <div class="step-number">4</div>
                         <h3>Enjoy Fresh Meals</h3>
@@ -2409,12 +2501,12 @@
                 <h2 class="section-title">What People Say</h2>
                 <p class="section-desc">Don't just take our word for it, hear from our happy customers</p>
             </div>
-            
+
             <div class="testimonial-slider">
                 <div class="testimonial-track" id="testimonialTrack">
                     <!-- Testimonials will be loaded by JavaScript -->
                 </div>
-                
+
                 <div class="testimonial-nav" id="testimonialNav">
                     <!-- Navigation dots will be added by JavaScript -->
                 </div>
@@ -2430,13 +2522,13 @@
                 <h2 class="section-title">Get the TiffinWala App</h2>
                 <p class="section-desc">Order food, track delivery, and get exclusive offers on the go</p>
             </div>
-            
+
             <div class="app-phone">
                 <div class="phone-mockup">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
             </div>
-            
+
             <div class="download-buttons" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                 <a href="#" class="btn btn-primary">
                     <i class="fab fa-google-play"></i>
@@ -2468,8 +2560,9 @@
                         </div>
                         <h3>TiffinWala</h3>
                     </div>
-                    <p>Delivering happiness through homemade food since 2025. We connect you with the best home chefs in your city.</p>
-                    
+                    <p>Delivering happiness through homemade food since 2025. We connect you with the best home chefs in
+                        your city.</p>
+
                     <div class="footer-contact">
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
@@ -2493,7 +2586,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="social-icons">
                         <a href="#" class="social-icon" title="Facebook">
                             <i class="fab fa-facebook-f"></i>
@@ -2512,7 +2605,7 @@
                         </a>
                     </div>
                 </div>
-                
+
                 <!-- Quick Links -->
                 <div class="footer-section">
                     <h3>Quick Links</h3>
@@ -2527,21 +2620,24 @@
                         <a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a>
                     </div>
                 </div>
-                
+
                 <!-- Categories -->
                 <div class="footer-section">
                     <h3>Food Categories</h3>
                     <div class="footer-categories">
-                        <a href="{{ url_for('tiffins', category='vegetarian') }}"><i class="fas fa-leaf"></i> Vegetarian</a>
-                        <a href="{{ url_for('tiffins', category='non-vegetarian') }}"><i class="fas fa-drumstick-bite"></i> Non-Vegetarian</a>
+                        <a href="{{ url_for('tiffins', category='vegetarian') }}"><i class="fas fa-leaf"></i>
+                            Vegetarian</a>
+                        <a href="{{ url_for('tiffins', category='non-vegetarian') }}"><i
+                                class="fas fa-drumstick-bite"></i> Non-Vegetarian</a>
                         <a href="{{ url_for('tiffins', category='jain') }}"><i class="fas fa-peace"></i> Jain Food</a>
-                        <a href="{{ url_for('tiffins', category='diet') }}"><i class="fas fa-apple-alt"></i> Diet Food</a>
+                        <a href="{{ url_for('tiffins', category='diet') }}"><i class="fas fa-apple-alt"></i> Diet
+                            Food</a>
                         <a href="{{ url_for('tiffins') }}"><i class="fas fa-child"></i> Kids Special</a>
                         <a href="{{ url_for('tiffins') }}"><i class="fas fa-heartbeat"></i> Diabetic Meals</a>
                         <a href="{{ url_for('tiffins') }}"><i class="fas fa-dumbbell"></i> High Protein</a>
                         <a href="{{ url_for('tiffins') }}"><i class="fas fa-bacon"></i> Keto Meals</a>
                     </div>
-                    
+
                     <div class="business-hours mt-20">
                         <h4><i class="fas fa-clock"></i> Business Hours</h4>
                         <div class="hours-grid">
@@ -2552,12 +2648,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Newsletter & App Download -->
                 <div class="footer-section">
                     <h3>Stay Updated</h3>
                     <p>Subscribe to get special offers, free giveaways, and exclusive deals</p>
-                    
+
                     <div class="newsletter">
                         <form class="newsletter-form" id="newsletterForm">
                             <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
@@ -2567,7 +2663,7 @@
                         </form>
                         <p class="newsletter-note">We promise not to spam you. Unsubscribe at any time.</p>
                     </div>
-                    
+
                     <div class="app-download">
                         <h4>Get Our Mobile App</h4>
                         <p>Order food, track delivery, and get exclusive offers</p>
@@ -2588,7 +2684,7 @@
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="payment-methods">
                         <h4>Payment Partners</h4>
                         <div class="payment-icons">
@@ -2604,14 +2700,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Footer Bottom -->
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
                     <div class="copyright">
                         <p>&copy; 2025 TiffinWala. All rights reserved.</p>
                     </div>
-                    
+
                     <div class="footer-legal">
                         <a href="#">Privacy Policy</a>
                         <span class="divider">|</span>
@@ -2623,7 +2719,7 @@
                         <span class="divider">|</span>
                         <a href="#">Sitemap</a>
                     </div>
-                    
+
                     <div class="trust-badges">
                         <span class="trust-badge" title="Secure Payment">
                             <i class="fas fa-shield-alt"></i> 100% Secure
@@ -2636,7 +2732,7 @@
                         </span>
                     </div>
                 </div>
-                
+
                 <div class="certifications">
                     <div class="certification-item">
                         <i class="fas fa-award"></i>
@@ -2662,7 +2758,7 @@
     <!-- JavaScript -->
     <script>
         // ===== ENHANCED JAVASCRIPT FOR ALL FEATURES =====
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Initialize all features
             initNavigation();
             initSearch();
@@ -2691,7 +2787,7 @@
                     if (window.innerWidth <= 768) {
                         searchContainer.classList.remove('active');
                     }
-                    
+
                     // Redirect to tiffins page with search
                     window.location.href = "{{ url_for('tiffins') }}?search=" + encodeURIComponent(query);
                 }
@@ -2701,9 +2797,9 @@
             if (searchBtn) {
                 searchBtn.addEventListener('click', performSearch);
             }
-            
+
             if (searchBox) {
-                searchBox.addEventListener('keypress', function(e) {
+                searchBox.addEventListener('keypress', function (e) {
                     if (e.key === 'Enter') {
                         performSearch();
                     }
@@ -2712,13 +2808,13 @@
 
             // Mobile search toggle
             if (mobileSearchBtn) {
-                mobileSearchBtn.addEventListener('click', function(e) {
+                mobileSearchBtn.addEventListener('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
                     searchContainer.classList.toggle('active');
                     navMenu.classList.remove('active');
                     menuToggle.classList.remove('active');
-                    
+
                     // Focus on search input when opened
                     if (searchContainer.classList.contains('active')) {
                         setTimeout(() => {
@@ -2730,10 +2826,10 @@
 
             // Mobile menu toggle
             if (menuToggle) {
-                menuToggle.addEventListener('click', function() {
+                menuToggle.addEventListener('click', function () {
                     menuToggle.classList.toggle('active');
                     navMenu.classList.toggle('active');
-                    
+
                     // Close search if open
                     if (searchContainer.classList.contains('active')) {
                         searchContainer.classList.remove('active');
@@ -2742,7 +2838,7 @@
             }
 
             // Close mobile menu when clicking outside
-            document.addEventListener('click', function(event) {
+            document.addEventListener('click', function (event) {
                 const isClickInsideNav = navMenu.contains(event.target);
                 const isClickOnToggle = menuToggle.contains(event.target);
                 const isClickInsideSearch = searchContainer.contains(event.target);
@@ -2753,7 +2849,7 @@
                     navMenu.classList.remove('active');
                     menuToggle.classList.remove('active');
                 }
-                
+
                 // Close search if clicking outside on mobile
                 if (!isClickInsideSearch && !isClickOnMobileSearch && window.innerWidth <= 768) {
                     searchContainer.classList.remove('active');
@@ -2762,7 +2858,7 @@
 
             // Close mobile menu on link click
             navLinks.forEach(link => {
-                link.addEventListener('click', function() {
+                link.addEventListener('click', function () {
                     if (window.innerWidth <= 768) {
                         navMenu.classList.remove('active');
                         menuToggle.classList.remove('active');
@@ -2846,11 +2942,11 @@
             function showSlide(index) {
                 const slides = track.querySelectorAll('.testimonial-card');
                 const dots = nav.querySelectorAll('.nav-dot');
-                
+
                 // Hide all slides
                 slides.forEach(slide => slide.style.display = 'none');
                 dots.forEach(dot => dot.classList.remove('active'));
-                
+
                 // Show selected slide
                 slides[index].style.display = 'block';
                 dots[index].classList.add('active');
@@ -2887,43 +2983,43 @@
         }
 
         function addToCart(productId, productName, productPrice, productType) {
-    // Create form data
-    const formData = new FormData();
-    formData.append('quantity', 1);
-    
-    // Send to server
-    fetch(`/cart/add/${productId}`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else if (response.status === 401) {
-            // Unauthorized - redirect to login
-            window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
-            return null;
-        } else {
-            throw new Error('Server error');
+            // Create form data
+            const formData = new FormData();
+            formData.append('quantity', 1);
+
+            // Send to server
+            fetch(`/cart/add/${productId}`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else if (response.status === 401) {
+                        // Unauthorized - redirect to login
+                        window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
+                        return null;
+                    } else {
+                        throw new Error('Server error');
+                    }
+                })
+                .then(data => {
+                    if (data && data.success) {
+                        updateCartCount();
+                        showNotification(data.message || `${productName} added to cart!`, 'success');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding to cart:', error);
+                    showNotification('Error adding to cart', 'error');
+                });
         }
-    })
-    .then(data => {
-        if (data && data.success) {
-            updateCartCount();
-            showNotification(data.message || `${productName} added to cart!`, 'success');
-        }
-    })
-    .catch(error => {
-        console.error('Error adding to cart:', error);
-        showNotification('Error adding to cart', 'error');
-    });
-}
 
         // ===== DROPDOWN TOGGLE =====
         function toggleUserDropdown(event) {
             event.preventDefault();
             event.stopPropagation();
-            
+
             const dropdown = document.getElementById('userDropdown');
             if (dropdown) {
                 dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
@@ -2931,7 +3027,7 @@
         }
 
         // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
             const dropdown = document.getElementById('userDropdown');
             if (dropdown && !event.target.closest('.dropdown')) {
                 dropdown.style.display = 'none';
@@ -2963,11 +3059,11 @@
         function initNewsletterForm() {
             const newsletterForm = document.getElementById('newsletterForm');
             if (newsletterForm) {
-                newsletterForm.addEventListener('submit', function(e) {
+                newsletterForm.addEventListener('submit', function (e) {
                     e.preventDefault();
                     const emailInput = document.getElementById('newsletterEmail');
                     const email = emailInput.value.trim();
-                    
+
                     if (email) {
                         // In a real application, you would send this to your server
                         console.log('Newsletter subscription:', email);
@@ -3003,8 +3099,8 @@
                 align-items: center;
                 gap: 10px;
             `;
-            
-            switch(type) {
+
+            switch (type) {
                 case 'success':
                     notification.style.background = 'var(--success)';
                     notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
@@ -3018,9 +3114,9 @@
                     notification.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
                     break;
             }
-            
+
             document.body.appendChild(notification);
-            
+
             // Add CSS for animation if not already present
             if (!document.querySelector('#notification-animations')) {
                 const style = document.createElement('style');
@@ -3037,7 +3133,7 @@
                 `;
                 document.head.appendChild(style);
             }
-            
+
             // Remove after 3 seconds
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-out';
@@ -3050,4 +3146,5 @@
         }
     </script>
 </body>
+
 </html>

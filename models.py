@@ -259,30 +259,28 @@ class Payment(db.Model):
 # ==================== NEW MODELS FOR SOCIAL FEATURES ====================
 
 class FoodPost(db.Model):
-    """Food post model for Instagram-style posts"""
     __tablename__ = 'food_posts'
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    media_type = db.Column(db.String(10))
+    media_type = db.Column(db.String(10))  # 'image' or 'video'
     media_url = db.Column(db.String(500))
     caption = db.Column(db.Text)
-    likes_count = db.Column(db.Integer, default=0)
-    comments_count = db.Column(db.Integer, default=0)
-    is_available = db.Column(db.Boolean, default=False)
-    price = db.Column(db.Float, nullable=True)
+    price = db.Column(db.Float)
     quantity_available = db.Column(db.Integer, default=0)
     location = db.Column(db.String(200))
-    post_type = db.Column(db.String(20))
-    availability_status = db.Column(db.String(20), default='available')
+    post_type = db.Column(db.String(50), default='photo')  # photo, reel, menu
+    availability_status = db.Column(db.String(50), default='available')
+    is_available = db.Column(db.Boolean, default=True)
+    likes_count = db.Column(db.Integer, default=0)
+    comments_count = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
-    user = db.relationship('User', back_populates='food_posts')
-    likes = db.relationship('PostLike', back_populates='post', lazy=True, cascade='all, delete-orphan')
-    comments = db.relationship('PostComment', back_populates='post', lazy=True, cascade='all, delete-orphan')
-    orders = db.relationship('FoodOrder', back_populates='post', lazy=True)
-
+    user = db.relationship('User', backref='food_posts')
+    likes = db.relationship('Like', backref='post', lazy='dynamic')
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
 class PostLike(db.Model):
     """Post likes model"""

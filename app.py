@@ -405,6 +405,8 @@ def logout():
 @login_required
 def profile():
     """User profile page"""
+    from models import FoodPost, Follower  # Import models
+    
     form = ProfileForm(obj=current_user)
     
     if form.validate_on_submit():
@@ -419,17 +421,29 @@ def profile():
         flash('Profile updated successfully!', 'success')
         return redirect(url_for('profile'))
     
+    # Get user's posts
+    posts = FoodPost.query.filter_by(user_id=current_user.id).order_by(FoodPost.created_at.desc()).all()
+    
     # Get user's orders
     orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.created_at.desc()).limit(5).all()
     
     # Get user's subscriptions
     subscriptions = Subscription.query.filter_by(user_id=current_user.id, is_active=True).all()
     
+    # Get user stats
+    posts_count = FoodPost.query.filter_by(user_id=current_user.id).count()
+    followers_count = Follower.query.filter_by(followed_id=current_user.id).count()
+    following_count = Follower.query.filter_by(follower_id=current_user.id).count()
+    
     return render_template(
         'profile.html',
         form=form,
         orders=orders,
-        subscriptions=subscriptions
+        subscriptions=subscriptions,
+        posts=posts,
+        posts_count=posts_count,
+        followers_count=followers_count,
+        following_count=following_count
     )
 
 @app.route('/cart')
