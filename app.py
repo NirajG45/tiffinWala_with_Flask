@@ -6,6 +6,9 @@ from datetime import datetime, timedelta
 import os
 from models import db, User, TiffinService, Category, Order, OrderItem, Cart, CartItem, Subscription, Review, Payment
 from forms import LoginForm, RegistrationForm, TiffinSearchForm, CheckoutForm, ReviewForm, ProfileForm
+import uuid
+from werkzeug.utils import secure_filename
+from models import FoodPost, Follower, FoodOrder, Notification
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -176,7 +179,7 @@ def index():
     """Home page"""
     featured_tiffins = TiffinService.query.filter_by(is_available=True).limit(6).all()
     categories = Category.query.all()
-    return render_template('index.html', tiffins=featured_tiffins, categories=categories)
+    return render_template('index5.html', tiffins=featured_tiffins, categories=categories)
 
 @app.route('/tiffins')
 def tiffins():
@@ -904,13 +907,10 @@ def api_filter_tiffins():
 @app.route('/api/user/stats')
 @login_required
 def get_user_stats():
-    """Get user statistics for profile"""
     from models import FoodPost, Follower
-    
     posts_count = FoodPost.query.filter_by(user_id=current_user.id).count()
     followers_count = Follower.query.filter_by(followed_id=current_user.id).count()
     following_count = Follower.query.filter_by(follower_id=current_user.id).count()
-    
     return jsonify({
         'posts': posts_count,
         'followers': followers_count,
@@ -1000,6 +1000,167 @@ def create_post():
     except Exception as e:
         db.session.rollback()
         return jsonify({'success': False, 'message': str(e)}), 500
+
+
+
+@app.route('/api/upload/avatar', methods=['POST'])
+@login_required
+def upload_avatar():
+    """Upload user profile picture"""
+    if 'avatar' not in request.files:
+        return jsonify({'success': False, 'message': 'No file provided'}), 400
+    
+    file = request.files['avatar']
+    if file.filename == '':
+        return jsonify({'success': False, 'message': 'Empty filename'}), 400
+    
+    # Validate extension
+    allowed = {'png', 'jpg', 'jpeg', 'gif'}
+    ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
+    if ext not in allowed:
+        return jsonify({'success': False, 'message': 'Invalid image format'}), 400
+    
+    # Save file
+    filename = f"avatar_{current_user.id}_{uuid.uuid4().hex}.{ext}"
+    upload_dir = os.path.join(app.root_path, 'static/uploads/avatars')
+    os.makedirs(upload_dir, exist_ok=True)
+    filepath = os.path.join(upload_dir, filename)
+    file.save(filepath)
+    
+    avatar_url = url_for('static', filename=f'uploads/avatars/{filename}')
+    
+    # Update user model (add avatar_url field to User if not exists)
+    current_user.avatar_url = avatar_url
+    db.session.commit()
+    
+    return jsonify({'success': True, 'avatar_url': avatar_url})
+
+@app.route('/api/posts/<int:post_id>/like', methods=['POST'])
+@login_required
+def like_post(post_id):
+    """Like or unlike a food post"""
+    post = FoodPost.query.get_or_404(post_id)
+    
+    # Check if already liked
+    if current_user in post.likes:
+        post.likes.remove(current_user)
+        liked = False
+    else:
+        post.likes.append(current_user)
+        liked = True
+        # Create notification for post owner
+        if post.user_id != current_user.id:
+            notif = Notification(
+                user_id=post.user_id,
+                type='like',
+                message=f'{current_user.username} liked your post',
+                related_id=post_id
+            )
+            db.session.add(notif)
+    
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'liked': liked,
+        'likes_count': len(post.likes)
+    })
+
+@app.route('/api/posts/<int:post_id>/comment', methods=['POST'])
+@login_required
+def comment_on_post(post_id):
+    """Add a comment to a post"""
+    data = request.get_json()
+    comment_text = data.get('comment', '').strip()
+    
+    if not comment_text:
+        return jsonify({'success': False, 'message': 'Comment cannot be empty'}), 400
+    
+    post = FoodPost.query.get_or_404(post_id)
+    
+    # Assuming you have a Comment model
+    from models import Comment
+    comment = Comment(
+        content=comment_text,
+        user_id=current_user.id,
+        post_id=post_id
+    )
+    db.session.add(comment)
+    
+    # Notification for post owner
+    if post.user_id != current_user.id:
+        notif = Notification(
+            user_id=post.user_id,
+            type='comment',
+            message=f'{current_user.username} commented on your post',
+            related_id=post_id
+        )
+        db.session.add(notif)
+    
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'comment': {
+            'id': comment.id,
+            'content': comment.content,
+            'username': current_user.username,
+            'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
+        },
+        'comments_count': len(post.comments)
+    })
+
+@app.route('/api/seller/orders/<int:order_id>/update', methods=['POST'])
+@login_required
+def update_seller_order_status(order_id):
+    """Update order status (confirmed, preparing, out_for_delivery, delivered, cancelled)"""
+    data = request.get_json()
+    new_status = data.get('status')
+    valid_statuses = ['confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled']
+    
+    if not new_status or new_status not in valid_statuses:
+        return jsonify({'success': False, 'message': 'Invalid status'}), 400
+    
+    order = FoodOrder.query.get_or_404(order_id)
+    if order.seller_id != current_user.id:
+        return jsonify({'success': False, 'message': 'Unauthorized'}), 403
+    
+    order.status = new_status
+    db.session.commit()
+    
+    # Send notification to buyer
+    notif = Notification(
+        user_id=order.buyer_id,
+        type='order_update',
+        message=f'Your order #{order.order_number} is now {new_status}',
+        related_id=order.id
+    )
+    db.session.add(notif)
+    db.session.commit()
+    
+    return jsonify({'success': True, 'message': f'Order status updated to {new_status}'})
+
+@app.route('/api/seller/orders/<int:order_id>')
+@login_required
+def get_seller_order(order_id):
+    """Get order details for seller (FoodOrder from social posts)"""
+    order = FoodOrder.query.get_or_404(order_id)
+    
+    # Ensure the seller is the owner
+    if order.seller_id != current_user.id:
+        return jsonify({'error': 'Unauthorized'}), 403
+    
+    return jsonify({
+        'id': order.id,
+        'order_number': order.order_number,
+        'customer': order.buyer.username,
+        'items': order.items_description,  # You may need to store this
+        'total_amount': f"{order.total_amount:.2f}",
+        'delivery_address': order.delivery_address,
+        'payment_method': order.payment_method,
+        'status': order.status,
+        'created_at': order.created_at.strftime('%Y-%m-%d %H:%M')
+    })
 
 @app.route('/order/<string:order_number>/json')
 @login_required

@@ -3,1883 +3,754 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiffin Services - TiffinWala</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Tiffin Services - TiffinWala | Simple & Fresh</title>
+    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        /* ===== GLOBAL RESET & VARIABLES ===== */
-:root {
-    --primary: #FF6B6B;
-    --secondary: #4ECDC4;
-    --accent: #FFD166;
-    --dark: #2C3E50;
-    --light: #F8F9FA;
-    --success: #06D6A0;
-    --gradient-primary: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-    --gradient-secondary: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
-    --gradient-dark: linear-gradient(135deg, #2C3E50 0%, #1A252F 100%);
-    --shadow-sm: 0 5px 15px rgba(0,0,0,0.08);
-    --shadow-md: 0 10px 30px rgba(0,0,0,0.15);
-    --shadow-lg: 0 20px 50px rgba(0,0,0,0.2);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: var(--dark);
-    background: var(--light);
-    overflow-x: hidden;
-    padding-top: 70px;
-}
-
-h1, h2, h3, h4 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* ===== NAVIGATION BAR STYLES ===== */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: white;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    padding: 0;
-    transition: var(--transition);
-}
-
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 70px;
-}
-
-/* Logo Styles */
-.logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 12px;
-    padding: 5px 0;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-primary);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 20px;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-}
-
-.logo-text .brand {
-    font-size: 24px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logo-text .tagline {
-    font-size: 10px;
-    color: #666;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-/* Search Container */
-.search-container {
-    flex: 1;
-    max-width: 600px;
-    margin: 0 40px;
-    position: relative;
-}
-
-.search-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.search-icon {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    font-size: 16px;
-    z-index: 2;
-}
-
-.search-box {
-    width: 100%;
-    padding: 14px 50px 14px 50px;
-    border: 1px solid #E0E0E0;
-    border-radius: 10px;
-    font-size: 15px;
-    transition: var(--transition);
-    background: #F8F9FA;
-    font-family: 'Poppins', sans-serif;
-}
-
-.search-box:focus {
-    outline: none;
-    border-color: var(--primary);
-    background: white;
-    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
-}
-
-.search-btn {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    font-size: 14px;
-}
-
-.search-btn:hover {
-    background: #FF5252;
-    transform: translateY(-50%) scale(1.05);
-}
-
-/* Navigation Menu */
-.nav-menu {
-    display: flex;
-    list-style: none;
-    align-items: center;
-    gap: 5px;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-item {
-    position: relative;
-}
-
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-
-.nav-link:hover {
-    color: var(--primary);
-    background: rgba(255, 107, 107, 0.1);
-}
-
-.nav-link.active {
-    color: var(--primary);
-    background: rgba(255, 107, 107, 0.1);
-    font-weight: 600;
-}
-
-.nav-link i {
-    font-size: 16px;
-    width: 20px;
-    text-align: center;
-}
-
-/* User Menu Styles */
-.user-nav-link {
-    padding: 8px 16px;
-    border: 1px solid #E0E0E0;
-    background: #F8F9FA;
-}
-
-.user-nav-link:hover {
-    background: white;
-    border-color: var(--primary);
-}
-
-.user-text {
-    font-weight: 600;
-}
-
-/* Cart Styles */
-.cart-nav-link {
-    position: relative;
-    padding: 8px 16px;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-}
-
-.cart-nav-link:hover {
-    background: var(--gradient-primary);
-    opacity: 0.9;
-    color: white;
-}
-
-.cart-text {
-    font-weight: 600;
-}
-
-.cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: white;
-    color: var(--primary);
-    font-size: 11px;
-    font-weight: 700;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--primary);
-}
-
-/* Mobile Search Toggle */
-.mobile-search-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    color: #333;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-}
-
-/* Mobile Menu Toggle */
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-
-.menu-toggle span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: #333;
-    border-radius: 3px;
-    transition: var(--transition);
-}
-
-.menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-}
-
-.menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
-
-/* Dropdown Styles */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-toggle {
-    cursor: pointer;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border-radius: 10px;
-    box-shadow: var(--shadow-lg);
-    min-width: 200px;
-    z-index: 1000;
-    display: none;
-    margin-top: 10px;
-    overflow: hidden;
-    border: 1px solid #E9ECEF;
-}
-
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
-    color: #333;
-    text-decoration: none;
-    transition: var(--transition);
-    font-size: 14px;
-    border-bottom: 1px solid #F0F0F0;
-}
-
-.dropdown-item:last-child {
-    border-bottom: none;
-}
-
-.dropdown-item:hover {
-    background: #F8F9FA;
-    color: var(--primary);
-}
-
-.dropdown-item i {
-    width: 20px;
-    text-align: center;
-}
-
-.dropdown-divider {
-    height: 1px;
-    background: #E9ECEF;
-    margin: 5px 0;
-}
-
-/* ===== FILTERS SECTION STYLES ===== */
-.filters-section {
-    background: white;
-    padding: 30px 0;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 70px;
-    z-index: 99;
-}
-
-.filter-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: flex-end;
-}
-
-.filter-group {
-    flex: 1;
-    min-width: 200px;
-}
-
-.filter-group label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #555;
-}
-
-.filter-group select,
-.filter-group input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #E0E0E0;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-family: 'Poppins', sans-serif;
-}
-
-.filter-group select:focus,
-.filter-group input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
-}
-
-.filter-actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.btn-filter {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-filter:hover {
-    background: #FF5252;
-    transform: translateY(-2px);
-}
-
-.btn-reset {
-    background: transparent;
-    color: #666;
-    border: 1px solid #E0E0E0;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.btn-reset:hover {
-    background: #F8F9FA;
-    border-color: #999;
-}
-
-/* ===== SECTION STYLES ===== */
-.section {
-    padding: 80px 20px;
-}
-
-.section.white {
-    background: #F0E68C;
-}
-
-/* ===== RESULTS HEADER STYLES ===== */
-.results-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px 0;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.results-count {
-    font-size: 1.1rem;
-    color: #666;
-}
-
-.results-count strong {
-    color: var(--dark);
-    font-size: 1.3rem;
-}
-
-/* ===== ACTIVE FILTERS STYLES ===== */
-.active-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.filter-tag {
-    background: #F8F9FA;
-    padding: 8px 15px;
-    border-radius: 30px;
-    font-size: 0.875rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #E0E0E0;
-}
-
-.filter-tag a {
-    color: var(--primary);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-}
-
-.filter-tag i {
-    color: var(--primary);
-    cursor: pointer;
-}
-
-.filter-tag i:hover {
-    color: #dc3545;
-}
-
-/* ===== TIFFIN SERVICE GRID STYLES ===== */
-.tiffin-service-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.tiffin-service-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: var(--transition);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-}
-
-.tiffin-service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-lg);
-}
-
-.service-image {
-    height: 250px;
-    position: relative;
-    overflow: hidden;
-}
-
-.service-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
-    z-index: 1;
-}
-
-.service-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.tiffin-service-card:hover .service-image img {
-    transform: scale(1.1);
-}
-
-.service-info {
-    padding: 25px;
-}
-
-.service-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
-}
-
-.service-header h3 {
-    font-size: 1.25rem;
-    color: var(--dark);
-    margin: 0;
-}
-
-/* Food Type Badges */
-.food-type {
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.food-type.veg {
-    background: #D4EDDA;
-    color: #155724;
-}
-
-.food-type.non-veg {
-    background: #F8D7DA;
-    color: #721C24;
-}
-
-/* Rating Styles */
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-}
-
-.rating i {
-    color: #FFD700;
-    font-size: 0.875rem;
-}
-
-.rating span {
-    color: #666;
-    font-size: 0.875rem;
-}
-
-/* Description */
-.description {
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 0.875rem;
-    line-height: 1.6;
-}
-
-/* Service Stats */
-.service-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #F8F9FA;
-    border-radius: 10px;
-}
-
-.stat-box {
-    text-align: center;
-}
-
-.stat-box i {
-    color: var(--primary);
-    margin-bottom: 5px;
-}
-
-.stat-box span {
-    display: block;
-    font-size: 0.75rem;
-    color: #666;
-}
-
-/* Price Section */
-.price-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 20px;
-    border-top: 1px solid #F0F0F0;
-}
-
-.price {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary);
-}
-
-.price small {
-    font-size: 0.875rem;
-    color: #888;
-}
-
-/* Order Button */
-.order-btn {
-    background: var(--gradient-secondary);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--transition);
-}
-
-.order-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(78, 205, 196, 0.3);
-}
-
-/* View Menu Button */
-.view-menu-btn {
-    background: transparent;
-    color: var(--primary);
-    border: 1px solid var(--primary);
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    width: 100%;
-    justify-content: center;
-    margin-top: 15px;
-    text-decoration: none;
-}
-
-.view-menu-btn:hover {
-    background: var(--primary);
-    color: white;
-}
-
-/* ===== PAGINATION STYLES ===== */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 50px 0 30px;
-    padding: 0;
-}
-
-.page-item {
-    list-style: none;
-}
-
-.page-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background: white;
-    border: 1px solid #E0E0E0;
-    color: #666;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.page-link:hover,
-.page-item.active .page-link {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.page-item.disabled .page-link {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* ===== NO RESULTS STYLES ===== */
-.no-results {
-    text-align: center;
-    padding: 80px 20px;
-}
-
-.no-results i {
-    font-size: 5rem;
-    color: #ddd;
-    margin-bottom: 20px;
-}
-
-.no-results h3 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: var(--dark);
-}
-
-.no-results p {
-    color: #666;
-    margin-bottom: 30px;
-}
-
-/* ===== BUTTON STYLES ===== */
-.btn {
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: var(--transition);
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.btn-primary {
-    background: var(--gradient-primary);
-    color: white;
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
-}
-
-/* ===== FOOTER STYLES ===== */
-footer {
-    background: #808080;
-    color: white;
-    padding: 60px 20px 30px;
-    position: relative;
-    overflow: hidden;
-}
-
-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-primary);
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    margin-bottom: 50px;
-}
-
-.footer-section {
-    padding: 0 15px;
-}
-
-.footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.footer-logo h3 {
-    font-size: 1.75rem;
-    background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-}
-
-.footer-section p {
-    opacity: 0.8;
-    margin-bottom: 20px;
-    line-height: 1.8;
-    font-size: 0.95rem;
-}
-
-/* Contact Info */
-.footer-contact {
-    margin: 25px 0;
-}
-
-.contact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.contact-item i {
-    color: var(--primary);
-    font-size: 1rem;
-    margin-top: 2px;
-    width: 20px;
-}
-
-.contact-item a {
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: var(--transition);
-}
-
-.contact-item a:hover {
-    color: var(--primary);
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 1200px) {
-    .nav-container {
-        padding: 0 15px;
-    }
-    
-    .search-container {
-        max-width: 500px;
-        margin: 0 30px;
-    }
-    
-    .footer-content {
-        gap: 30px;
-    }
-}
-
-@media (max-width: 992px) {
-    .search-container {
-        max-width: 400px;
-        margin: 0 20px;
-    }
-    
-    .nav-link {
-        padding: 8px 15px;
-        font-size: 13px;
-    }
-    
-    .cart-text,
-    .user-text {
-        display: none;
-    }
-    
-    .nav-link i {
-        font-size: 18px;
-        width: auto;
-    }
-    
-    footer {
-        padding: 60px 20px 25px;
-    }
-    
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .tiffin-service-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding-top: 70px;
-    }
-    
-    .navbar {
-        height: 70px;
-    }
-    
-    .nav-container {
-        height: 70px;
-        padding: 0 15px;
-    }
-    
-    .logo-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
-    }
-    
-    .logo-text .brand {
-        font-size: 22px;
-    }
-    
-    .logo-text .tagline {
-        font-size: 9px;
-    }
-    
-    /* Show mobile search toggle */
-    .mobile-search-toggle {
-        display: flex;
-    }
-    
-    /* Hide desktop search */
-    .search-container {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        padding: 15px;
-        margin: 0;
-        max-width: 100%;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        border-top: 1px solid #E9ECEF;
-        z-index: 999;
-    }
-    
-    .search-container.active {
-        display: block;
-    }
-    
-    /* Mobile Menu Toggle */
-    .menu-toggle {
-        display: flex;
-        z-index: 1001;
-    }
-    
-    /* Navigation Menu */
-    .nav-menu {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background: white;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 20px;
-        transition: var(--transition);
-        overflow-y: auto;
-        gap: 10px;
-        box-shadow: var(--shadow-lg);
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .nav-link {
-        padding: 15px;
-        justify-content: flex-start;
-        font-size: 16px;
-        border-radius: 10px;
-        margin-bottom: 5px;
-    }
-    
-    .cart-text,
-    .user-text {
-        display: inline;
-    }
-    
-    .section {
-        padding: 60px 15px;
-    }
-    
-    .tiffin-service-card {
-        padding: 0;
-    }
-    
-    .tiffin-service-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .filter-form {
-        flex-direction: column;
-    }
-    
-    .filter-actions {
-        width: 100%;
-    }
-    
-    .btn-filter,
-    .btn-reset {
-        flex: 1;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    
-    .footer-section {
-        padding: 0;
-        text-align: center;
-    }
-    
-    .footer-logo {
-        justify-content: center;
-    }
-    
-    .contact-item {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-text .brand {
-        font-size: 20px;
-    }
-    
-    .logo-text .tagline {
-        font-size: 8px;
-    }
-    
-    .nav-link {
-        padding: 12px;
-    }
-    
-    .section-title {
-        font-size: 1.75rem;
-    }
-    
-    .tiffin-service-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .footer-content {
-        gap: 30px;
-    }
-    
-    .pagination {
-        gap: 5px;
-    }
-    
-    .page-link {
-        width: 35px;
-        height: 35px;
-    }
-}
-
-/* ===== UTILITY CLASSES ===== */
-.text-center {
-    text-align: center;
-}
-
-.mt-20 { margin-top: 20px; }
-.mt-30 { margin-top: 30px; }
-.mt-50 { margin-top: 50px; }
-.mb-20 { margin-bottom: 20px; }
-.mb-30 { margin-bottom: 30px; }
-.mb-50 { margin-bottom: 50px; }
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #FF5252;
-}
-        /* Additional styles for tiffins page */
+        /* ---------- GLOBAL RESET & VARIABLES (ONLY RED, YELLOW, WHITE, BLACK) ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #E11D1F;      /* bold red */
+            --yellow: #F5B700;   /* vibrant yellow */
+            --white: #FFFFFF;
+            --black: #121212;
+            --light-yellow: #FFF5DF;  /* for soft accents (derived from yellow+white) */
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.5;
+            padding-top: 70px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- TYPOGRAPHY & BASE ---------- */
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        a {
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        /* ---------- SIMPLE NAVBAR (red + white + black) ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            border-bottom: 2px solid var(--red);
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: var(--red);
+            color: var(--white);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text .brand {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text .brand span {
+            color: var(--red);
+        }
+
+        .logo-text .tagline {
+            font-size: 9px;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+
+        /* Search (desktop) */
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 30px;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 14px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px 12px 42px;
+            border: 1px solid #e2e2e2;
+            border-radius: 40px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--white);
+            transition: var(--transition);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(225, 29, 31, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--red);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            color: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: #b91c1c;
+        }
+
+        /* Nav menu */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 40px;
+            color: var(--black);
+            background: transparent;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background: rgba(225, 29, 31, 0.08);
+            color: var(--red);
+        }
+
+        .nav-link.active {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .cart-nav-link {
+            background: var(--black);
+            color: var(--white);
+            position: relative;
+        }
+
+        .cart-nav-link:hover {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--yellow);
+            color: var(--black);
+            font-weight: 800;
+            font-size: 11px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--white);
+        }
+
+        /* user dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .user-nav-link {
+            background: #f5f5f5;
+            border: 1px solid #eee;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 48px;
+            right: 0;
+            background: var(--white);
+            border: 1px solid #eaeaea;
+            border-radius: 16px;
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--black);
+            font-size: 14px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #fff1f0;
+            color: var(--red);
+        }
+
+        /* mobile toggles */
+        .mobile-search-toggle, .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--black);
+        }
+
+        /* ---------- FILTERS (minimal, red/yellow accents) ---------- */
         .filters-section {
-            background: white;
-            padding: 30px 0;
+            background: var(--white);
             border-bottom: 1px solid #eee;
+            padding: 24px 0;
             position: sticky;
             top: 70px;
             z-index: 99;
         }
-        
+
         .filter-form {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
             align-items: flex-end;
         }
-        
+
         .filter-group {
             flex: 1;
-            min-width: 200px;
+            min-width: 160px;
         }
-        
+
         .filter-group label {
-            display: block;
-            font-size: 0.875rem;
+            font-size: 13px;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #555;
+            margin-bottom: 6px;
+            display: block;
+            color: var(--black);
         }
-        
+
         .filter-group select,
         .filter-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #E0E0E0;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-family: 'Poppins', sans-serif;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-family: inherit;
+            background: var(--white);
         }
-        
+
         .filter-group select:focus,
         .filter-group input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+            border-color: var(--red);
         }
-        
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
+
         .btn-filter {
-            background: var(--primary);
-            color: white;
+            background: var(--red);
+            color: var(--white);
             border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
+            padding: 10px 24px;
+            border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.2s;
         }
-        
+
         .btn-filter:hover {
-            background: #FF5252;
-            transform: translateY(-2px);
+            background: #b91c1c;
         }
-        
+
         .btn-reset {
             background: transparent;
-            color: #666;
-            border: 1px solid #E0E0E0;
-            padding: 12px 25px;
-            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 10px 22px;
+            border-radius: 40px;
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
+            color: var(--black);
         }
-        
+
         .btn-reset:hover {
-            background: #F8F9FA;
-            border-color: #999;
+            border-color: var(--red);
+            color: var(--red);
         }
-        
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .results-count {
-            font-size: 1.1rem;
-            color: #666;
-        }
-        
-        .results-count strong {
-            color: var(--dark);
-            font-size: 1.3rem;
-        }
-        
+
+        /* Active filter chips */
         .active-filters {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px;
+            margin: 20px 0 10px;
         }
-        
+
         .filter-tag {
-            background: #F8F9FA;
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-size: 0.875rem;
-            display: flex;
+            background: var(--light-yellow);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
-            border: 1px solid #E0E0E0;
+            border: 1px solid rgba(0,0,0,0.05);
+            color: var(--black);
         }
-        
-        .filter-tag i {
-            color: var(--primary);
+
+        .filter-tag a i {
+            color: var(--red);
+        }
+
+        /* results header */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            margin: 24px 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .results-count strong {
+            color: var(--red);
+            font-size: 1.4rem;
+        }
+
+        /* ---------- TIFFIN CARDS (simple, clean) ---------- */
+        .tiffin-service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            margin: 32px 0;
+        }
+
+        .tiffin-service-card {
+            background: var(--white);
+            border: 1px solid #f0f0f0;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .tiffin-service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+            border-color: #e0e0e0;
+        }
+
+        .service-image {
+            height: 210px;
+            overflow: hidden;
+            background: #fafafa;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.25s;
+        }
+
+        .tiffin-service-card:hover .service-image img {
+            transform: scale(1.02);
+        }
+
+        .service-info {
+            padding: 20px 20px 24px;
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .service-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* Food type badges : red / yellow only */
+        .food-type {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+
+        .food-type.veg {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .food-type.non-veg {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .rating i {
+            color: var(--yellow);
+            font-size: 14px;
+        }
+
+        .rating span {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .description {
+            color: #3a3a3a;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.45;
+        }
+
+        .service-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            background: var(--light-yellow);
+            padding: 12px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .stat-box i {
+            color: var(--red);
+            margin-bottom: 4px;
+            display: inline-block;
+        }
+
+        .stat-box span {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 18px;
+        }
+
+        .price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--red);
+        }
+
+        .price small {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .order-btn {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             cursor: pointer;
+            transition: 0.2s;
         }
-        
-        .filter-tag i:hover {
-            color: #dc3545;
+
+        .order-btn:hover {
+            background: var(--red);
         }
-        
+
+        .view-menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            background: transparent;
+            border: 1px solid var(--red);
+            color: var(--red);
+            padding: 10px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .view-menu-btn:hover {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 50px 0 30px;
+            gap: 8px;
+            margin: 40px 0 50px;
         }
-        
-        .page-item {
-            list-style: none;
-        }
-        
+
         .page-link {
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: white;
-            border: 1px solid #E0E0E0;
-            color: #666;
-            text-decoration: none;
-            transition: var(--transition);
+            border-radius: 50%;
+            border: 1px solid #e2e2e2;
+            color: var(--black);
+            font-weight: 500;
         }
-        
-        .page-link:hover,
+
         .page-item.active .page-link {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: var(--red);
+            color: var(--white);
+            border-color: var(--red);
         }
-        
+
+        .page-link:hover {
+            background: var(--yellow);
+            color: var(--black);
+            border-color: var(--yellow);
+        }
+
+        /* no results */
         .no-results {
             text-align: center;
             padding: 80px 20px;
         }
-        
+
         .no-results i {
-            font-size: 5rem;
-            color: #ddd;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            color: #ccc;
         }
-        
+
         .no-results h3 {
             font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: var(--dark);
+            margin: 16px 0 8px;
         }
-        
-        .no-results p {
-            color: #666;
-            margin-bottom: 30px;
+
+        /* ---------- SIMPLE FOOTER (only black, white, red) ---------- */
+        .simple-footer {
+            background: var(--black);
+            color: #e0e0e0;
+            padding: 36px 0 28px;
+            margin-top: 40px;
+            border-top: 3px solid var(--red);
         }
-        
+
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-brand h4 {
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: #aaa;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .footer-contact {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .footer-contact a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-contact a:hover {
+            color: var(--yellow);
+        }
+
+        .copyright {
+            font-size: 13px;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 28px;
+            padding-top: 24px;
+            text-align: center;
+            color: #888;
+        }
+
+        /* responsiveness */
+        @media (max-width: 900px) {
+            .search-container {
+                max-width: 380px;
+            }
+            .nav-link .user-text, .cart-text {
+                display: none;
+            }
+            .nav-link i {
+                font-size: 18px;
+            }
+        }
+
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            .mobile-search-toggle, .menu-toggle {
+                display: flex;
+            }
+            .search-container {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                padding: 16px;
+                margin: 0;
+                max-width: 100%;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+                border-bottom: 1px solid #eee;
+            }
+            .search-container.active {
+                display: block;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--white);
+                flex-direction: column;
+                padding: 24px;
+                transition: 0.25s;
+                gap: 12px;
+                z-index: 999;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
             .filter-form {
                 flex-direction: column;
             }
-            
             .filter-actions {
                 width: 100%;
-            }
-            
-            .btn-filter,
-            .btn-reset {
-                flex: 1;
-            }
-        }
-
-    </style>
-</head>
-<body>
-    <!-- Include navigation bar from index.html -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="{{ url_for('index') }}" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-utensils"></i>
-                </div>
-                <div class="logo-text">
-                    <span class="brand">TiffinWala</span>
-                    <span class="tagline">Fresh Home Food</span>
-                </div>
-            </a>
-
-            <div class="search-container" id="searchContainer">
-                <div class="search-wrapper">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-box" id="searchBox" placeholder="Search for tiffin services..." value="{{ current_filters.search }}">
-                    <button class="search-btn" id="searchBtn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-
-            <ul class="nav-menu" id="navMenu">
-                <li class="nav-item">
-                    <a href="{{ url_for('index') }}" class="nav-link">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ url_for('tiffins') }}" class="nav-link active">
-                        <i class="fas fa-utensils"></i> Order Food
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#how-it-works" class="nav-link">
-                        <i class="fas fa-play-circle"></i> How it Works
-                    </a>
-                </li>
-                
-                <li class="nav-item" id="userMenu">
-                    {% if current_user.is_authenticated %}
-                    <div class="dropdown">
-                        <button class="nav-link user-nav-link dropdown-toggle" onclick="toggleUserDropdown(event)">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <div style="width: 28px; height: 28px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 12px;">
-                                    {{ current_user.username[0]|upper }}
-                                </div>
-                                <span class="user-text">{{ current_user.username.split(' ')[0] }}</span>
-                            </div>
-                        </button>
-                        <div class="dropdown-menu" id="userDropdown">
-                            <a href="{{ url_for('profile') }}" class="dropdown-item">
-                                <i class="fas fa-user"></i> My Profile
-                            </a>
-                            <a href="{{ url_for('orders') }}" class="dropdown-item">
-                                <i class="fas fa-history"></i> My Orders
-                            </a>
-                            <a href="{{ url_for('subscriptions') }}" class="dropdown-item">
-                                <i class="fas fa-calendar-alt"></i> My Subscriptions
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for('logout') }}" class="dropdown-item">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-                        </div>
-                    </div>
-                    {% else %}
-                    <a href="{{ url_for('login') }}" class="nav-link user-nav-link">
-                        <i class="fas fa-user"></i>
-                        <span class="user-text">Login</span>
-                    </a>
-                    {% endif %}
-                </li>
-
-                <li class="nav-item cart-container">
-                    <a href="{{ url_for('cart') }}" class="nav-link cart-nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Cart</span>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </a>
-                </li>
-            </ul>
-
-            <button class="mobile-search-toggle" id="mobileSearchBtn">
-                <i class="fas fa-search"></i>
-            </button>
-            <button class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Filters Section -->
-    <section class="filters-section">
-        <div class="container">
-            <form method="GET" action="{{ url_for('tiffins') }}" class="filter-form">
-                <div class="filter-group">
-                    <label>Category</label>
-                    <select name="category">
-                        <option value="">All Categories</option>
-                        {% for category in categories %}
-                        <option value="{{ category.name }}" {% if current_filters.category == category.name %}selected{% endif %}>
-                            {{ category.name }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label>Price Range</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="number" name="min_price" placeholder="Min" value="{{ current_filters.min_price or '' }}" min="0">
-                        <input type="number" name="max_price" placeholder="Max" value="{{ current_filters.max_price or '' }}" min="0">
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <label>Food Type</label>
-                    <select name="food_type">
-                        <option value="">All</option>
-                        <option value="veg" {% if current_filters.food_type == 'veg' %}selected{% endif %}>Vegetarian</option>
-                        <option value="nonveg" {% if current_filters.food_type == 'nonveg' %}selected{% endif %}>Non-Vegetarian</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label>Sort By</label>
-                    <select name="sort_by">
-                        <option value="rating_desc" {% if current_filters.sort_by == 'rating_desc' %}selected{% endif %}>Top Rated</option>
-                        <option value="price_asc" {% if current_filters.sort_by == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
-                        <option value="price_desc" {% if current_filters.sort_by == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
-                        <option value="name_asc" {% if current_filters.sort_by == 'name_asc' %}selected{% endif %}>Name: A to Z</option>
-                    </select>
-                </div>
-                
-                <div class="filter-actions">
-                    <button type="submit" class="btn-filter">
-                        <i class="fas fa-filter"></i> Apply Filters
-                    </button>
-                    <a href="{{ url_for('tiffins') }}" class="btn-reset">
-                        <i class="fas fa-redo-alt"></i> Reset
-                    </a>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Results Section -->
-    <section class="section white">
-        <div class="container">
-            <!-- Active Filters -->
-            {% if current_filters.category or current_filters.min_price or current_filters.max_price or current_filters.food_type %}
-            <div class="active-filters">
-                <span style="font-weight: 600;">Active Filters:</span>
-                {% if current_filters.category %}
-                <span class="filter-tag">
-                    Category: {{ current_filters.category }}
-                    <a href="{{ url_for('tiffins', search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </span>
-                {% endif %}
-                {% if current_filters.min_price or current_filters.max_price %}
-                <span class="filter-tag">
-                    Price: 
-                    {% if current_filters.min_price %}₹{{ current_filters.min_price }}{% endif %}
-                    {% if current_filters.min_price and current_filters.max_price %} - {% endif %}
-                    {% if current_filters.max_price %}₹{{ current_filters.max_price }}{% endif %}
-                    <a href="{{ url_for('tiffins', category=current_filters.category, search=current_filters.search, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </span>
-                {% endif %}
-                {% if current_filters.food_type %}
-                <span class="filter-tag">
-                    Food Type: {% if current_filters.food_type == 'veg' %}Vegetarian{% else %}Non-Vegetarian{% endif %}
-                    <a href="{{ url_for('tiffins', category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, sort_by=current_filters.sort_by) }}">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </span>
-                {% endif %}
-            </div>
-            {% endif %}
-
-            <!-- Results Header -->
-            <div class="results-header">
-                <div class="results-count">
-                    <strong>{{ pagination.total }}</strong> tiffin services found
-                </div>
-            </div>
-
-            <!-- Tiffin Grid -->
-            {% if tiffins %}
-            <div class="tiffin-service-grid">
-                {% for tiffin in tiffins %}
-                <div class="tiffin-service-card animate-fade-in">
-                    <div class="service-image">
-                        <img src="{{ tiffin.image_url }}" alt="{{ tiffin.name }}" loading="lazy">
-                    </div>
-                    <div class="service-info">
-                        <div class="service-header">
-                            <h3>{{ tiffin.name }}</h3>
-                            <span class="food-type {% if tiffin.is_veg %}veg{% else %}non-veg{% endif %}">
-                                {% if tiffin.is_veg %}Veg{% else %}Non-Veg{% endif %}
-                            </span>
-                        </div>
-                        <div class="rating">
-                            <div>
-                                {% for i in range(5) %}
-                                    {% if i < tiffin.rating|int %}
-                                        <i class="fas fa-star"></i>
-                                    {% elif i < tiffin.rating and tiffin.rating - i >= 0.5 %}
-                                        <i class="fas fa-star-half-alt"></i>
-                                    {% else %}
-                                        <i class="far fa-star"></i>
-                                    {% endif %}
-                                {% endfor %}
-                                <span>{{ "%.1f"|format(tiffin.rating) }} ({{ tiffin.total_reviews }}+ reviews)</span>
-                            </div>
-                        </div>
-                        <p class="description">{{ tiffin.description|truncate(100) }}</p>
-                        
-                        <!-- Additional Info -->
-                        <div class="service-stats">
-                            <div class="stat-box">
-                                <i class="fas fa-clock"></i>
-                                <span>Min {{ tiffin.min_order_days }} days</span>
-                            </div>
-                            <div class="stat-box">
-                                <i class="fas fa-truck"></i>
-                                <span>{{ tiffin.delivery_time }}</span>
-                            </div>
-                            <div class="stat-box">
-                                <i class="fas fa-utensils"></i>
-                                <span>{{ tiffin.category.name }}</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Price and Order Section -->
-                        <div class="price-section">
-                            <div class="price">₹{{ "%.0f"|format(tiffin.price) }}<small>/day</small></div>
-                            <button class="order-btn" onclick="addToCart({{ tiffin.id }}, '{{ tiffin.name }}', {{ tiffin.price }}, '{{ tiffin.category.name }}')">
-                                <i class="fas fa-shopping-cart"></i> Add
-                            </button>
-                        </div>
-                        
-                        <a href="{{ url_for('tiffin_detail', tiffin_id=tiffin.id) }}" class="view-menu-btn">
-                            <i class="fas fa-eye"></i> View Details
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Pagination -->
-            {% if pagination.pages > 1 %}
-            <ul class="pagination">
-                {% if pagination.has_prev %}
-                <li class="page-item">
-                    <a class="page-link" href="{{ url_for('tiffins', page=pagination.prev_num, category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}">
-                        <i class="fas fa-chevron-left"></i>
-                    </a>
-                </li>
-                {% endif %}
-                
-                {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
-                    {% if page_num %}
-                        <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
-                            <a class="page-link" href="{{ url_for('tiffins', page=page_num, category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}">
-                                {{ page_num }}
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <span class="page-link">...</span>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-                
-                {% if pagination.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="{{ url_for('tiffins', page=pagination.next_num, category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </li>
-                {% endif %}
-            </ul>
-            {% endif %}
-
-            {% else %}
-            <!-- No Results -->
-            <div class="no-results">
-                <i class="fas fa-search"></i>
-                <h3>No Tiffin Services Found</h3>
-                <p>We couldn't find any tiffin services matching your criteria. Try adjusting your filters or search term.</p>
-                <a href="{{ url_for('tiffins') }}" class="btn btn-primary">
-                    <i class="fas fa-redo-alt"></i> Clear All Filters
-                </a>
-            </div>
-            {% endif %}
-        </div>
-    </section>
-
-    <!-- Footer (same as index.html) -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <div class="logo-icon" style="width: 50px; height: 50px;">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <h3>TiffinWala</h3>
-                    </div>
-                    <p>Delivering happiness through homemade food since 2025.</p>
-                    <div class="footer-contact">
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <a href="tel:+919570374945">+91 9570374945</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:133rajankumar@gmail.com">133rajankumar@gmail.com</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add other footer sections as needed -->
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            initNavigation();
-            updateCartCount();
-            
-            // Initialize search with current query
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchQuery = urlParams.get('search');
-            if (searchQuery) {
-                document.getElementById('searchBox').value = searchQuery;
-            }
-            
-            // Handle search button
-            document.getElementById('searchBtn').addEventListener('click', function() {
-                const query = document.getElementById('searchBox').value.trim();
-                if (query) {
-                    window.location.href = "{{ url_for('tiffins') }}?search=" + encodeURIComponent(query);
-                }
-            });
-            
-            // Handle enter key in search box
-            document.getElementById('searchBox').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    const query = this.value.trim();
-                    if (query) {
-                        window.location.href = "{{ url_for('tiffins') }}?search=" + encodeURIComponent(query);
-                    }
-                }
-            });
-        });
-
-        function initNavigation() {
-            // Same navigation functions from index.html
-            const menuToggle = document.getElementById('menuToggle');
-            const navMenu = document.getElementById('navMenu');
-            const mobileSearchBtn = document.getElementById('mobileSearchBtn');
-            const searchContainer = document.getElementById('searchContainer');
-            
-            if (menuToggle) {
-                menuToggle.addEventListener('click', function() {
-                    menuToggle.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-            
-            if (mobileSearchBtn) {
-                mobileSearchBtn.addEventListener('click', function() {
-                    searchContainer.classList.toggle('active');
-                    navMenu.classList.remove('active');
-                    menuToggle.classList.remove('active');
-                });
-            }
-        }
-
-        function updateCartCount() {
-            fetch('/cart/count')
-                .then(response => response.json())
-                .then(data => {
-                    const cartCount = document.getElementById('cartCount');
-                    if (cartCount) {
-                        cartCount.textContent = data.count > 99 ? '99+' : data.count;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching cart count:', error);
-                });
-        }
-
-        function addToCart(productId, productName, productPrice, productType) {
-    const formData = new FormData();
-    formData.append('quantity', 1);
-    
-    fetch(`/cart/add/${productId}`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            updateCartCount();
-            showNotification(data.message, 'success');
-        } else {
-            window.location.href = "{{ url_for('login') }}?next=" + encodeURIComponent(window.location.pathname);
-        }
-    })
-    .catch(error => {
-        console.error('Error adding to cart:', error);
-        showNotification('Error adding to cart', 'error');
-    });
-}
-
-        function toggleUserDropdown(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            const dropdown = document.getElementById('userDropdown');
-            if (dropdown) {
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            }
-        }
-
-        document.addEventListener('click', function(event) {
-            const dropdown = document.getElementById('userDropdown');
-            if (dropdown && !event.target.closest('.dropdown')) {
-                dropdown.style.display = 'none';
-            }
-        });
-
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                padding: 15px 25px;
-                border-radius: 10px;
-                color: white;
-                font-weight: 500;
-                z-index: 10000;
-                animation: slideIn 0.3s ease-out;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
                 display: flex;
-                align-items: center;
-                gap: 10px;
-            `;
-            
-            notification.style.background = type === 'success' ? '#06D6A0' : '#dc3545';
-            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => {
-                    if (document.body.contains(notification)) {
-                        document.body.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
+                gap: 12px;
+            }
+            .tiffin-service-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-contact {
+                justify-content: center;
+            }
         }
-    </script>
 
-    <style>
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -1888,6 +759,290 @@ footer::before {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(100%); opacity: 0; }
         }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="logo">
+            <div class="logo-icon"><i class="fas fa-utensils"></i></div>
+            <div class="logo-text">
+                <span class="brand"><span>Tiffin</span>Wala</span>
+                <span class="tagline">FRESH • SIMPLE • HOME</span>
+            </div>
+        </a>
+
+        <div class="search-container" id="searchContainer">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-box" id="searchBox" placeholder="Search tiffin services..." value="{{ current_filters.search }}">
+                <button class="search-btn" id="searchBtn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="{{ url_for('index') }}" class="nav-link"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="{{ url_for('tiffins') }}" class="nav-link active"><i class="fas fa-utensils"></i><span>Order Food</span></a></li>
+            <li><a href="#how-it-works" class="nav-link"><i class="fas fa-play-circle"></i><span>How it Works</span></a></li>
+            <li id="userMenu">
+                {% if current_user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="nav-link user-nav-link dropdown-toggle" onclick="toggleUserDropdown(event)">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 28px; height: 28px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">{{ current_user.username[0]|upper }}</div>
+                            <span class="user-text">{{ current_user.username.split(' ')[0] }}</span>
+                        </div>
+                    </button>
+                    <div class="dropdown-menu" id="userDropdown">
+                        <a href="{{ url_for('profile') }}" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="{{ url_for('orders') }}" class="dropdown-item"><i class="fas fa-history"></i> My Orders</a>
+                        <a href="{{ url_for('subscriptions') }}" class="dropdown-item"><i class="fas fa-calendar-alt"></i> Subscriptions</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ url_for('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="nav-link user-nav-link"><i class="fas fa-user"></i><span class="user-text">Login</span></a>
+                {% endif %}
+            </li>
+            <li class="cart-container">
+                <a href="{{ url_for('cart') }}" class="nav-link cart-nav-link"><i class="fas fa-shopping-cart"></i><span class="cart-text">Cart</span><span class="cart-count" id="cartCount">0</span></a>
+            </li>
+        </ul>
+        <button class="mobile-search-toggle" id="mobileSearchBtn"><i class="fas fa-search"></i></button>
+        <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<!-- Filters Section -->
+<section class="filters-section">
+    <div class="container">
+        <form method="GET" action="{{ url_for('tiffins') }}" class="filter-form">
+            <div class="filter-group">
+                <label>Category</label>
+                <select name="category">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.name }}" {% if current_filters.category == category.name %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Price (₹/day)</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="number" name="min_price" placeholder="Min" value="{{ current_filters.min_price or '' }}">
+                    <input type="number" name="max_price" placeholder="Max" value="{{ current_filters.max_price or '' }}">
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Food Type</label>
+                <select name="food_type">
+                    <option value="">All</option>
+                    <option value="veg" {% if current_filters.food_type == 'veg' %}selected{% endif %}>Vegetarian</option>
+                    <option value="nonveg" {% if current_filters.food_type == 'nonveg' %}selected{% endif %}>Non-Veg</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Sort by</label>
+                <select name="sort_by">
+                    <option value="rating_desc" {% if current_filters.sort_by == 'rating_desc' %}selected{% endif %}>Top Rated</option>
+                    <option value="price_asc" {% if current_filters.sort_by == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_desc" {% if current_filters.sort_by == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="name_asc" {% if current_filters.sort_by == 'name_asc' %}selected{% endif %}>Name A-Z</option>
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button type="submit" class="btn-filter"><i class="fas fa-filter"></i> Apply</button>
+                <a href="{{ url_for('tiffins') }}" class="btn-reset">Reset</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section style="background: var(--white); padding: 20px 0 60px;">
+    <div class="container">
+        <!-- Active filters -->
+        {% if current_filters.category or current_filters.min_price or current_filters.max_price or current_filters.food_type %}
+        <div class="active-filters">
+            <span style="font-weight: 600;">Active filters:</span>
+            {% if current_filters.category %}
+            <span class="filter-tag">Category: {{ current_filters.category }} <a href="{{ url_for('tiffins', search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}"><i class="fas fa-times-circle"></i></a></span>
+            {% endif %}
+            {% if current_filters.min_price or current_filters.max_price %}
+            <span class="filter-tag">₹{{ current_filters.min_price or '0' }} - ₹{{ current_filters.max_price or '∞' }} <a href="{{ url_for('tiffins', category=current_filters.category, search=current_filters.search, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}"><i class="fas fa-times-circle"></i></a></span>
+            {% endif %}
+            {% if current_filters.food_type %}
+            <span class="filter-tag">{% if current_filters.food_type == 'veg' %}Vegetarian{% else %}Non-Veg{% endif %} <a href="{{ url_for('tiffins', category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, sort_by=current_filters.sort_by) }}"><i class="fas fa-times-circle"></i></a></span>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="results-header">
+            <div class="results-count"><strong>{{ pagination.total }}</strong> tasty tiffin services</div>
+        </div>
+
+        {% if tiffins %}
+        <div class="tiffin-service-grid">
+            {% for tiffin in tiffins %}
+            <div class="tiffin-service-card animate-fade-in">
+                <div class="service-image">
+                    <img src="{{ tiffin.image_url }}" alt="{{ tiffin.name }}" loading="lazy">
+                </div>
+                <div class="service-info">
+                    <div class="service-header">
+                        <h3>{{ tiffin.name }}</h3>
+                        <span class="food-type {% if tiffin.is_veg %}veg{% else %}non-veg{% endif %}">{% if tiffin.is_veg %}Veg{% else %}Non-Veg{% endif %}</span>
+                    </div>
+                    <div class="rating">
+                        <div>
+                            {% for i in range(5) %}
+                                {% if i < tiffin.rating|int %}<i class="fas fa-star"></i>
+                                {% elif i < tiffin.rating and tiffin.rating - i >= 0.5 %}<i class="fas fa-star-half-alt"></i>
+                                {% else %}<i class="far fa-star"></i>{% endif %}
+                            {% endfor %}
+                            <span>{{ "%.1f"|format(tiffin.rating) }} ({{ tiffin.total_reviews }})</span>
+                        </div>
+                    </div>
+                    <p class="description">{{ tiffin.description|truncate(95) }}</p>
+                    <div class="service-stats">
+                        <div class="stat-box"><i class="fas fa-clock"></i> <span>{{ tiffin.min_order_days }} days min</span></div>
+                        <div class="stat-box"><i class="fas fa-truck"></i> <span>{{ tiffin.delivery_time }}</span></div>
+                        <div class="stat-box"><i class="fas fa-utensils"></i> <span>{{ tiffin.category.name }}</span></div>
+                    </div>
+                    <div class="price-section">
+                        <div class="price">₹{{ "%.0f"|format(tiffin.price) }}<small>/day</small></div>
+                        <button class="order-btn" onclick="addToCart({{ tiffin.id }}, '{{ tiffin.name }}', {{ tiffin.price }})"><i class="fas fa-shopping-cart"></i> Add</button>
+                    </div>
+                    <a href="{{ url_for('tiffin_detail', tiffin_id=tiffin.id) }}" class="view-menu-btn"><i class="fas fa-eye"></i> View details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if pagination.pages > 1 %}
+        <ul class="pagination">
+            {% if pagination.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('tiffins', page=pagination.prev_num, category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}"><i class="fas fa-chevron-left"></i></a></li>
+            {% endif %}
+            {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                {% if page_num %}
+                <li class="page-item {% if page_num == pagination.page %}active{% endif %}"><a class="page-link" href="{{ url_for('tiffins', page=page_num, category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}">{{ page_num }}</a></li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('tiffins', page=pagination.next_num, category=current_filters.category, search=current_filters.search, min_price=current_filters.min_price, max_price=current_filters.max_price, food_type=current_filters.food_type, sort_by=current_filters.sort_by) }}"><i class="fas fa-chevron-right"></i></a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        {% else %}
+        <div class="no-results">
+            <i class="fas fa-search"></i>
+            <h3>No tiffins found</h3>
+            <p>Try different filters or explore our full menu.</p>
+            <a href="{{ url_for('tiffins') }}" class="btn-filter">Clear filters</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Simple footer (only red/yellow/white/black) -->
+<footer class="simple-footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h4><span style="color: var(--red);">Tiffin</span>Wala</h4>
+                <p>Wholesome home-style meals, delivered daily.</p>
+            </div>
+            <div class="footer-contact">
+                <a href="tel:+919570374945"><i class="fas fa-phone-alt"></i> +91 9570374945</a>
+                <a href="mailto:133rajankumar@gmail.com"><i class="fas fa-envelope"></i> 133rajankumar@gmail.com</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 TiffinWala — Freshness Guaranteed
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Navigation toggles & cart logic
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+        const searchContainer = document.getElementById('searchContainer');
+        if(menuToggle) menuToggle.addEventListener('click', () => { menuToggle.classList.toggle('active'); navMenu.classList.toggle('active'); });
+        if(mobileSearchBtn) mobileSearchBtn.addEventListener('click', () => { searchContainer.classList.toggle('active'); navMenu.classList.remove('active'); if(menuToggle) menuToggle.classList.remove('active'); });
+        updateCartCount();
+
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            let q = document.getElementById('searchBox').value.trim();
+            if(q) window.location.href = "{{ url_for('tiffins') }}?search=" + encodeURIComponent(q);
+        });
+        document.getElementById('searchBox').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') {
+                let q = this.value.trim();
+                if(q) window.location.href = "{{ url_for('tiffins') }}?search=" + encodeURIComponent(q);
+            }
+        });
+    });
+
+    function updateCartCount() {
+        fetch('/cart/count').then(r => r.json()).then(data => {
+            let countSpan = document.getElementById('cartCount');
+            if(countSpan) countSpan.innerText = data.count > 99 ? '99+' : data.count;
+        }).catch(e => console.warn);
+    }
+
+    function addToCart(productId, name, price) {
+        let formData = new FormData();
+        formData.append('quantity', 1);
+        fetch(`/cart/add/${productId}`, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                updateCartCount();
+                showNotification(`${name} added to cart`, 'success');
+            } else {
+                window.location.href = "{{ url_for('login') }}?next=" + encodeURIComponent(window.location.pathname);
+            }
+        }).catch(() => showNotification('Error adding to cart', 'error'));
+    }
+
+    function showNotification(message, type) {
+        let notif = document.createElement('div');
+        let bgColor = type === 'success' ? 'var(--yellow)' : 'var(--red)';
+        let textColor = type === 'success' ? 'var(--black)' : 'white';
+        notif.style.cssText = `position:fixed; top:90px; right:20px; background:${bgColor}; color:${textColor}; padding:12px 24px; border-radius:50px; font-weight:500; z-index:10000; box-shadow:0 5px 12px rgba(0,0,0,0.1); animation:slideIn 0.2s ease; display:flex; align-items:center; gap:10px; font-size:14px;`;
+        notif.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+        document.body.appendChild(notif);
+        setTimeout(() => {
+            notif.style.animation = 'slideOut 0.2s ease';
+            setTimeout(() => notif.remove(), 200);
+        }, 2800);
+    }
+
+    function toggleUserDropdown(event) {
+        event.preventDefault(); event.stopPropagation();
+        let dropdown = document.getElementById('userDropdown');
+        if(dropdown) dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+    document.addEventListener('click', function(e) {
+        let dropdown = document.getElementById('userDropdown');
+        if(dropdown && !e.target.closest('.dropdown')) dropdown.style.display = 'none';
+    });
+</script>
 </body>
 </html>

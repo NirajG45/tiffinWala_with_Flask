@@ -4,198 +4,464 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - TiffinWala</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Font Awesome & Google Fonts (same simplified style) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
+        /* ---------- GLOBAL RESET & VARIABLES (RED, YELLOW, WHITE, BLACK) ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #E11D1F;
+            --yellow: #F5B700;
+            --white: #FFFFFF;
+            --black: #121212;
+            --light-yellow: #FFF5DF;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F8F9FA;
+            color: var(--black);
+            line-height: 1.5;
+            padding-top: 70px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- SIMPLE NAVBAR (consistent) ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            border-bottom: 2px solid var(--red);
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: var(--red);
+            color: var(--white);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text .brand {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text .brand span {
+            color: var(--red);
+        }
+
+        .logo-text .tagline {
+            font-size: 9px;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-home-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 40px;
+            color: var(--black);
+            background: transparent;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .nav-home-link:hover {
+            background: rgba(225, 29, 31, 0.08);
+            color: var(--red);
+        }
+
+        /* ---------- AUTH CONTAINER (registration card) ---------- */
         .auth-container {
             min-height: calc(100vh - 70px);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(145deg, #ffffff 0%, #FFF5DF 100%);
         }
-        
+
         .auth-box {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            padding: 50px 40px;
+            background: var(--white);
+            border-radius: 32px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            padding: 48px 40px;
             width: 100%;
-            max-width: 500px;
+            max-width: 540px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
         }
-        
+
         .auth-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
-        
+
         .auth-header h1 {
             font-size: 2rem;
+            font-weight: 800;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--black);
         }
-        
+
+        .auth-header h1 span {
+            color: var(--red);
+        }
+
+        .auth-header p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* Form elements */
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--black);
         }
-        
+
+        .form-group label i {
+            color: var(--red);
+            margin-right: 6px;
+        }
+
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #E0E0E0;
-            border-radius: 8px;
+            padding: 12px 18px;
+            border: 1.5px solid #e2e2e2;
+            border-radius: 20px;
             font-size: 0.95rem;
-            transition: all 0.3s;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            background: var(--white);
         }
-        
+
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #FF6B6B;
-            box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(225, 29, 31, 0.08);
         }
-        
+
         .form-group textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 85px;
         }
-        
+
+        /* Primary button */
         .btn-auth {
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-            color: white;
+            padding: 14px;
+            background: var(--red);
+            color: var(--white);
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border-radius: 40px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            margin: 20px 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0 10px;
         }
-        
+
         .btn-auth:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255,107,107,0.3);
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(225, 29, 31, 0.25);
         }
-        
+
+        /* Footer links */
         .auth-footer {
             text-align: center;
+            margin-top: 24px;
             padding-top: 20px;
-            border-top: 1px solid #E0E0E0;
+            border-top: 1px solid #f0f0f0;
         }
-        
+
+        .auth-footer p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
         .auth-footer a {
-            color: #FF6B6B;
+            color: var(--red);
             text-decoration: none;
             font-weight: 600;
+            transition: var(--transition);
         }
-        
-        .error-message {
-            color: #dc3545;
-            font-size: 0.875rem;
-            margin-top: 5px;
+
+        .auth-footer a:hover {
+            text-decoration: underline;
         }
-        
+
+        /* Alert messages */
         .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 14px 18px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
+
         .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: #FFECEC;
+            color: var(--red);
+            border-left: 4px solid var(--red);
+        }
+
+        .alert-success {
+            background: var(--light-yellow);
+            color: #7a5a00;
+            border-left: 4px solid var(--yellow);
+        }
+
+        .error-message {
+            color: var(--red);
+            font-size: 0.75rem;
+            margin-top: 5px;
+            margin-left: 12px;
+        }
+
+        /* ---------- SIMPLE FOOTER (same as login) ---------- */
+        .simple-footer {
+            background: var(--black);
+            color: #e0e0e0;
+            padding: 36px 0 28px;
+            margin-top: 0;
+            border-top: 3px solid var(--red);
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-brand h4 {
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: #aaa;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .footer-contact {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .footer-contact a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-contact a:hover {
+            color: var(--yellow);
+        }
+
+        .copyright {
+            font-size: 13px;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 28px;
+            padding-top: 24px;
+            text-align: center;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .auth-box {
+                padding: 36px 24px;
+            }
+            .auth-header h1 {
+                font-size: 1.7rem;
+            }
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-contact {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="{{ url_for('index') }}" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-utensils"></i>
-                </div>
-                <div class="logo-text">
-                    <span class="brand">TiffinWala</span>
-                    <span class="tagline">Fresh Home Food</span>
-                </div>
-            </a>
-        </div>
-    </nav>
 
-    <div class="auth-container">
-        <div class="auth-box">
-            <div class="auth-header">
-                <h1>Create Account</h1>
-                <p>Join TiffinWala and enjoy fresh homemade food daily</p>
+<!-- Navbar (same as login page) -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="logo">
+            <div class="logo-icon"><i class="fas fa-utensils"></i></div>
+            <div class="logo-text">
+                <span class="brand"><span>Tiffin</span>Wala</span>
+                <span class="tagline">FRESH • SIMPLE • HOME</span>
+            </div>
+        </a>
+        <a href="{{ url_for('index') }}" class="nav-home-link">
+            <i class="fas fa-home"></i> <span>Home</span>
+        </a>
+    </div>
+</nav>
+
+<!-- Registration Form Section -->
+<div class="auth-container">
+    <div class="auth-box">
+        <div class="auth-header">
+            <h1>Create <span>Account</span></h1>
+            <p>Join TiffinWala and enjoy fresh homemade food daily</p>
+        </div>
+
+        <!-- Flash messages (if any) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        <i class="fas fa-{% if category == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Registration form (posts to /register, backend redirects to login after success) -->
+        <form method="POST" action="{{ url_for('register') }}">
+            {{ form.hidden_tag() if form else '' }}
+            
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Username</label>
+                <input type="text" id="username" name="username" required placeholder="e.g., raj_kumar" autocomplete="username">
             </div>
             
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            
-            <form method="POST" action="{{ url_for('register') }}">
-                {{ form.hidden_tag() }}
-                
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required placeholder="Choose a username">
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email">
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
-                </div>
-                
-                <div class="form-group">
-                    <label for="address">Delivery Address</label>
-                    <textarea id="address" name="address" required placeholder="Enter your complete address"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="Create a password">
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password">
-                </div>
-                
-                <button type="submit" class="btn-auth">
-                    <i class="fas fa-user-plus"></i> Register
-                </button>
-            </form>
-            
-            <div class="auth-footer">
-                <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email">
             </div>
+            
+            <div class="form-group">
+                <label for="phone"><i class="fas fa-phone-alt"></i> Phone Number</label>
+                <input type="tel" id="phone" name="phone" required placeholder="+91 9876543210" autocomplete="tel">
+            </div>
+            
+            <div class="form-group">
+                <label for="address"><i class="fas fa-map-marker-alt"></i> Delivery Address</label>
+                <textarea id="address" name="address" required placeholder="House No., Street, City, PIN code"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="password" name="password" required placeholder="Create a strong password" autocomplete="new-password">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password"><i class="fas fa-check-circle"></i> Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password" autocomplete="new-password">
+            </div>
+            
+            <button type="submit" class="btn-auth">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+            <p style="margin-top: 12px; font-size: 0.8rem; color: #888;">
+                <i class="fas fa-arrow-right"></i> After registration, you'll be redirected to the login page.
+            </p>
         </div>
     </div>
+</div>
+
+<!-- Simple Footer (same as other pages) -->
+<footer class="simple-footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h4><span style="color: var(--red);">Tiffin</span>Wala</h4>
+                <p>Wholesome home-style meals, delivered daily.</p>
+            </div>
+            <div class="footer-contact">
+                <a href="tel:+919570374945"><i class="fas fa-phone-alt"></i> +91 9570374945</a>
+                <a href="mailto:133rajankumar@gmail.com"><i class="fas fa-envelope"></i> 133rajankumar@gmail.com</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 TiffinWala — Freshness Guaranteed
+        </div>
+    </div>
+</footer>
+
+<!-- No extra JS needed, backend handles redirect after registration -->
 </body>
 </html>
