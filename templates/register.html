@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - TiffinWala</title>
-    <!-- Font Awesome & Google Fonts (same simplified style) -->
+    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        /* ---------- GLOBAL RESET & VARIABLES (RED, YELLOW, WHITE, BLACK) ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -39,7 +38,7 @@
             padding: 0 24px;
         }
 
-        /* ---------- SIMPLE NAVBAR (consistent) ---------- */
+        /* Navbar */
         .navbar {
             position: fixed;
             top: 0;
@@ -110,7 +109,6 @@
             border-radius: 40px;
             color: var(--black);
             background: transparent;
-            transition: var(--transition);
             text-decoration: none;
         }
 
@@ -119,7 +117,7 @@
             color: var(--red);
         }
 
-        /* ---------- AUTH CONTAINER (registration card) ---------- */
+        /* Auth container */
         .auth-container {
             min-height: calc(100vh - 70px);
             display: flex;
@@ -137,7 +135,6 @@
             width: 100%;
             max-width: 540px;
             border: 1px solid rgba(0, 0, 0, 0.03);
-            transition: var(--transition);
         }
 
         .auth-header {
@@ -161,7 +158,6 @@
             font-size: 0.95rem;
         }
 
-        /* Form elements */
         .form-group {
             margin-bottom: 20px;
         }
@@ -203,7 +199,13 @@
             min-height: 85px;
         }
 
-        /* Primary button */
+        .error-message {
+            color: var(--red);
+            font-size: 0.75rem;
+            margin-top: 5px;
+            display: block;
+        }
+
         .btn-auth {
             width: 100%;
             padding: 14px;
@@ -228,7 +230,6 @@
             box-shadow: 0 6px 14px rgba(225, 29, 31, 0.25);
         }
 
-        /* Footer links */
         .auth-footer {
             text-align: center;
             margin-top: 24px;
@@ -245,14 +246,12 @@
             color: var(--red);
             text-decoration: none;
             font-weight: 600;
-            transition: var(--transition);
         }
 
         .auth-footer a:hover {
             text-decoration: underline;
         }
 
-        /* Alert messages */
         .alert {
             padding: 14px 18px;
             border-radius: 20px;
@@ -275,14 +274,7 @@
             border-left: 4px solid var(--yellow);
         }
 
-        .error-message {
-            color: var(--red);
-            font-size: 0.75rem;
-            margin-top: 5px;
-            margin-left: 12px;
-        }
-
-        /* ---------- SIMPLE FOOTER (same as login) ---------- */
+        /* Footer */
         .simple-footer {
             background: var(--black);
             color: #e0e0e0;
@@ -339,7 +331,6 @@
             color: #888;
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             .auth-box {
                 padding: 36px 24px;
@@ -359,7 +350,6 @@
 </head>
 <body>
 
-<!-- Navbar (same as login page) -->
 <nav class="navbar">
     <div class="nav-container">
         <a href="{{ url_for('index') }}" class="logo">
@@ -375,7 +365,6 @@
     </div>
 </nav>
 
-<!-- Registration Form Section -->
 <div class="auth-container">
     <div class="auth-box">
         <div class="auth-header">
@@ -383,7 +372,7 @@
             <p>Join TiffinWala and enjoy fresh homemade food daily</p>
         </div>
 
-        <!-- Flash messages (if any) -->
+        <!-- Flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -395,45 +384,74 @@
             {% endif %}
         {% endwith %}
 
-        <!-- Registration form (posts to /register, backend redirects to login after success) -->
         <form method="POST" action="{{ url_for('register') }}">
-            {{ form.hidden_tag() if form else '' }}
-            
+            {{ form.hidden_tag() }}
+
             <div class="form-group">
                 <label for="username"><i class="fas fa-user"></i> Username</label>
-                <input type="text" id="username" name="username" required placeholder="e.g., raj_kumar" autocomplete="username">
+                {{ form.username(class="form-control", placeholder="e.g., raj_kumar", autocomplete="username") }}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        <span class="error-message"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
-            
+
             <div class="form-group">
                 <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
-                <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email">
+                {{ form.email(class="form-control", placeholder="you@example.com", autocomplete="email") }}
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <span class="error-message"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
-            
+
             <div class="form-group">
                 <label for="phone"><i class="fas fa-phone-alt"></i> Phone Number</label>
-                <input type="tel" id="phone" name="phone" required placeholder="+91 9876543210" autocomplete="tel">
+                {{ form.phone(class="form-control", placeholder="+91 9876543210", autocomplete="tel") }}
+                {% if form.phone.errors %}
+                    {% for error in form.phone.errors %}
+                        <span class="error-message"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
-            
+
             <div class="form-group">
                 <label for="address"><i class="fas fa-map-marker-alt"></i> Delivery Address</label>
-                <textarea id="address" name="address" required placeholder="House No., Street, City, PIN code"></textarea>
+                {{ form.address(class="form-control", rows="3", placeholder="House No., Street, City, PIN code") }}
+                {% if form.address.errors %}
+                    {% for error in form.address.errors %}
+                        <span class="error-message"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
-            
+
             <div class="form-group">
                 <label for="password"><i class="fas fa-lock"></i> Password</label>
-                <input type="password" id="password" name="password" required placeholder="Create a strong password" autocomplete="new-password">
+                {{ form.password(class="form-control", placeholder="Create a strong password", autocomplete="new-password") }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <span class="error-message"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
-            
+
             <div class="form-group">
                 <label for="confirm_password"><i class="fas fa-check-circle"></i> Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password" autocomplete="new-password">
+                {{ form.confirm_password(class="form-control", placeholder="Confirm your password", autocomplete="new-password") }}
+                {% if form.confirm_password.errors %}
+                    {% for error in form.confirm_password.errors %}
+                        <span class="error-message"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
-            
+
             <button type="submit" class="btn-auth">
                 <i class="fas fa-user-plus"></i> Register
             </button>
         </form>
-        
+
         <div class="auth-footer">
             <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
             <p style="margin-top: 12px; font-size: 0.8rem; color: #888;">
@@ -443,7 +461,6 @@
     </div>
 </div>
 
-<!-- Simple Footer (same as other pages) -->
 <footer class="simple-footer">
     <div class="container">
         <div class="footer-inner">
@@ -462,6 +479,5 @@
     </div>
 </footer>
 
-<!-- No extra JS needed, backend handles redirect after registration -->
 </body>
 </html>

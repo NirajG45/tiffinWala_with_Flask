@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - TiffinWala</title>
-    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        /* ---------- GLOBAL RESET & VARIABLES (RED, YELLOW, WHITE, BLACK) ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -39,7 +37,7 @@
             padding: 0 24px;
         }
 
-        /* ---------- NAVBAR (matching simplified pages) ---------- */
+        /* ---------- NAVBAR ---------- */
         .navbar {
             position: fixed;
             top: 0;
@@ -220,7 +218,6 @@
             padding: 32px 24px;
         }
 
-        /* Profile header */
         .profile-header {
             display: flex;
             gap: 48px;
@@ -306,7 +303,6 @@
             flex-wrap: wrap;
         }
 
-        /* Buttons */
         .btn {
             padding: 10px 20px;
             border-radius: 40px;
@@ -343,8 +339,25 @@
         .btn-yellow:hover {
             background: #e0a800;
         }
+        .seller-badge {
+            background: var(--yellow);
+            color: var(--black);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-left: 12px;
+        }
+        .status-pending {
+            background: #f0ad4e;
+            color: white;
+        }
+        .status-approved {
+            background: #28a745;
+            color: white;
+        }
 
-        /* Tabs */
         .profile-tabs {
             display: flex;
             gap: 24px;
@@ -376,7 +389,6 @@
             border-radius: 3px;
         }
 
-        /* Grids */
         .posts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -484,7 +496,6 @@
         .status-confirmed { background: var(--red); color: white; }
         .status-delivered { background: #2e7d32; color: white; }
 
-        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -525,14 +536,12 @@
             font-family: inherit;
         }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: #777;
         }
 
-        /* Footer */
         .simple-footer {
             background: var(--black);
             color: #ccc;
@@ -542,7 +551,6 @@
             text-align: center;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: flex;
@@ -568,7 +576,6 @@
 </head>
 <body>
 
-<!-- Navbar (simplified) -->
 <nav class="navbar">
     <div class="nav-container">
         <a href="{{ url_for('index') }}" class="logo">
@@ -601,17 +608,35 @@
         </div>
         <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="uploadAvatar(event)">
         <div class="profile-info">
-            <div class="profile-name">{{ current_user.username }}</div>
+            <div class="profile-name">
+                {{ current_user.username }}
+                {% if current_user.is_seller %}
+                    <span class="seller-badge">✅ Verified Seller</span>
+                {% elif current_user.seller_request == 'pending' %}
+                    <span class="seller-badge status-pending">⏳ Request Pending</span>
+                {% elif current_user.seller_request == 'rejected' %}
+                    <span class="seller-badge" style="background:#dc3545; color:white;">❌ Request Rejected</span>
+                {% endif %}
+            </div>
             <div class="profile-username">@{{ current_user.username.lower() }}</div>
-            <div class="profile-bio">{{ current_user.bio or "Home chef sharing delicious homemade meals. Available for delivery in your area." }}</div>
+            <div class="profile-bio">{{ current_user.bio or "Food lover sharing homemade meals." }}</div>
             <div class="profile-stats">
                 <div class="stat"><span class="stat-number">{{ posts|length if posts else 0 }}</span><div class="stat-label">Posts</div></div>
                 <div class="stat"><span class="stat-number">{{ followers|default(0) }}</span><div class="stat-label">Followers</div></div>
                 <div class="stat"><span class="stat-number">{{ following|default(0) }}</span><div class="stat-label">Following</div></div>
             </div>
             <div class="profile-actions">
+                <!-- Upload Dish button is always visible (as in your older code) -->
                 <button class="btn btn-red" onclick="openUploadModal()"><i class="fas fa-plus-circle"></i> Upload Dish</button>
-                <button class="btn btn-outline-red" onclick="openOrderManagementTab()"><i class="fas fa-clipboard-list"></i> Manage Orders</button>
+                {% if current_user.is_seller %}
+                    <button class="btn btn-outline-red" onclick="openOrderManagementTab()"><i class="fas fa-clipboard-list"></i> Manage Orders</button>
+                {% elif current_user.seller_request == 'pending' %}
+                    <button class="btn btn-yellow" disabled><i class="fas fa-clock"></i> Request under review</button>
+                {% elif current_user.seller_request == 'rejected' %}
+                    <button class="btn btn-outline-red" onclick="requestSellerApproval()"><i class="fas fa-redo-alt"></i> Re-apply to sell</button>
+                {% else %}
+                    <button class="btn btn-yellow" onclick="requestSellerApproval()"><i class="fas fa-store"></i> Sell on TiffinWala (Apply)</button>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -710,7 +735,6 @@
     </div>
 </div>
 
-<!-- Simple Footer -->
 <footer class="simple-footer">
     <div class="container">
         <p>&copy; 2025 TiffinWala — Freshness Guaranteed</p>
@@ -726,15 +750,14 @@
 
     function toggleUserDropdown(e) {
         e.preventDefault();
-        document.getElementById('userDropdown').style.display = 
-            document.getElementById('userDropdown').style.display === 'block' ? 'none' : 'block';
+        let dd = document.getElementById('userDropdown');
+        dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
     }
     document.addEventListener('click', function(e) {
         let dd = document.getElementById('userDropdown');
         if(dd && !e.target.closest('.dropdown')) dd.style.display = 'none';
     });
 
-    // Tab switching
     function switchTab(tab) {
         document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
         document.getElementById(`${tab}-tab`).style.display = 'block';
@@ -742,12 +765,50 @@
         event.currentTarget.classList.add('active');
     }
 
-    // Upload modal
-    function openUploadModal() { document.getElementById('uploadModal').style.display = 'flex'; }
-    function closeUploadModal() { document.getElementById('uploadModal').style.display = 'none'; }
-    window.onclick = function(e) { if(e.target === document.getElementById('uploadModal')) closeUploadModal(); }
+    function updateCartCount() {
+        fetch('/cart/count').then(r=>r.json()).then(d=>{
+            document.getElementById('cartCount').innerText = d.count>99?'99+':d.count;
+        }).catch(()=>{});
+    }
+    updateCartCount();
 
-    // Upload dish submission (mock API)
+    // Seller request
+    function requestSellerApproval() {
+        if(confirm('Request to become a seller on TiffinWala? Admin will review your request.')) {
+            fetch('/api/seller/request', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Request sent! Admin will review and notify you.');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Try again later.'));
+                }
+            })
+            .catch(() => alert('Network error.'));
+        }
+    }
+
+    // Avatar upload
+    function uploadAvatar(event) {
+        const file = event.target.files[0];
+        if(!file) return;
+        const fd = new FormData(); fd.append('avatar', file);
+        fetch('/api/upload/avatar', { method: 'POST', body: fd })
+        .then(r => r.json()).then(data => { if(data.success) location.reload(); else alert('Upload failed'); });
+    }
+
+    // Upload dish modal
+    function openUploadModal() {
+        document.getElementById('uploadModal').style.display = 'flex';
+    }
+    function closeUploadModal() {
+        document.getElementById('uploadModal').style.display = 'none';
+    }
+    window.onclick = function(e) {
+        if(e.target === document.getElementById('uploadModal')) closeUploadModal();
+    };
+
     function submitUpload(e) {
         e.preventDefault();
         const file = document.getElementById('mediaFile').files[0];
@@ -765,35 +826,19 @@
         }).catch(() => alert('Error uploading'));
     }
 
-    // Avatar upload
-    function uploadAvatar(event) {
-        const file = event.target.files[0];
-        if(!file) return;
-        const fd = new FormData(); fd.append('avatar', file);
-        fetch('/api/upload/avatar', { method: 'POST', body: fd })
-        .then(r => r.json()).then(data => { if(data.success) location.reload(); else alert('Avatar update failed'); });
-    }
-
-    // Order now (add to cart)
     function orderNow(dishId) {
         let qty = prompt('Quantity:', '1');
         if(!qty) return;
         const fd = new FormData(); fd.append('quantity', qty);
         fetch(`/cart/add/${dishId}`, { method: 'POST', body: fd })
-        .then(r => r.json()).then(data => { if(data.success) { updateCartCount(); alert('Added to cart!'); } else alert('Please login'); });
+        .then(r => r.json()).then(data => {
+            if(data.success) { updateCartCount(); alert('Added to cart!'); }
+            else alert('Please login first');
+        });
     }
-
-    function updateCartCount() {
-        fetch('/cart/count').then(r=>r.json()).then(d=>{ document.getElementById('cartCount').innerText = d.count>99?'99+':d.count; });
-    }
-    updateCartCount();
 
     function openOrderManagementTab() { switchTab('orders'); document.querySelectorAll('.tab-btn')[2].click(); }
-
-    function viewOrderDetails(orderId) {
-        alert('Order management: You can update status, but for simplicity use seller dashboard.');
-        // optional redirect to dedicated page
-    }
+    function viewOrderDetails(orderId) { alert('Manage order from the admin panel or contact support.'); }
 </script>
 </body>
 </html>

@@ -1,0 +1,84 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Tiffin Services{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-title"><i class="fas fa-plus-circle"></i> Add New Tiffin Service</div>
+    <form method="POST" action="{{ url_for('admin_create_tiffin') }}">
+        <div class="form-row">
+            <input type="text" name="name" placeholder="Service Name" required>
+            <input type="number" step="0.01" name="price" placeholder="Price (₹)" required>
+        </div>
+        <div class="form-row">
+            <select name="category_id" required>
+                <option value="">Select Category</option>
+                {% for cat in categories %}<option value="{{ cat.id }}">{{ cat.name }}</option>{% endfor %}
+            </select>
+            <input type="url" name="image_url" placeholder="Image URL">
+        </div>
+        <textarea name="description" rows="3" placeholder="Description"></textarea>
+        <div class="form-row">
+            <input type="text" name="delivery_time" placeholder="Delivery time (e.g., 7-9 AM)">
+            <input type="number" name="min_order_days" placeholder="Min order days (default 1)">
+        </div>
+        <div class="form-row">
+            <input type="text" name="address" placeholder="Address">
+            <input type="text" name="phone" placeholder="Phone">
+            <input type="email" name="email" placeholder="Email">
+        </div>
+        <label><input type="checkbox" name="is_veg"> Vegetarian</label>
+        <button type="submit" class="btn btn-red mt-20">Create Tiffin</button>
+    </form>
+</div>
+
+<div class="card">
+    <div class="card-title"><i class="fas fa-list"></i> Existing Tiffin Services</div>
+    <div style="overflow-x:auto;">
+        <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Price</th><th>Category</th><th>Veg</th><th>Actions</th></tr></thead>
+            <tbody>
+                {% for t in tiffins %}
+                <tr>
+                    <td>{{ t.id }}</td>
+                    <td>{{ t.name }}</td>
+                    <td>₹{{ t.price }}</td>
+                    <td>{{ t.category.name }}</td>
+                    <td>{% if t.is_veg %}✅{% else %}🍗{% endif %}</td>
+                    <td>
+                        <button onclick="editTiffin({{ t.id }}, '{{ t.name }}', '{{ t.description|replace("'","\\'") }}', {{ t.price }}, {{ t.category_id }}, '{{ t.image_url }}', '{{ t.delivery_time }}', {{ t.min_order_days }}, '{{ t.address }}', '{{ t.phone }}', '{{ t.email }}', {{ t.is_veg|lower }})" class="btn btn-outline">Edit</button>
+                        <form method="POST" action="{{ url_for('admin_delete_tiffin', tiffin_id=t.id) }}" style="display:inline-block;" onsubmit="return confirm('Delete tiffin service?');"><button class="btn btn-danger">Delete</button></form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function editTiffin(id, name, desc, price, catId, img, delivery, minDays, addr, phone, email, isVeg) {
+    let html = `<div id="editModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:10000;">
+        <div style="background:white; border-radius:28px; padding:28px; width:500px; max-width:90%; max-height:90vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:space-between;"><h3>Edit Tiffin</h3><button onclick="document.getElementById('editModal').remove()" style="background:none; border:none; font-size:1.5rem;">&times;</button></div>
+            <form method="POST" action="/admin/tiffin/${id}/edit">
+                <input type="text" name="name" value="${name.replace(/"/g, '&quot;')}" required>
+                <textarea name="description" rows="3">${desc}</textarea>
+                <input type="number" step="0.01" name="price" value="${price}" required>
+                <select name="category_id">{% for cat in categories %}<option value="{{ cat.id }}">{{ cat.name }}</option>{% endfor %}</select>
+                <input type="url" name="image_url" value="${img}">
+                <input type="text" name="delivery_time" value="${delivery}">
+                <input type="number" name="min_order_days" value="${minDays}">
+                <input type="text" name="address" value="${addr}">
+                <input type="text" name="phone" value="${phone}">
+                <input type="email" name="email" value="${email}">
+                <label><input type="checkbox" name="is_veg" ${isVeg ? 'checked' : ''}> Vegetarian</label>
+                <button type="submit" class="btn btn-red mt-20">Save Changes</button>
+            </form>
+        </div>
+    </div>`;
+    document.body.insertAdjacentHTML('beforeend', html);
+    // pre-select category
+    const select = document.querySelector('#editModal select[name="category_id"]');
+    for(let opt of select.options) if(opt.value == catId) opt.selected = true;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Orders{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-title"><i class="fas fa-truck"></i> Tiffin Orders</div>
+    <div style="overflow-x:auto;">
+        <table>
+            <thead><tr><th>Order #</th><th>Customer</th><th>Address</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.customer.username }}</td>
+                    <td>{{ order.delivery_address|truncate(30) }}</td>
+                    <td>₹{{ "%.0f"|format(order.total_amount) }}</td>
+                    <td><span class="status-badge">{{ order.status }}</span></td>
+                    <td>{{ order.created_at.strftime('%d/%m/%Y') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card">
+    <div class="card-title"><i class="fas fa-utensils"></i> Food Orders (Community)</div>
+    <div style="overflow-x:auto;">
+        <table>
+            <thead><tr><th>Order #</th><th>Customer</th><th>Seller</th><th>Item</th><th>Amount</th><th>Status</th></tr></thead>
+            <tbody>
+                {% for order in food_orders %}
+                <tr>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.customer.username }}</td>
+                    <td>{{ order.seller.username }}</td>
+                    <td>{{ order.post.caption|truncate(30) }}</td>
+                    <td>₹{{ "%.0f"|format(order.total_amount) }}</td>
+                    <td><span class="status-badge">{{ order.status }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

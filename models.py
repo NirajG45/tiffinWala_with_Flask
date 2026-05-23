@@ -23,6 +23,8 @@ class User(UserMixin, db.Model):
     avatar_url = db.Column(db.String(500))
     location = db.Column(db.String(200))
     is_seller = db.Column(db.Boolean, default=False)
+    seller_request = db.Column(db.String(20), default=None)  # 'pending', 'approved', 'rejected' (approved = is_seller=True)
+    is_admin = db.Column(db.Boolean, default=False)          # <-- NEW FIELD for admin panel
     followers_count = db.Column(db.Integer, default=0)
     following_count = db.Column(db.Integer, default=0)
     posts_count = db.Column(db.Integer, default=0)
@@ -33,9 +35,10 @@ class User(UserMixin, db.Model):
     reviews = db.relationship('Review', backref='author', lazy=True)
     subscriptions = db.relationship('Subscription', backref='subscriber', lazy=True)
     
-    # FIXED: Use back_populates instead of backref
+    # Food posts
     food_posts = db.relationship('FoodPost', back_populates='user', lazy=True, cascade='all, delete-orphan')
     
+    # Messages
     sent_messages = db.relationship('Message', 
                                    foreign_keys='Message.sender_id', 
                                    back_populates='sender', 
@@ -46,6 +49,7 @@ class User(UserMixin, db.Model):
                                        back_populates='receiver', 
                                        lazy=True)
     
+    # Food orders (customer and seller)
     customer_orders = db.relationship('FoodOrder', 
                                      foreign_keys='FoodOrder.customer_id', 
                                      back_populates='customer', 
@@ -56,18 +60,18 @@ class User(UserMixin, db.Model):
                                    back_populates='seller', 
                                    lazy=True)
     
-    # Relationships for likes and comments
+    # Likes and comments
     post_likes = db.relationship('PostLike', 
                                 back_populates='user', 
                                 lazy=True, 
                                 cascade='all, delete-orphan')
     
-    post_comments = db.relationship('PostComment', 
+    post_comments = db.relationship('Comment', 
                                    back_populates='user', 
                                    lazy=True, 
                                    cascade='all, delete-orphan')
     
-    # FOLLOWERS - Corrected relationships with proper back_populates
+    # Followers
     following_relationships = db.relationship('Follower', 
                                              foreign_keys='Follower.follower_id',
                                              back_populates='follower',
@@ -79,6 +83,9 @@ class User(UserMixin, db.Model):
                                             back_populates='followed',
                                             lazy='dynamic',
                                             cascade='all, delete-orphan')
+    
+    # Notifications
+    notifications = db.relationship('Notification', backref='user', lazy=True)
     
     def __repr__(self):
         return f'<User {self.username}>'
@@ -256,7 +263,7 @@ class Payment(db.Model):
         return f'<Payment {self.id}>'
 
 
-# ==================== NEW MODELS FOR SOCIAL FEATURES ====================
+# ==================== SOCIAL FEATURES MODELS ====================
 
 class FoodPost(db.Model):
     __tablename__ = 'food_posts'
@@ -277,17 +284,14 @@ class FoodPost(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # FIXED: Use back_populates instead of backref to avoid conflict
+    # Relationships
     user = db.relationship('User', back_populates='food_posts')
-    
-    # Use back_populates for likes and comments
     likes = db.relationship('PostLike', back_populates='post', lazy='dynamic', cascade='all, delete-orphan')
-    comments = db.relationship('PostComment', back_populates='post', lazy='dynamic', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', back_populates='post', lazy='dynamic', cascade='all, delete-orphan')
     orders = db.relationship('FoodOrder', back_populates='post', lazy=True, cascade='all, delete-orphan')
 
 
 class PostLike(db.Model):
-    """Post likes model"""
     __tablename__ = 'post_likes'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -297,28 +301,25 @@ class PostLike(db.Model):
     
     __table_args__ = (db.UniqueConstraint('user_id', 'post_id', name='unique_user_post_like'),)
     
-    # Relationships
     user = db.relationship('User', back_populates='post_likes')
     post = db.relationship('FoodPost', back_populates='likes')
 
 
-class PostComment(db.Model):
-    """Post comments model"""
+class Comment(db.Model):
+    """Post comments model - renamed from PostComment to match app.py import"""
     __tablename__ = 'post_comments'
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('food_posts.id'), nullable=False)
-    comment = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)  # renamed from 'comment' to 'content'
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # Relationships
     user = db.relationship('User', back_populates='post_comments')
     post = db.relationship('FoodPost', back_populates='comments')
 
 
 class FoodOrder(db.Model):
-    """Food orders from social posts"""
     __tablename__ = 'food_orders'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -336,14 +337,12 @@ class FoodOrder(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # Relationships
     customer = db.relationship('User', foreign_keys=[customer_id], back_populates='customer_orders')
     seller = db.relationship('User', foreign_keys=[seller_id], back_populates='seller_orders')
     post = db.relationship('FoodPost', back_populates='orders')
 
 
 class Follower(db.Model):
-    """Follower relationship model - FIXED VERSION"""
     __tablename__ = 'followers'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -353,7 +352,6 @@ class Follower(db.Model):
     
     __table_args__ = (db.UniqueConstraint('follower_id', 'followed_id', name='unique_follow'),)
     
-    # Relationships - Properly linked to User model
     follower = db.relationship('User', 
                               foreign_keys=[follower_id], 
                               back_populates='following_relationships',
@@ -366,7 +364,6 @@ class Follower(db.Model):
 
 
 class Message(db.Model):
-    """Messaging model for seller-buyer communication"""
     __tablename__ = 'messages'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -376,16 +373,21 @@ class Message(db.Model):
     is_read = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # Relationships
     sender = db.relationship('User', foreign_keys=[sender_id], back_populates='sent_messages')
     receiver = db.relationship('User', foreign_keys=[receiver_id], back_populates='received_messages')
-    
-    
+
+
 class Notification(db.Model):
+    """Notification model for user alerts (likes, comments, orders, etc.)"""
+    __tablename__ = 'notifications'
+    
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    type = db.Column(db.String(50))  # like, comment, order_update
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    type = db.Column(db.String(50))  # like, comment, order_update, etc.
     message = db.Column(db.String(500))
-    related_id = db.Column(db.Integer)
+    related_id = db.Column(db.Integer)  # ID of related object (post, order, etc.)
     is_read = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<Notification {self.id} for user {self.user_id}>'

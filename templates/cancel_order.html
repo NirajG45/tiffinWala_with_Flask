@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Subscriptions - TiffinWala</title>
+    <title>Cancel Order - TiffinWala</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        /* ---------- GLOBAL RESET & VARIABLES (RED, YELLOW, WHITE, BLACK) ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -38,7 +37,7 @@
             padding: 0 24px;
         }
 
-        /* ---------- SIMPLE NAVBAR (same as other simplified pages) ---------- */
+        /* ---------- NAVBAR (same as other pages) ---------- */
         .navbar {
             position: fixed;
             top: 0;
@@ -123,11 +122,6 @@
         .nav-link:hover {
             background: rgba(225, 29, 31, 0.08);
             color: var(--red);
-        }
-
-        .nav-link.active {
-            background: var(--red);
-            color: var(--white);
         }
 
         .cart-nav-link {
@@ -218,179 +212,133 @@
             transition: 0.2s;
         }
 
-        /* ---------- SIMPLE SUBSCRIPTIONS PAGE ---------- */
-        .page-container {
-            max-width: 1200px;
+        /* ---------- CANCELLATION PAGE ---------- */
+        .cancel-page {
+            max-width: 800px;
             margin: 40px auto;
             padding: 0 24px;
         }
 
-        .page-header {
-            margin-bottom: 32px;
-        }
-
-        .page-header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--black);
-            margin-bottom: 8px;
-        }
-
-        .page-header p {
-            color: #555;
-            font-size: 15px;
-        }
-
-        /* subscription cards */
-        .subscriptions-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .subscription-card {
+        .card {
             background: var(--white);
             border: 1px solid #e0e0e0;
-            border-radius: 20px;
-            padding: 24px;
-            transition: 0.2s;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
         }
 
-        .subscription-card:hover {
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .provider-info h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--black);
-        }
-
-        .provider-info .plan-badge {
-            display: inline-block;
-            background: var(--light-yellow);
-            color: var(--black);
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-
-        .price {
-            text-align: right;
-        }
-
-        .price .amount {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--red);
-        }
-
-        .price .period {
-            font-size: 13px;
-            color: #666;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 6px;
-        }
-
-        .status-active {
-            background: rgba(225, 29, 31, 0.1);
-            color: var(--red);
-        }
-
-        .status-paused {
-            background: #f0f0f0;
-            color: #666;
-        }
-
-        .status-expiring {
-            background: var(--light-yellow);
-            color: #b85c00;
-        }
-
-        .card-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
+        .warning-icon {
+            text-align: center;
             margin-bottom: 24px;
         }
 
-        @media (max-width: 600px) {
-            .card-details {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .detail-section h4 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .detail-section p {
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .detail-section i {
-            width: 24px;
+        .warning-icon i {
+            font-size: 56px;
             color: var(--red);
+            background: var(--light-yellow);
+            padding: 20px;
+            border-radius: 50%;
         }
 
-        .card-actions {
+        .cancel-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .cancel-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .cancel-header p {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .order-summary {
+            background: #f9f9f9;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .order-summary h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
             display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            border-top: 1px solid #f0f0f0;
-            padding-top: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.2s;
-            border: none;
-            background: transparent;
-            display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
-        .btn-primary {
+        .order-summary .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .policy-box {
+            background: var(--light-yellow);
+            border-left: 4px solid var(--yellow);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .policy-box h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .policy-box ul {
+            margin-left: 24px;
+            color: #555;
+            font-size: 13px;
+        }
+
+        .policy-box li {
+            margin-bottom: 6px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-danger {
             background: var(--red);
             color: var(--white);
         }
 
-        .btn-primary:hover {
+        .btn-danger:hover {
             background: #b91c1c;
             transform: translateY(-1px);
         }
 
         .btn-outline {
+            background: transparent;
             border: 1px solid #ccc;
             color: var(--black);
         }
@@ -398,41 +346,6 @@
         .btn-outline:hover {
             border-color: var(--red);
             color: var(--red);
-        }
-
-        .btn-warning {
-            background: var(--yellow);
-            color: var(--black);
-            border: none;
-        }
-
-        .btn-warning:hover {
-            background: #e5a700;
-        }
-
-        /* empty state */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: var(--white);
-            border-radius: 24px;
-            border: 1px solid #eee;
-        }
-
-        .empty-state i {
-            font-size: 48px;
-            color: #ddd;
-            margin-bottom: 16px;
-        }
-
-        .empty-state h3 {
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-        .empty-state p {
-            color: #666;
-            margin-bottom: 24px;
         }
 
         /* simple footer */
@@ -492,7 +405,6 @@
             color: #888;
         }
 
-        /* responsive */
         @media (max-width: 768px) {
             .nav-menu {
                 position: fixed;
@@ -512,12 +424,11 @@
             .menu-toggle {
                 display: flex;
             }
-            .card-header {
+            .action-buttons {
                 flex-direction: column;
-                align-items: flex-start;
             }
-            .price {
-                text-align: left;
+            .btn {
+                justify-content: center;
             }
             .footer-inner {
                 flex-direction: column;
@@ -527,20 +438,10 @@
                 justify-content: center;
             }
         }
-
-        /* animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.3s ease forwards;
-        }
     </style>
 </head>
 <body>
 
-<!-- Navbar (identical to simplified pages) -->
 <nav class="navbar">
     <div class="nav-container">
         <a href="{{ url_for('index') }}" class="logo">
@@ -566,7 +467,7 @@
                     <div class="dropdown-menu" id="userDropdown">
                         <a href="{{ url_for('profile') }}" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
                         <a href="{{ url_for('orders') }}" class="dropdown-item"><i class="fas fa-history"></i> My Orders</a>
-                        <a href="{{ url_for('subscriptions') }}" class="dropdown-item active"><i class="fas fa-calendar-alt"></i> Subscriptions</a>
+                        <a href="{{ url_for('subscriptions') }}" class="dropdown-item"><i class="fas fa-calendar-alt"></i> Subscriptions</a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ url_for('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
@@ -585,69 +486,59 @@
     </div>
 </nav>
 
-<!-- Main Content -->
-<div class="page-container">
-    <div class="page-header">
-        <h1>My Subscriptions</h1>
-        <p>Manage your active meal plans and delivery schedules</p>
-    </div>
+<div class="cancel-page">
+    <div class="card">
+        <div class="warning-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="cancel-header">
+            <h1>Cancel Order</h1>
+            <p>Please review order details before cancellation</p>
+        </div>
 
-    {% if subscriptions and subscriptions|length > 0 %}
-        <div class="subscriptions-list">
-            {% for sub in subscriptions %}
-            <div class="subscription-card animate-fade-in">
-                <div class="card-header">
-                    <div class="provider-info">
-                        <h3>{{ sub.tiffin_service.name if sub.tiffin_service else 'Tiffin Service' }}</h3>
-                        <div>
-                            <span class="plan-badge">{{ sub.days_per_week }} days/week • {{ sub.duration_weeks }} weeks</span>
-                            <span class="status-badge {% if sub.is_active %}status-active{% else %}status-paused{% endif %}">
-                                {% if sub.is_active %}Active{% else %}Paused{% endif %}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="price">
-                        <div class="amount">₹{{ "%.0f"|format(sub.price) }}</div>
-                        <div class="period">total for {{ sub.total_meals }} meals</div>
-                    </div>
-                </div>
-                <div class="card-details">
-                    <div class="detail-section">
-                        <h4><i class="fas fa-calendar-week"></i> Schedule</h4>
-                        <p><i class="fas fa-play-circle"></i> Starts: {{ sub.start_date.strftime('%d %b %Y') }}</p>
-                        <p><i class="fas fa-stop-circle"></i> Ends: {{ sub.end_date.strftime('%d %b %Y') }}</p>
-                        <p><i class="fas fa-clock"></i> Delivery: {{ sub.delivery_time or '12:00 PM - 2:00 PM' }}</p>
-                    </div>
-                    <div class="detail-section">
-                        <h4><i class="fas fa-utensils"></i> Meal info</h4>
-                        <p><i class="fas fa-box"></i> Total meals: {{ sub.total_meals }}</p>
-                        <p><i class="fas fa-tag"></i> ₹{{ "%.0f"|format(sub.price / sub.total_meals if sub.total_meals else sub.price) }}/meal</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Home delivery included</p>
-                    </div>
-                </div>
-                <div class="card-actions">
-                    {% if sub.is_active %}
-                        <button class="btn btn-outline" onclick="pauseSubscription({{ sub.id }})"><i class="fas fa-pause"></i> Pause</button>
-                        <button class="btn btn-primary" onclick="manageSubscription({{ sub.id }})"><i class="fas fa-cog"></i> Manage</button>
-                    {% else %}
-                        <button class="btn btn-warning" onclick="resumeSubscription({{ sub.id }})"><i class="fas fa-play"></i> Resume</button>
-                        <button class="btn btn-outline" onclick="cancelSubscription({{ sub.id }})"><i class="fas fa-trash-alt"></i> Cancel</button>
-                    {% endif %}
-                </div>
+        <div class="order-summary">
+            <h3><i class="fas fa-receipt"></i> Order #{{ order.id }}</h3>
+            <div class="row">
+                <span>Placed on:</span>
+                <span>{{ order.created_at.strftime('%d %b %Y, %I:%M %p') }}</span>
             </div>
-            {% endfor %}
+            <div class="row">
+                <span>Total amount:</span>
+                <span>₹{{ "%.0f"|format(order.total_amount) }}</span>
+            </div>
+            <div class="row">
+                <span>Items:</span>
+                <span>{{ order.items|sum(attribute='quantity') }} items</span>
+            </div>
+            <div class="row">
+                <span>Delivery to:</span>
+                <span>{{ order.delivery_address.split(',')[0] if order.delivery_address else 'Address' }}</span>
+            </div>
         </div>
-    {% else %}
-        <div class="empty-state">
-            <i class="fas fa-calendar-alt"></i>
-            <h3>No active subscriptions</h3>
-            <p>Subscribe to a tiffin service and enjoy regular home-cooked meals.</p>
-            <a href="{{ url_for('tiffins') }}" class="btn btn-primary"><i class="fas fa-utensils"></i> Browse Tiffin Services</a>
+
+        <div class="policy-box">
+            <h4><i class="fas fa-info-circle"></i> Cancellation policy</h4>
+            <ul>
+                <li>Orders can be cancelled before they are confirmed by the restaurant.</li>
+                <li>Once confirmed, cancellations may not be possible or may incur a fee.</li>
+                <li>Refunds (if any) will be processed within 5-7 business days.</li>
+                <li>Contact support for any issues: <strong>support@tiffinwala.com</strong></li>
+            </ul>
         </div>
-    {% endif %}
+
+        <div class="action-buttons">
+            <form method="POST" action="{{ url_for('cancel_order', order_id=order.id) }}" onsubmit="return confirm('Are you absolutely sure you want to cancel this order? This action cannot be undone.');">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-times-circle"></i> Yes, cancel order
+                </button>
+            </form>
+            <a href="{{ url_for('order_detail', order_id=order.id) }}" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> Go back
+            </a>
+        </div>
+    </div>
 </div>
 
-<!-- Simple Footer -->
 <footer class="simple-footer">
     <div class="container">
         <div class="footer-inner">
@@ -667,7 +558,6 @@
 </footer>
 
 <script>
-    // Navigation and helpers
     document.addEventListener('DOMContentLoaded', function() {
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
@@ -684,8 +574,8 @@
         fetch('/cart/count')
             .then(res => res.json())
             .then(data => {
-                const cartSpan = document.getElementById('cartCount');
-                if (cartSpan) cartSpan.textContent = data.count > 99 ? '99+' : data.count;
+                const countSpan = document.getElementById('cartCount');
+                if (countSpan) countSpan.textContent = data.count > 99 ? '99+' : data.count;
             })
             .catch(err => console.warn);
     }
@@ -700,70 +590,6 @@
         const dropdown = document.getElementById('userDropdown');
         if (dropdown && !e.target.closest('.dropdown')) dropdown.style.display = 'none';
     });
-
-    // Subscription actions (connected to backend endpoints)
-    function pauseSubscription(subId) {
-        if (confirm('Pause this subscription? You can resume anytime.')) {
-            fetch(`/subscription/${subId}/cancel`, { method: 'POST' })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        showNotification('Subscription paused', 'success');
-                        setTimeout(() => location.reload(), 1000);
-                    } else {
-                        showNotification(data.message || 'Error', 'error');
-                    }
-                })
-                .catch(() => showNotification('Network error', 'error'));
-        }
-    }
-
-    function resumeSubscription(subId) {
-        // For resume you'd need a separate endpoint; assuming you can reactivate via same cancel or custom resume.
-        // For simplicity, we'll redirect to a manage page or show message.
-        showNotification('Please contact support or manage from your profile', 'info');
-    }
-
-    function manageSubscription(subId) {
-        window.location.href = `/subscription/${subId}/manage`;  // you can implement a detail page
-    }
-
-    function cancelSubscription(subId) {
-        if (confirm('Are you sure you want to cancel this subscription? This action cannot be undone.')) {
-            fetch(`/subscription/${subId}/cancel`, { method: 'POST' })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        showNotification('Subscription cancelled', 'success');
-                        setTimeout(() => location.reload(), 1000);
-                    } else {
-                        showNotification(data.message || 'Error', 'error');
-                    }
-                })
-                .catch(() => showNotification('Network error', 'error'));
-        }
-    }
-
-    function showNotification(message, type = 'success') {
-        const notif = document.createElement('div');
-        const bgColor = type === 'success' ? 'var(--yellow)' : 'var(--red)';
-        const textColor = type === 'success' ? 'var(--black)' : 'white';
-        notif.style.cssText = `position:fixed; top:90px; right:20px; background:${bgColor}; color:${textColor}; padding:12px 24px; border-radius:50px; font-weight:500; z-index:10000; box-shadow:0 5px 12px rgba(0,0,0,0.1); animation:slideIn 0.2s ease; display:flex; align-items:center; gap:10px; font-size:14px;`;
-        notif.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
-        document.body.appendChild(notif);
-        setTimeout(() => {
-            notif.style.animation = 'slideOut 0.2s ease';
-            setTimeout(() => notif.remove(), 200);
-        }, 2800);
-    }
-
-    // slide animations
-    const styleSheet = document.createElement("style");
-    styleSheet.textContent = `
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
-    `;
-    document.head.appendChild(styleSheet);
 </script>
 </body>
 </html>

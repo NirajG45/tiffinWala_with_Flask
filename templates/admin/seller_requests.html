@@ -1,0 +1,28 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Seller Requests{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-title"><i class="fas fa-store"></i> Pending Seller Applications</div>
+    <div style="overflow-x:auto;">
+        <table>
+            <thead><tr><th>Username</th><th>Email</th><th>Phone</th><th>Address</th><th>Applied On</th><th>Actions</th></tr></thead>
+            <tbody>
+                {% for user in pending %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone or '-' }}</td>
+                    <td>{{ user.address|truncate(40) }}</td>
+                    <td>{{ user.created_at.strftime('%d/%m/%Y') }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin_approve_seller', user_id=user.id) }}" style="display:inline-block;"><button class="btn btn-red" style="background:#28a745;">Approve</button></form>
+                        <form method="POST" action="{{ url_for('admin_reject_seller', user_id=user.id) }}" style="display:inline-block;"><button class="btn btn-danger">Reject</button></form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if not pending %}<p class="text-center mt-20">No pending seller requests.</p>{% endif %}
+</div>
+{% endblock %}
