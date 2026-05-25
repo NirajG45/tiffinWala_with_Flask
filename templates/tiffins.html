@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiffin Services - TiffinWala | Simple & Fresh</title>
-    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
@@ -16,11 +15,11 @@
         }
 
         :root {
-            --red: #E11D1F;      /* bold red */
-            --yellow: #F5B700;   /* vibrant yellow */
+            --red: #E11D1F;
+            --yellow: #F5B700;
             --white: #FFFFFF;
             --black: #121212;
-            --light-yellow: #FFF5DF;  /* for soft accents (derived from yellow+white) */
+            --light-yellow: #FFF5DF;
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             --transition: all 0.2s ease;
         }
@@ -39,7 +38,6 @@
             padding: 0 24px;
         }
 
-        /* ---------- TYPOGRAPHY & BASE ---------- */
         h1, h2, h3, h4 {
             font-weight: 600;
             letter-spacing: -0.01em;
@@ -50,7 +48,7 @@
             transition: var(--transition);
         }
 
-        /* ---------- SIMPLE NAVBAR (red + white + black) ---------- */
+        /* ---------- SIMPLE NAVBAR ---------- */
         .navbar {
             position: fixed;
             top: 0;
@@ -75,7 +73,6 @@
             padding: 0 24px;
         }
 
-        /* Logo */
         .logo {
             display: flex;
             align-items: center;
@@ -112,7 +109,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Search (desktop) */
         .search-container {
             flex: 1;
             max-width: 500px;
@@ -168,7 +164,6 @@
             background: #b91c1c;
         }
 
-        /* Nav menu */
         .nav-menu {
             display: flex;
             align-items: center;
@@ -227,7 +222,6 @@
             border: 2px solid var(--white);
         }
 
-        /* user dropdown */
         .dropdown {
             position: relative;
         }
@@ -269,7 +263,6 @@
             color: var(--red);
         }
 
-        /* mobile toggles */
         .mobile-search-toggle, .menu-toggle {
             display: none;
             background: none;
@@ -279,7 +272,7 @@
             color: var(--black);
         }
 
-        /* ---------- FILTERS (minimal, red/yellow accents) ---------- */
+        /* ---------- FILTERS ---------- */
         .filters-section {
             background: var(--white);
             border-bottom: 1px solid #eee;
@@ -355,7 +348,6 @@
             color: var(--red);
         }
 
-        /* Active filter chips */
         .active-filters {
             display: flex;
             flex-wrap: wrap;
@@ -379,7 +371,6 @@
             color: var(--red);
         }
 
-        /* results header */
         .results-header {
             display: flex;
             justify-content: space-between;
@@ -392,7 +383,7 @@
             font-size: 1.4rem;
         }
 
-        /* ---------- TIFFIN CARDS (simple, clean) ---------- */
+        /* ---------- TIFFIN & SELLER CARDS ---------- */
         .tiffin-service-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -418,6 +409,7 @@
             height: 210px;
             overflow: hidden;
             background: #fafafa;
+            position: relative;
         }
 
         .service-image img {
@@ -429,6 +421,18 @@
 
         .tiffin-service-card:hover .service-image img {
             transform: scale(1.02);
+        }
+
+        .video-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
         }
 
         .service-info {
@@ -448,7 +452,6 @@
             color: var(--black);
         }
 
-        /* Food type badges : red / yellow only */
         .food-type {
             font-size: 12px;
             font-weight: 700;
@@ -574,7 +577,6 @@
             color: var(--white);
         }
 
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -606,7 +608,6 @@
             border-color: var(--yellow);
         }
 
-        /* no results */
         .no-results {
             text-align: center;
             padding: 80px 20px;
@@ -622,7 +623,33 @@
             margin: 16px 0 8px;
         }
 
-        /* ---------- SIMPLE FOOTER (only black, white, red) ---------- */
+        .seller-posts-section {
+            margin-top: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .seller-badge {
+            background: var(--yellow);
+            color: var(--black);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* ---------- FOOTER ---------- */
         .simple-footer {
             background: var(--black);
             color: #e0e0e0;
@@ -679,7 +706,7 @@
             color: #888;
         }
 
-        /* responsiveness */
+        /* ---------- RESPONSIVE ---------- */
         @media (max-width: 900px) {
             .search-container {
                 max-width: 380px;
@@ -759,7 +786,6 @@
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(100%); opacity: 0; }
         }
-
         .animate-fade-in {
             animation: fadeIn 0.3s ease;
         }
@@ -870,7 +896,7 @@
 
 <section style="background: var(--white); padding: 20px 0 60px;">
     <div class="container">
-        <!-- Active filters -->
+        <!-- Active filters display -->
         {% if current_filters.category or current_filters.min_price or current_filters.max_price or current_filters.food_type %}
         <div class="active-filters">
             <span style="font-weight: 600;">Active filters:</span>
@@ -928,6 +954,7 @@
             {% endfor %}
         </div>
 
+        <!-- Pagination -->
         {% if pagination.pages > 1 %}
         <ul class="pagination">
             {% if pagination.has_prev %}
@@ -954,10 +981,59 @@
             <a href="{{ url_for('tiffins') }}" class="btn-filter">Clear filters</a>
         </div>
         {% endif %}
+
+        <!-- ========== NEW SECTION: FRESH FROM OUR SELLERS ========== -->
+        {% if seller_posts and seller_posts|length > 0 %}
+        <div class="seller-posts-section">
+            <div class="section-header">
+                <i class="fas fa-store" style="color: var(--red); font-size: 1.8rem;"></i>
+                <h2>Fresh from Our Sellers</h2>
+                <span class="seller-badge">Homemade & Available</span>
+            </div>
+            <div class="tiffin-service-grid">
+                {% for post in seller_posts %}
+                <div class="tiffin-service-card animate-fade-in">
+                    <div class="service-image">
+                        <img src="{{ post.media_url }}" alt="{{ post.caption }}" loading="lazy">
+                        {% if post.media_type == 'video' %}
+                        <span class="video-badge"><i class="fas fa-video"></i> Video</span>
+                        {% endif %}
+                    </div>
+                    <div class="service-info">
+                        <div class="service-header">
+                            <h3>{{ post.caption|truncate(35) }}</h3>
+                            <span class="food-type" style="background: var(--yellow); color: var(--black);">Chef: {{ post.user.username }}</span>
+                        </div>
+                        <div class="rating">
+                            <div>
+                                {% for i in range(5) %}
+                                    {% if i < (post.likes_count|default(0) // 5) %}<i class="fas fa-star" style="color: var(--yellow);"></i>
+                                    {% else %}<i class="far fa-star"></i>{% endif %}
+                                {% endfor %}
+                                <span>{{ post.likes_count|default(0) }} likes</span>
+                            </div>
+                        </div>
+                        <p class="description">{{ post.caption|truncate(80) }}</p>
+                        <div class="service-stats">
+                            <div class="stat-box"><i class="fas fa-map-marker-alt"></i> <span>{{ post.location or 'Local delivery' }}</span></div>
+                            <div class="stat-box"><i class="fas fa-clock"></i> <span>Fresh today</span></div>
+                            <div class="stat-box"><i class="fas fa-utensils"></i> <span>Home chef</span></div>
+                        </div>
+                        <div class="price-section">
+                            <div class="price">₹{{ "%.0f"|format(post.price) }}<small>/serving</small></div>
+                            <button class="order-btn" onclick="addToCart({{ post.id }}, '{{ post.caption|replace("'", "\\'") }}', {{ post.price }})"><i class="fas fa-shopping-cart"></i> Add</button>
+                        </div>
+                        <a href="#" onclick="alert('Full recipe details coming soon!'); return false;" class="view-menu-btn"><i class="fas fa-eye"></i> View details</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        <!-- ========== END SELLER SECTION ========== -->
     </div>
 </section>
 
-<!-- Simple footer (only red/yellow/white/black) -->
 <footer class="simple-footer">
     <div class="container">
         <div class="footer-inner">
@@ -977,7 +1053,6 @@
 </footer>
 
 <script>
-    // Navigation toggles & cart logic
     document.addEventListener('DOMContentLoaded', function() {
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');

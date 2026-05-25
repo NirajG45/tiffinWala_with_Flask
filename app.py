@@ -154,14 +154,14 @@ def tiffins_html_redirect():
 # ---------- Main routes ----------
 @app.route('/')
 def index():
-    """Home page with featured tiffins and community posts (only from approved sellers)"""
+    """Home page with featured tiffins and community posts (all users)"""
     featured_tiffins = TiffinService.query.filter_by(is_available=True).limit(6).all()
     categories = Category.query.all()
-    # ✅ Only show posts from approved sellers
+    # Show all posts (both sellers and non-sellers) – social media style
+    # Only show posts that have media (image/video)
     food_posts = FoodPost.query.filter(
-        FoodPost.is_available == True,
-        FoodPost.user.has(is_seller=True)   # only approved sellers
-    ).order_by(FoodPost.created_at.desc()).limit(6).all()
+        FoodPost.media_url.isnot(None)
+    ).order_by(FoodPost.created_at.desc()).limit(9).all()
     return render_template('index.html', 
                            tiffins=featured_tiffins, 
                            categories=categories,
@@ -616,24 +616,28 @@ def request_seller_approval():
         return jsonify({'success': False, 'message': 'Your request is already pending admin approval.'})
     current_user.seller_request = 'pending'
     db.session.commit()
-    # Optional: create notification for admin (you can implement later)
     return jsonify({'success': True, 'message': 'Seller request sent to admin. You will be notified once approved.'})
 
+# UPDATED: Allow all users to upload posts (non‑sellers can share media without price)
 @app.route('/api/posts/create', methods=['POST'])
 @login_required
 def create_post():
     try:
-        # Only approved sellers can upload posts
-        if not current_user.is_seller:
-            return jsonify({'success': False, 'message': 'You must be an approved seller to upload dishes.'}), 403
-        
         caption = request.form.get('caption', '')
         price = request.form.get('price', type=float)
         quantity = request.form.get('quantity', type=int, default=0)
         location = request.form.get('location', current_user.address or '')
         post_type = request.form.get('post_type', 'photo')
         availability = request.form.get('availability', 'available')
-        is_available = (availability == 'available')
+        
+        # If user is not a seller, force price to None and make it non‑sellable
+        if not current_user.is_seller:
+            price = None
+            quantity = 0
+            is_available = False
+            availability = 'share'  # custom status for social posts
+        else:
+            is_available = (availability == 'available')
         
         if 'media' not in request.files:
             return jsonify({'success': False, 'message': 'No file uploaded'}), 400
@@ -662,7 +666,12 @@ def create_post():
         db.session.add(post)
         current_user.posts_count = (current_user.posts_count or 0) + 1
         db.session.commit()
-        return jsonify({'success': True, 'message': 'Post created!', 'post': {'id': post.id}})
+        
+        if current_user.is_seller:
+            msg = 'Dish uploaded and available for sale!'
+        else:
+            msg = 'Post shared! (To sell dishes, please apply for seller approval.)'
+        return jsonify({'success': True, 'message': msg, 'post': {'id': post.id}})
     except Exception as e:
         db.session.rollback()
         return jsonify({'success': False, 'message': str(e)}), 500
@@ -810,12 +819,10 @@ def admin_required(func):
         return func(*args, **kwargs)
     return decorated_view
 
-# Admin dashboard
 @app.route('/admin')
 @login_required
 @admin_required
 def admin_dashboard():
-    # Statistics
     total_users = User.query.count()
     total_sellers = User.query.filter_by(is_seller=True).count()
     pending_sellers = User.query.filter_by(seller_request='pending').count()
@@ -825,7 +832,6 @@ def admin_dashboard():
     total_revenue = db.session.query(db.func.sum(Order.total_amount)).scalar() or 0
     total_food_revenue = db.session.query(db.func.sum(FoodOrder.total_amount)).scalar() or 0
     
-    # Recent orders
     recent_orders = Order.query.order_by(Order.created_at.desc()).limit(10).all()
     recent_food_orders = FoodOrder.query.order_by(FoodOrder.created_at.desc()).limit(10).all()
     
@@ -840,7 +846,6 @@ def admin_dashboard():
                           recent_orders=recent_orders,
                           recent_food_orders=recent_food_orders)
 
-# Manage users
 @app.route('/admin/users')
 @login_required
 @admin_required
@@ -888,7 +893,6 @@ def admin_delete_user(user_id):
         flash(f'User {user.username} deleted.', 'success')
     return redirect(url_for('admin_users'))
 
-# Approve seller requests
 @app.route('/admin/seller-requests')
 @login_required
 @admin_required
@@ -917,7 +921,6 @@ def admin_reject_seller(user_id):
     flash(f'{user.username}\'s seller request rejected.', 'warning')
     return redirect(url_for('admin_seller_requests'))
 
-# Manage Tiffin Services
 @app.route('/admin/tiffins')
 @login_required
 @admin_required
@@ -983,7 +986,6 @@ def admin_delete_tiffin(tiffin_id):
     flash('Tiffin service deleted.', 'success')
     return redirect(url_for('admin_tiffins'))
 
-# Manage Categories
 @app.route('/admin/categories')
 @login_required
 @admin_required
@@ -1009,7 +1011,6 @@ def admin_create_category():
 @admin_required
 def admin_delete_category(cat_id):
     category = Category.query.get_or_404(cat_id)
-    # Check if any tiffin uses this category
     if category.tiffins:
         flash('Cannot delete category that has tiffin services. Remove them first.', 'danger')
     else:
@@ -1018,7 +1019,6 @@ def admin_delete_category(cat_id):
         flash('Category deleted.', 'success')
     return redirect(url_for('admin_categories'))
 
-# Manage Orders (regular and food orders)
 @app.route('/admin/orders')
 @login_required
 @admin_required
@@ -1027,7 +1027,6 @@ def admin_orders():
     food_orders = FoodOrder.query.order_by(FoodOrder.created_at.desc()).all()
     return render_template('admin/orders.html', orders=orders, food_orders=food_orders)
 
-# Manage Food Posts (moderation)
 @app.route('/admin/food-posts')
 @login_required
 @admin_required
