@@ -157,8 +157,6 @@ def index():
     """Home page with featured tiffins and community posts (all users)"""
     featured_tiffins = TiffinService.query.filter_by(is_available=True).limit(6).all()
     categories = Category.query.all()
-    # Show all posts (both sellers and non-sellers) – social media style
-    # Only show posts that have media (image/video)
     food_posts = FoodPost.query.filter(
         FoodPost.media_url.isnot(None)
     ).order_by(FoodPost.created_at.desc()).limit(9).all()
@@ -212,8 +210,19 @@ def tiffins():
     categories = Category.query.all()
     form = TiffinSearchForm()
     
-    return render_template('tiffins.html', tiffins=tiffins, pagination=pagination,
-                           categories=categories, form=form,
+    # Get seller-uploaded posts (approved sellers, with price, available)
+    seller_posts = FoodPost.query.filter(
+        FoodPost.user.has(is_seller=True),
+        FoodPost.price.isnot(None),
+        FoodPost.is_available == True
+    ).order_by(FoodPost.created_at.desc()).limit(6).all()
+    
+    return render_template('tiffins.html',
+                           tiffins=tiffins,
+                           pagination=pagination,
+                           categories=categories,
+                           form=form,
+                           seller_posts=seller_posts,
                            current_filters={'category': category, 'search': search_query,
                                              'min_price': min_price, 'max_price': max_price,
                                              'food_type': food_type, 'sort_by': sort_by})
@@ -291,7 +300,6 @@ def login():
         if user and check_password_hash(user.password_hash, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            # Transfer session cart to user cart
             if 'cart' in session:
                 cart = user.cart
                 if not cart:
@@ -341,7 +349,6 @@ def profile():
     followers_count = Follower.query.filter_by(followed_id=current_user.id).count()
     following_count = Follower.query.filter_by(follower_id=current_user.id).count()
     
-    # Seller orders (only if user is seller)
     seller_orders = []
     if current_user.is_seller:
         seller_orders = FoodOrder.query.filter_by(seller_id=current_user.id).order_by(FoodOrder.created_at.desc()).all()
@@ -378,9 +385,13 @@ def cart():
     return render_template('cart.html', cart_items=cart_items, subtotal=subtotal,
                            delivery_charge=delivery_charge, total=total)
 
-@app.route('/cart/add/<int:tiffin_id>', methods=['POST'])
-def add_to_cart(tiffin_id):
-    tiffin = TiffinService.query.get_or_404(tiffin_id)
+@app.route('/cart/add/<int:item_id>', methods=['POST'])
+def add_to_cart(item_id):
+    # For now, only allow adding regular tiffin services (not seller posts)
+    tiffin = TiffinService.query.get(item_id)
+    if not tiffin:
+        return jsonify({'success': False, 'message': 'This item is not available for ordering yet.'}), 400
+    
     quantity = int(request.form.get('quantity', 1))
     if current_user.is_authenticated:
         cart = current_user.cart
@@ -388,11 +399,11 @@ def add_to_cart(tiffin_id):
             cart = Cart(user_id=current_user.id)
             db.session.add(cart)
             db.session.commit()
-        cart_item = CartItem.query.filter_by(cart_id=cart.id, tiffin_id=tiffin_id).first()
+        cart_item = CartItem.query.filter_by(cart_id=cart.id, tiffin_id=item_id).first()
         if cart_item:
             cart_item.quantity += quantity
         else:
-            cart_item = CartItem(cart_id=cart.id, tiffin_id=tiffin_id, quantity=quantity, price=tiffin.price)
+            cart_item = CartItem(cart_id=cart.id, tiffin_id=item_id, quantity=quantity, price=tiffin.price)
             db.session.add(cart_item)
         db.session.commit()
     else:
@@ -400,12 +411,12 @@ def add_to_cart(tiffin_id):
             session['cart'] = []
         found = False
         for item in session['cart']:
-            if item['tiffin_id'] == tiffin_id:
+            if item['tiffin_id'] == item_id:
                 item['quantity'] += quantity
                 found = True
                 break
         if not found:
-            session['cart'].append({'tiffin_id': tiffin_id, 'quantity': quantity, 'price': float(tiffin.price)})
+            session['cart'].append({'tiffin_id': item_id, 'quantity': quantity, 'price': float(tiffin.price)})
         session.modified = True
     count = get_cart_count()
     return jsonify({'success': True, 'count': count, 'message': f'{tiffin.name} added to cart!'})
@@ -609,7 +620,6 @@ def get_user_stats():
 @app.route('/api/seller/request', methods=['POST'])
 @login_required
 def request_seller_approval():
-    """Allow a user to request becoming a seller"""
     if current_user.is_seller:
         return jsonify({'success': False, 'message': 'You are already a verified seller.'})
     if current_user.seller_request == 'pending':
@@ -618,7 +628,6 @@ def request_seller_approval():
     db.session.commit()
     return jsonify({'success': True, 'message': 'Seller request sent to admin. You will be notified once approved.'})
 
-# UPDATED: Allow all users to upload posts (non‑sellers can share media without price)
 @app.route('/api/posts/create', methods=['POST'])
 @login_required
 def create_post():
@@ -630,12 +639,11 @@ def create_post():
         post_type = request.form.get('post_type', 'photo')
         availability = request.form.get('availability', 'available')
         
-        # If user is not a seller, force price to None and make it non‑sellable
         if not current_user.is_seller:
             price = None
             quantity = 0
             is_available = False
-            availability = 'share'  # custom status for social posts
+            availability = 'share'
         else:
             is_available = (availability == 'available')
         
@@ -807,9 +815,8 @@ def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
 
-# ---------- ADMIN PANEL (requires is_admin=True) ----------
+# ---------- ADMIN PANEL ----------
 def admin_required(func):
-    """Decorator to restrict access to admin users."""
     from functools import wraps
     @wraps(func)
     def decorated_view(*args, **kwargs):
