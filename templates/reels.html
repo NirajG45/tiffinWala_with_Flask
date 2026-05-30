@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Reels - TiffinWala</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --red: #E11D1F;
+            --yellow: #F5B700;
+            --white: #FFFFFF;
+            --black: #121212;
+            --light-yellow: #FFF5DF;
+        }
+        body {
+            background: var(--black);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            height: 100vh;
+            padding-top: 0;
+        }
+        /* Simple navbar (inline with black background) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 1px solid #333;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            background: var(--red);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        .logo-text {
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 20px;
+        }
+        /* Reels container - full screen scroll snap */
+        .reels-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .reel-card {
+            scroll-snap-align: start;
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Overlay info */
+        .reel-info {
+            position: absolute;
+            bottom: 80px;
+            left: 16px;
+            right: 80px;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .username {
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .caption {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        /* Action buttons on the right */
+        .action-buttons {
+            position: absolute;
+            bottom: 120px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            z-index: 20;
+        }
+        .action-btn {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+            font-size: 1.2rem;
+        }
+        .action-btn span {
+            font-size: 0.7rem;
+        }
+        .action-btn:hover {
+            transform: scale(1.05);
+            background: var(--red);
+        }
+        .liked {
+            color: var(--red);
+        }
+        /* comment modal */
+        .modal {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            z-index: 1001;
+            animation: slideUp 0.3s ease;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .comment-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+        .comment-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .comment-input {
+            display: flex;
+            gap: 8px;
+        }
+        .comment-input input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 40px;
+            border: 1px solid #ddd;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0;
+            width:100%; height:100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        @media (max-width: 640px) {
+            .action-buttons { bottom: 100px; right: 12px; gap: 16px; }
+            .action-btn { width: 40px; height: 40px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="logo">
+            <div class="logo-icon"><i class="fas fa-utensils"></i></div>
+            <div class="logo-text">TiffinWala</div>
+        </a>
+        <div>
+            <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+            <a href="{{ url_for('tiffins') }}" class="nav-link">Order</a>
+            <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        </div>
+    </nav>
+
+    <div class="reels-container" id="reelsContainer">
+        {% for reel in reels %}
+        <div class="reel-card" data-post-id="{{ reel.id }}" data-user-id="{{ reel.user.id }}">
+            <video src="{{ reel.media_url }}" loop muted playsinline></video>
+            <div class="reel-info">
+                <div class="username">
+                    <i class="fas fa-user-circle"></i> {{ reel.user.username }}
+                    {% if reel.user.is_seller %}<span style="font-size:0.7rem; background:var(--yellow); color:black; padding:2px 6px; border-radius:20px;">Seller</span>{% endif %}
+                </div>
+                <div class="caption">{{ reel.caption }}</div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn like-btn" data-post-id="{{ reel.id }}">
+                    <i class="far fa-heart"></i>
+                    <span class="like-count">{{ reel.likes_count|default(0) }}</span>
+                </button>
+                <button class="action-btn comment-btn" data-post-id="{{ reel.id }}">
+                    <i class="far fa-comment"></i>
+                    <span class="comment-count">{{ reel.comments_count|default(0) }}</span>
+                </button>
+                <button class="action-btn share-btn" onclick="shareReel({{ reel.id }})">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Comment Modal -->
+    <div class="overlay" id="commentOverlay"></div>
+    <div class="modal" id="commentModal">
+        <div class="modal-header">
+            <h3>Comments</h3>
+            <button onclick="closeCommentModal()" style="background:none; border:none; font-size:1.4rem;">&times;</button>
+        </div>
+        <div class="comment-list" id="commentList"></div>
+        <div class="comment-input">
+            <input type="text" id="commentText" placeholder="Write a comment...">
+            <button class="btn btn-red" id="postCommentBtn">Post</button>
+        </div>
+    </div>
+
+    <script>
+        let currentPostId = null;
+        let currentVideo = null;
+        let observer = null;
+
+        // Autoplay when video enters viewport
+        function setupIntersectionObserver() {
+            const videos = document.querySelectorAll('video');
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.play().catch(e => console.log('autoplay blocked', e));
+                        // Pause all other videos
+                        document.querySelectorAll('video').forEach(v => {
+                            if (v !== video) v.pause();
+                        });
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, { threshold: 0.6 });
+            videos.forEach(video => observer.observe(video));
+        }
+
+        // Like/unlike
+        async function toggleLike(postId, btn) {
+            const icon = btn.querySelector('i');
+            const countSpan = btn.querySelector('.like-count');
+            try {
+                const res = await fetch(`/api/posts/${postId}/like`, { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    if (data.liked) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        btn.classList.add('liked');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        btn.classList.remove('liked');
+                    }
+                    countSpan.innerText = data.likes_count;
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // Open comment modal
+        async function openComments(postId) {
+            currentPostId = postId;
+            document.getElementById('commentOverlay').style.display = 'block';
+            document.getElementById('commentModal').style.display = 'block';
+            await loadComments(postId);
+        }
+        function closeCommentModal() {
+            document.getElementById('commentOverlay').style.display = 'none';
+            document.getElementById('commentModal').style.display = 'none';
+            currentPostId = null;
+        }
+        async function loadComments(postId) {
+            try {
+                const res = await fetch(`/api/posts/${postId}/comments`);
+                const comments = await res.json();
+                const container = document.getElementById('commentList');
+                container.innerHTML = comments.map(c => `<div class="comment-item"><strong>${c.username}</strong> ${c.content}</div>`).join('');
+            } catch(e) { console.error(e); }
+        }
+        async function postComment() {
+            const text = document.getElementById('commentText').value.trim();
+            if (!text || !currentPostId) return;
+            try {
+                const res = await fetch(`/api/posts/${currentPostId}/comment`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ comment: text })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('commentText').value = '';
+                    loadComments(currentPostId);
+                    // Update comment count on reel card
+                    const commentBtn = document.querySelector(`.reel-card[data-post-id="${currentPostId}"] .comment-btn span`);
+                    if (commentBtn) commentBtn.innerText = data.comments_count;
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function shareReel(postId) {
+            navigator.share ? navigator.share({ title: 'Check this reel', url: window.location.href }) : alert('Copy link: ' + window.location.href);
+        }
+
+        // Event listeners
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleLike(btn.dataset.postId, btn);
+            });
+        });
+        document.querySelectorAll('.comment-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openComments(btn.dataset.postId);
+            });
+        });
+        document.getElementById('postCommentBtn').addEventListener('click', postComment);
+        document.getElementById('commentOverlay').addEventListener('click', closeCommentModal);
+
+        // Handle scroll to ensure first video plays
+        window.addEventListener('load', () => {
+            setupIntersectionObserver();
+            // manually trigger first video
+            const firstVideo = document.querySelector('video');
+            if (firstVideo) firstVideo.play().catch(e=>console.log);
+        });
+    </script>
+</body>
+</html>

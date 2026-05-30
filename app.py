@@ -154,16 +154,36 @@ def tiffins_html_redirect():
 # ---------- Main routes ----------
 @app.route('/')
 def index():
-    """Home page with featured tiffins and community posts (all users)"""
+    """Home page with featured tiffins, community posts, and reels"""
     featured_tiffins = TiffinService.query.filter_by(is_available=True).limit(6).all()
     categories = Category.query.all()
+    
+    # Community posts (all media types, but not videos? Keep as is)
     food_posts = FoodPost.query.filter(
         FoodPost.media_url.isnot(None)
     ).order_by(FoodPost.created_at.desc()).limit(9).all()
+    
+    # Reels (video posts from approved sellers or all users, order by latest)
+    reels = FoodPost.query.filter(
+        FoodPost.media_type == 'video',
+        FoodPost.user.has(is_seller=True)   # optionally only sellers
+    ).order_by(FoodPost.created_at.desc()).limit(12).all()
+    
     return render_template('index.html', 
                            tiffins=featured_tiffins, 
                            categories=categories,
-                           food_posts=food_posts)
+                           food_posts=food_posts,
+                           reels=reels)
+
+@app.route('/reels')
+@login_required
+def reels():
+    """Instagram-style reels page - shows video posts from sellers"""
+    reel_posts = FoodPost.query.filter(
+        FoodPost.media_type == 'video',
+        FoodPost.user.has(is_seller=True)
+    ).order_by(FoodPost.created_at.desc()).all()
+    return render_template('reels.html', reels=reel_posts)
 
 @app.route('/tiffins')
 def tiffins():
@@ -750,6 +770,19 @@ def comment_on_post(post_id):
         },
         'comments_count': comments_count
     })
+
+# NEW endpoint to fetch comments for a post (used by reels page)
+@app.route('/api/posts/<int:post_id>/comments')
+@login_required
+def get_post_comments(post_id):
+    post = FoodPost.query.get_or_404(post_id)
+    comments = post.comments.order_by(Comment.created_at.desc()).all()
+    return jsonify([{
+        'id': c.id,
+        'username': c.user.username,
+        'content': c.content,
+        'created_at': c.created_at.strftime('%Y-%m-%d %H:%M')
+    } for c in comments])
 
 @app.route('/api/seller/orders/<int:order_id>')
 @login_required
